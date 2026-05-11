@@ -9,12 +9,36 @@ const read = (relativePath) => fs.readFileSync(path.join(rootDir, relativePath),
 
 const openPlanPage = read('src/app/(marketing)/openplan/page.tsx')
 const ctaHref = '/contact/openplan-fit?tier=Open-source%20fit%20audit'
-assert.ok(openPlanPage.includes(ctaHref), 'OpenPlan CTAs must preserve fit-audit tier context.')
-assert.equal((openPlanPage.match(new RegExp(ctaHref.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length, 2, 'Both OpenPlan fit CTAs should use the same routed URL.')
+const openPlanFitLinks = [...openPlanPage.matchAll(/<Link\s+href="([^"]+)"/g)]
+  .map((match) => match[1])
+  .filter((href) => href.startsWith('/contact/openplan-fit'))
+assert.deepEqual(openPlanFitLinks, [ctaHref, ctaHref], 'Every OpenPlan fit CTA must use the same routed fit-audit URL.')
 
 const fitPage = read('src/app/(marketing)/contact/openplan-fit/page.tsx')
-for (const required of ['searchParams', 'initialIntent="fit"', 'initialTopic="openplan"', 'initialProduct="openplan"', 'initialTier={safeTier(params.tier)}']) {
-  assert.ok(fitPage.includes(required), `OpenPlan fit page is missing routed context: ${required}`)
+for (const required of [
+  'searchParams',
+  'initialIntent="fit"',
+  'initialTopic="openplan"',
+  'initialProduct="openplan"',
+  'initialTier={safeTier(params.tier)}',
+  "if (!value) return 'Open-source fit audit'",
+  'return value.slice(0, 80)',
+]) {
+  assert.ok(fitPage.includes(required), `OpenPlan fit page is missing bounded routed context: ${required}`)
+}
+
+const contactShell = read('src/components/features/contact-page-shell.tsx')
+for (const required of [
+  'initialIntent?: string',
+  'initialTopic?: string',
+  'initialProduct?: string',
+  'initialTier?: string',
+  'initialIntent={initialIntent}',
+  'initialTopic={initialTopic}',
+  'initialProduct={initialProduct}',
+  'initialTier={initialTier}',
+]) {
+  assert.ok(contactShell.includes(required), `Contact shell must preserve context through to intake form: ${required}`)
 }
 
 const prefill = buildContactPrefill({
