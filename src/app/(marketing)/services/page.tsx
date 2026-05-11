@@ -18,7 +18,7 @@ const services = [
   {
     name: 'Urban & Transportation Planning',
     description:
-      'RTPs, ATPs, corridor strategy, and board-ready planning packages grounded in local implementation realities.',
+      'Regional plans, active transportation plans, corridor strategy, and board-ready packages grounded in what staff can actually deliver.',
     icon: MapPin,
     href: '/services/planning',
     outcomes: [
@@ -30,7 +30,7 @@ const services = [
   {
     name: 'GIS & Spatial Analysis',
     description:
-      'Spatial data systems, map products, and diagnostics that turn fragmented data into decision-ready intelligence.',
+      'Map products, spatial data cleanup, and practical analysis that turn scattered information into clear recommendations.',
     icon: Database,
     href: '/services/gis',
     outcomes: [
@@ -42,7 +42,7 @@ const services = [
   {
     name: 'Aerial Mapping & Photogrammetry',
     description:
-      'FAA-certified capture and geospatial outputs for corridor, site, and asset-level understanding.',
+      'FAA-certified drone capture and measurable map outputs for corridors, sites, assets, and public-facing evidence.',
     icon: Plane,
     href: '/services/aerial',
     outcomes: [
@@ -54,7 +54,7 @@ const services = [
   {
     name: 'Funding & Grant Services',
     description:
-      'Opportunity fit, scoring-aware narratives, and grant package assembly to increase competitiveness.',
+      'Grant fit checks, benefit framing, and package assembly for teams that need a stronger, cleaner submission.',
     icon: FileText,
     href: '/services/grants',
     outcomes: [
@@ -78,7 +78,7 @@ const services = [
   {
     name: 'AI-Enabled Documentation',
     description:
-      'Automation for report drafting, table/figure generation, and QA with human-reviewed outputs.',
+      'Human-reviewed drafting, tables, figures, and QA support that shortens production without handing judgment to a black box.',
     icon: Sparkles,
     href: '/services/ai',
     outcomes: [
@@ -100,28 +100,31 @@ const capabilityMatrix = [
 export default function ServicesPage() {
   return (
     <>
-      <Section spacing="lg" className="hero-mesh text-white">
+      <Section spacing="md" className="hero-mesh text-white">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.85fr)] lg:items-end">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.85fr)] lg:items-center">
             <div className="max-w-3xl">
               <span className="pill">Service portfolio</span>
-              <h1 className="section-title mt-5 text-[2.75rem] leading-[0.96] text-white sm:text-5xl md:text-6xl">
-                Integrated services built for real{' '}
-                <span className="text-[color:var(--copper)]">public-sector execution</span>.
+              <h1 className="section-title mt-4 text-[2.35rem] leading-[0.97] text-white sm:text-5xl md:text-6xl">
+                Services that help agencies decide, fund, map, and{' '}
+                <span className="text-[color:var(--copper)]">deliver the work</span>.
               </h1>
-              <p className="mt-5 max-w-2xl text-lg text-white/82">
-                Planning, GIS, funding strategy, open-source software support, and custom software development — combined so agencies and companies can make clear decisions, automate real workflows, and move work forward with less rework.
+              <p className="mt-4 max-w-2xl text-base leading-7 text-white/84 sm:text-lg">
+                Nat Ford combines planning, GIS, drone mapping, grant support, and custom software so public teams and mission-driven companies can move from messy inputs to usable deliverables without starting over three times.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button asChild size="lg" variant="secondary">
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
                   <Link href="/contact?intent=discovery">
-                    Schedule discovery <ArrowRight className="ml-2 h-4 w-4" />
+                    Schedule a 30-minute discovery call <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-white/35 text-white hover:border-white hover:text-white">
-                  <Link href="/contact?intent=discovery&topic=custom-software">Scope a project</Link>
+                <Button asChild size="lg" variant="outline" className="w-full border-white/35 text-white hover:border-white hover:text-white sm:w-auto">
+                  <Link href="/contact?intent=discovery&topic=custom-software">Tell us what you need built</Link>
                 </Button>
               </div>
+              <p className="mt-3 text-sm text-white/72">
+                You will leave the first call with a plain-English next step, rough level of effort, and the main risks to watch.
+              </p>
             </div>
 
             <div className="rounded-2xl border border-white/18 bg-white/[0.06] p-5 backdrop-blur-sm">
@@ -237,7 +240,7 @@ export default function ServicesPage() {
                     <div className="flex items-center p-6 lg:p-7">
                       <Button asChild variant="outline" className="w-full whitespace-nowrap lg:w-auto">
                         <Link href={service.href}>
-                          View Overview
+                          View service details
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
                       </Button>
