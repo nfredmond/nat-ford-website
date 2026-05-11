@@ -23,7 +23,7 @@ import { PlannerChatbot } from '@/components/features/planner-chatbot'
 import organizationData from '@/data/organization.json'
 import servicesData from '@/data/services.json'
 import projectsData from '@/data/projects.json'
-import { implementationOffers, openSourceProjects } from '@/data/open-source-projects'
+import { implementationOffers, openSourceProjects, supportCtaForProject } from '@/data/open-source-projects'
 
 const planningServices = [
   {
@@ -78,9 +78,9 @@ const openSourceBeliefs = [
 ]
 
 const proofStats = [
-  { label: 'Public repos', value: `${openSourceProjects.length}+` },
-  { label: 'Company model', value: 'Free code + paid stewardship' },
-  { label: 'Core domains', value: 'Planning, GIS, aerial, AI, ops' },
+  { label: 'Northern California practice', value: 'Planning, GIS, aerial, and implementation' },
+  { label: 'FAA Part 107', value: 'Drone capture tied to planning evidence' },
+  { label: 'Public-sector delivery', value: `${openSourceProjects.length}+ open-source lanes with paid stewardship` },
 ]
 
 export default function HomePage() {
@@ -101,7 +101,7 @@ export default function HomePage() {
                 <span>Open-source planning, GIS, AI, and operations software</span>
               </div>
 
-              <h1 className="section-title mt-7 text-5xl leading-[0.94] text-[color:var(--ink)] dark:text-white sm:text-6xl lg:text-[5.45rem]">
+              <h1 className="section-title mt-6 text-[2.75rem] leading-[0.96] text-[color:var(--ink)] dark:text-white sm:text-6xl lg:text-[5.45rem]">
                 Free open-source software. Paid stewardship. Planning work that holds up in public.
               </h1>
               <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--foreground)]/82 dark:text-white/85 sm:text-xl">
@@ -111,23 +111,23 @@ export default function HomePage() {
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button asChild size="lg" variant="secondary">
-                  <Link href="/open-source">
-                    Read the open-source position <ArrowRight className="ml-2 h-4 w-4" />
+                <Button asChild size="lg">
+                  <Link href="/contact?topic=open-source-support&intent=discovery">
+                    Get implementation support <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline">
+                <Button asChild size="lg" variant="secondary">
                   <Link href="/products">Browse public projects</Link>
                 </Button>
                 <Button asChild size="lg" variant="ghost">
-                  <Link href="/contact?topic=custom-software">Scope custom software</Link>
+                  <Link href="/open-source">Read the open-source position</Link>
                 </Button>
               </div>
 
               <div className="mt-10 grid gap-3 md:grid-cols-3">
                 {proofStats.map((stat) => (
                   <div key={stat.label} className="nf-proof-strip">
-                    <span className="block text-[0.66rem] uppercase tracking-[0.16em] text-[color:var(--foreground)]/58 dark:text-white/54">
+                    <span className="block text-[0.68rem] uppercase tracking-[0.13em] text-[color:var(--foreground)]/68 dark:text-white/68">
                       {stat.label}
                     </span>
                     <span className="mt-1 block text-[0.95rem] font-semibold text-[color:var(--ink)] dark:text-white">{stat.value}</span>
@@ -143,7 +143,7 @@ export default function HomePage() {
                     Operating model
                   </p>
                   <h2 className="section-title mt-3 text-3xl text-[color:var(--ink)] dark:text-white sm:text-[2.3rem]">
-                    Open the primitives. Charge for stewardship.
+                    Open the reusable pieces. Support the hard parts.
                   </h2>
                 </div>
 
@@ -231,7 +231,10 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-5 lg:grid-cols-2">
-            {featuredProjects.map((project) => (
+            {featuredProjects.map((project) => {
+              const supportCta = supportCtaForProject(project)
+
+              return (
               <Card key={project.slug} hover className="p-0">
                 <CardContent className="p-6 md:p-7">
                   <div className="flex items-start justify-between gap-4">
@@ -254,9 +257,18 @@ export default function HomePage() {
                   <p className="mt-5 border-t border-[color:var(--line)] pt-4 text-sm leading-6 text-[color:var(--foreground)]/70">
                     <span className="font-semibold text-[color:var(--ink)]">Paid support:</span> {project.paidSupport}
                   </p>
+                  <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+                    <Button asChild size="sm">
+                      <Link href={supportCta.href}>{supportCta.label}</Link>
+                    </Button>
+                    <Button asChild size="sm" variant="outline">
+                      <Link href={`/products#${project.slug}`}>View project details</Link>
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
-            ))}
+              )
+            })}
           </div>
         </Container>
       </Section>

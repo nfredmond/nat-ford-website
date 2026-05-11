@@ -130,9 +130,9 @@ body {
   align-items: center;
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.19em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--foreground) 66%, transparent 34%);
+  color: color-mix(in srgb, var(--foreground) 74%, transparent 26%);
 }
 
 .nf-kicker span:not(:last-child)::after {
@@ -182,9 +182,9 @@ body {
 .nf-ops-label {
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--foreground) 60%, transparent 40%);
+  color: color-mix(in srgb, var(--foreground) 70%, transparent 30%);
 }
 
 .nf-ops-value {
@@ -194,6 +194,11 @@ body {
 }
 
 @media (max-width: 640px) {
+  .hero-mesh,
+  .hero-mesh-light {
+    overflow-wrap: anywhere;
+  }
+
   .nf-kicker span:not(:last-child)::after {
     display: none;
   }
@@ -297,7 +302,7 @@ body {
   background: color-mix(in srgb, var(--sand) 76%, white 24%);
   padding: 0.35rem 0.7rem;
   font-size: 0.76rem;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.075em;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--ink) 80%, #000 20%);
   font-weight: 700;

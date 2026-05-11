@@ -64,6 +64,23 @@ export function isFeaturedPublicRepo(project: OpenSourceProject) {
   return Boolean(project.repoUrl) && ['Active build', 'Public alpha'].includes(project.status)
 }
 
+export function supportCtaForProject(project: Pick<OpenSourceProject, 'name' | 'slug'>) {
+  const labelBySlug: Record<string, string> = {
+    openplan: 'Discuss OpenPlan deployment',
+    opengeo: 'Scope OpenGeo support',
+    'aerial-intel-platform': 'Scope aerial workflow support',
+    clawmodeler: 'Scope modeling support',
+    'ads-chatbot': 'Scope analytics support',
+    clawchat: 'Discuss agent-ops support',
+    'planner-ai-workflow-guide-v2': 'Request workflow rollout help',
+  }
+
+  return {
+    label: labelBySlug[project.slug] ?? `Scope ${project.name} support`,
+    href: `/contact?topic=open-source-support&intent=discovery&product=${encodeURIComponent(project.slug)}`,
+  }
+}
+
 export const openSourceProjects: OpenSourceProject[] = [
   {
     name: 'OpenPlan',

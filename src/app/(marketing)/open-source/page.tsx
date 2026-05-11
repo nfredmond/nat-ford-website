@@ -13,6 +13,7 @@ import {
   openSourceProjects,
   readinessLabel,
   readinessNote,
+  supportCtaForProject,
 } from '@/data/open-source-projects'
 
 export const metadata: Metadata = {
@@ -28,8 +29,8 @@ const principles = [
     icon: GitFork,
   },
   {
-    title: 'Primitives beat monoliths',
-    body: 'AI agents are increasingly good at gluing together proven building blocks. The useful unit is often the component, schema, workflow, or package — not the giant closed app.',
+    title: 'Building blocks beat monoliths',
+    body: 'AI agents are increasingly good at gluing together proven pieces. The useful unit is often the component, schema, workflow, or package — not the giant closed app.',
     icon: Code2,
   },
   {
@@ -61,7 +62,7 @@ export default function OpenSourcePage() {
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.12fr)_minmax(320px,0.88fr)] lg:items-end">
             <div className="max-w-4xl">
               <span className="pill border-white/20 bg-white/10 text-white">Open-source by default</span>
-              <h1 className="section-title mt-6 text-5xl leading-[0.94] text-white md:text-7xl">
+              <h1 className="section-title mt-5 text-[2.75rem] leading-[0.96] text-white sm:text-5xl md:text-7xl">
                 Free code. Serious implementation.
               </h1>
               <p className="mt-6 max-w-3xl text-lg leading-8 text-white/82 md:text-xl">
@@ -70,12 +71,12 @@ export default function OpenSourcePage() {
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button asChild size="lg" variant="secondary">
-                  <Link href="#projects">
-                    Browse featured projects <ArrowRight className="ml-2 h-4 w-4" />
+                  <Link href="/contact?topic=open-source-support&intent=discovery">
+                    Get implementation support <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-white/35 text-white hover:border-white hover:text-white">
-                  <Link href="/contact?topic=open-source-support">Get deployment support</Link>
+                  <Link href="#projects">Browse featured projects</Link>
                 </Button>
               </div>
             </div>
@@ -153,7 +154,10 @@ export default function OpenSourcePage() {
           </div>
 
           <div className="grid gap-5 lg:grid-cols-2">
-            {featuredOpenSourceProjects.map((project) => (
+            {featuredOpenSourceProjects.map((project) => {
+              const supportCta = supportCtaForProject(project)
+
+              return (
               <Card key={project.slug} id={project.slug} className="scroll-mt-28 p-0">
                 <CardContent className="p-6 md:p-7">
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
@@ -215,6 +219,12 @@ export default function OpenSourcePage() {
                     {project.licenseNote}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
+                    <Link
+                      href={supportCta.href}
+                      className="inline-flex items-center rounded-full bg-[color:var(--pine)] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-white hover:bg-[color:var(--pine-deep)]"
+                    >
+                      {supportCta.label} <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                    </Link>
                     <a
                       href={project.repoUrl!}
                       target="_blank"
@@ -234,7 +244,8 @@ export default function OpenSourcePage() {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+              )
+            })}
           </div>
           <div className="mt-8 flex justify-center">
             <Button asChild variant="outline">

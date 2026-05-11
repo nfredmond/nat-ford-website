@@ -90,11 +90,11 @@ const services = [
 ]
 
 const capabilityMatrix = [
-  { label: 'Planning', value: 'RTP · ATP · Corridor' },
-  { label: 'Data', value: 'PostGIS · QA · Maps' },
-  { label: 'Field', value: 'Drone · Ortho · DSM' },
-  { label: 'Funding', value: 'Fit · Scoring · Package' },
-  { label: 'Software', value: 'Open source · AI · Apps' },
+  { label: 'Plans', value: 'RTP · ATP · corridor packages' },
+  { label: 'Maps', value: 'GIS · QA · public exhibits' },
+  { label: 'Field evidence', value: 'FAA Part 107 drone capture' },
+  { label: 'Funding', value: 'Fit · scoring · grant packages' },
+  { label: 'Software', value: 'Open source · AI · internal tools' },
 ]
 
 export default function ServicesPage() {
@@ -104,29 +104,50 @@ export default function ServicesPage() {
         <Container>
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.85fr)] lg:items-end">
             <div className="max-w-3xl">
-              <span className="pill">Service Portfolio</span>
-              <h1 className="section-title mt-5 text-5xl leading-[0.94] text-white md:text-6xl">
+              <span className="pill">Service portfolio</span>
+              <h1 className="section-title mt-5 text-[2.75rem] leading-[0.96] text-white sm:text-5xl md:text-6xl">
                 Integrated services built for real{' '}
                 <span className="text-[color:var(--copper)]">public-sector execution</span>.
               </h1>
               <p className="mt-5 max-w-2xl text-lg text-white/82">
                 Planning, GIS, funding strategy, open-source software support, and custom software development — combined so agencies and companies can make clear decisions, automate real workflows, and move work forward with less rework.
               </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Button asChild size="lg" variant="secondary">
+                  <Link href="/contact?intent=discovery">
+                    Schedule discovery <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-white/35 text-white hover:border-white hover:text-white">
+                  <Link href="/contact?intent=discovery&topic=custom-software">Scope a project</Link>
+                </Button>
+              </div>
             </div>
 
             <div className="rounded-2xl border border-white/18 bg-white/[0.06] p-5 backdrop-blur-sm">
-              <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-white/70">
-                Capability coverage
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.13em] text-white/78">
+                What a buyer can expect
               </p>
               <dl className="mt-4 space-y-2.5">
                 {capabilityMatrix.map((item) => (
                   <div key={item.label} className="flex items-baseline justify-between gap-4 border-b border-white/10 pb-2 last:border-b-0 last:pb-0">
-                    <dt className="text-xs font-semibold uppercase tracking-[0.12em] text-white/72">{item.label}</dt>
+                    <dt className="text-xs font-semibold uppercase tracking-[0.1em] text-white/78">{item.label}</dt>
                     <dd className="text-right text-sm text-white/88">{item.value}</dd>
                   </div>
                 ))}
               </dl>
             </div>
+          </div>
+        </Container>
+      </Section>
+
+      <Section spacing="sm" className="border-y border-[color:var(--line)] bg-[color:var(--background)]/90">
+        <Container>
+          <div className="grid gap-3 text-sm font-semibold text-[color:var(--foreground)]/78 md:grid-cols-4">
+            <div className="border-t border-[color:var(--line)] pt-3 md:border-t-0 md:border-l md:pl-4 md:pt-0">Northern California planning practice</div>
+            <div className="border-t border-[color:var(--line)] pt-3 md:border-t-0 md:border-l md:pl-4 md:pt-0">FAA Part 107 aerial capture</div>
+            <div className="border-t border-[color:var(--line)] pt-3 md:border-t-0 md:border-l md:pl-4 md:pt-0">Public-sector board-ready deliverables</div>
+            <div className="border-t border-[color:var(--line)] pt-3 md:border-t-0 md:border-l md:pl-4 md:pt-0">Open-source software with paid support</div>
           </div>
         </Container>
       </Section>
@@ -232,7 +253,8 @@ export default function ServicesPage() {
       <SectionEndCTA
         heading="Not sure where to start?"
         subhead="Start with a 30-minute intake and we’ll recommend a scope that matches your timeline, budget, and decision risk."
-        primary={{ href: '/contact', label: 'Schedule Consultation' }}
+        primary={{ href: '/contact?intent=discovery', label: 'Schedule discovery' }}
+        secondary={{ href: '/contact?intent=discovery&topic=custom-software', label: 'Scope a project' }}
       />
     </>
   )

@@ -109,10 +109,10 @@ export function Header() {
           <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-2 lg:items-center">
             <ThemeToggle />
             <Link
-              href="/contact?topic=open-source-support"
+              href="/contact?topic=open-source-support&intent=discovery"
               className="inline-flex items-center justify-center rounded-full border border-[color:var(--copper)]/55 bg-[color:var(--copper)]/12 px-4 py-2 text-sm font-semibold text-[color:var(--foreground)] transition hover:-translate-y-0.5 hover:border-[color:var(--copper)] hover:bg-[color:var(--copper)]/18 hover:text-[color:var(--ink)] dark:text-white"
             >
-              Get Support
+              Get implementation support
             </Link>
           </div>
 
@@ -150,11 +150,11 @@ export function Header() {
               ))}
               <div className="pt-2">
                 <Link
-                  href="/contact?topic=open-source-support"
+                  href="/contact?topic=open-source-support&intent=discovery"
                   onClick={() => setMobileMenuOpen(false)}
                   className="inline-flex w-full items-center justify-center rounded-full bg-[color:var(--pine)] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[color:var(--pine-deep)]"
                 >
-                  Get Support
+                  Get implementation support
                 </Link>
               </div>
             </div>

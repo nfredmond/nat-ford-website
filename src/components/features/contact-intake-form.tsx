@@ -44,6 +44,16 @@ const checkoutProductLabel: Record<string, string> = {
   'planner-ai-workflow-guide-v2': 'AI-Assisted Planning Workflows',
 }
 
+const supportProductLabel: Record<string, string> = {
+  openplan: 'OpenPlan',
+  opengeo: 'OpenGeo',
+  'aerial-intel-platform': 'Aerial Intel Platform',
+  clawmodeler: 'ClawModeler',
+  'ads-chatbot': 'Marketing & Planning Analytics Software',
+  clawchat: 'ClawChat',
+  'planner-ai-workflow-guide-v2': 'AI-Assisted Planning Workflows',
+}
+
 const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''
 
 type ContactIntakeFormProps = {
@@ -71,7 +81,8 @@ export function ContactIntakeForm({
 
   const checkoutIntent = ['subscription', 'checkout', 'purchase'].includes(requestIntent)
   const pilotUpdatesIntent = ['updates', 'pilot-updates', 'waitlist-updates'].includes(requestIntent)
-  const fitConversationIntent = ['fit', 'discovery', 'discuss-fit'].includes(requestIntent)
+  const discoveryIntent = requestIntent === 'discovery'
+  const fitConversationIntent = ['fit', 'discuss-fit'].includes(requestIntent)
   const fundingReadinessIntent = ['scorecard-review', 'funding-readiness-review'].includes(requestIntent) || requestTopic === 'funding-readiness-scorecard'
   const openPlanIntent = requestTopic === 'openplan' || requestTopic === 'open-source-support' || checkoutProduct === 'openplan'
   const customSoftwareIntent = requestTopic === 'custom-software'
@@ -87,10 +98,11 @@ export function ContactIntakeForm({
     ? timelines[0]
     : pilotUpdatesIntent
       ? timelines[2]
-      : fitConversationIntent || fundingReadinessIntent
+      : discoveryIntent || fitConversationIntent || fundingReadinessIntent
         ? timelines[1]
         : ''
   const checkoutLabel = checkoutProductLabel[checkoutProduct] || checkoutProduct
+  const supportLabel = supportProductLabel[checkoutProduct] || checkoutLabel || checkoutProduct
   const defaultDescription = checkoutIntent
     ? ['Access/support request', `Product: ${checkoutLabel}`, checkoutTier ? `Prior selected tier: ${checkoutTier}` : null, '', 'Please share the right open-source setup, managed deployment, support, or access next step.']
         .filter(Boolean)
@@ -116,7 +128,7 @@ export function ContactIntakeForm({
             ? [
                 'Open-source deployment/support request',
                 '',
-                'Project or repo of interest:',
+                `Project or repo of interest: ${supportLabel || ''}`,
                 'Do you need hosting, custom fork, onboarding, support, or all of the above?',
                 'Current data/systems involved:',
                 'Timeline or urgency:',
@@ -206,8 +218,8 @@ export function ContactIntakeForm({
 
   return !submitted ? (
     <>
-      <p className="mb-6 text-sm text-[color:var(--foreground)]/70">
-        Submit this form and we’ll route your request into our internal lead pipeline for follow-up.
+      <p className="mb-5 text-sm leading-6 text-[color:var(--foreground)]/78">
+        Send the essential details now. Budget, exact dates, and geography are helpful but optional — we can sort those out in discovery.
       </p>
       {checkoutIntent ? (
         <div className="mb-6 rounded-xl border border-[color:var(--pine)]/25 bg-[color:var(--sand)]/35 px-4 py-3 text-sm text-[color:var(--foreground)]/85">
@@ -239,7 +251,7 @@ export function ContactIntakeForm({
           </p>
         </div>
       ) : null}
-      <form key={`${requestTopic}:${requestIntent}:${checkoutProduct}:${checkoutTier}`} onSubmit={handleSubmit} className="space-y-5">
+      <form key={`${requestTopic}:${requestIntent}:${checkoutProduct}:${checkoutTier}`} onSubmit={handleSubmit} className="space-y-4">
         <input type="text" name="website" className="hidden" tabIndex={-1} autoComplete="off" />
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -248,7 +260,7 @@ export function ContactIntakeForm({
         </div>
 
         <Input label="Email" name="email" type="email" required />
-        <Input label="Organization" name="organization" required />
+        <Input label="Organization (optional)" name="organization" />
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
@@ -273,13 +285,12 @@ export function ContactIntakeForm({
 
           <div>
             <label htmlFor="timeline" className="mb-1.5 block text-sm font-medium text-[color:var(--ink)]">
-              Desired Timeline
+              Desired Timeline <span className="font-normal text-[color:var(--foreground)]/62">(optional)</span>
             </label>
             <select
               id="timeline"
               name="timeline"
               defaultValue={defaultTimeline}
-              required
               className="flex h-11 w-full rounded-xl border border-[color:var(--line)] bg-[color:var(--background)] px-3.5 py-2 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
             >
               <option value="">Select one</option>
@@ -292,47 +303,54 @@ export function ContactIntakeForm({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div>
-            <label htmlFor="budgetRange" className="mb-1.5 block text-sm font-medium text-[color:var(--ink)]">
-              Budget Range <span className="font-normal text-[color:var(--foreground)]/55">(optional)</span>
-            </label>
-            <select
-              id="budgetRange"
-              name="budgetRange"
-              defaultValue=""
-              className="flex h-11 w-full rounded-xl border border-[color:var(--line)] bg-[color:var(--background)] px-3.5 py-2 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
-            >
-              <option value="">Select a range</option>
-              {budgetRanges.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <Input
-            label="Desired Start Window (optional)"
-            name="desiredStartDate"
-            type="date"
-          />
-        </div>
-
-        <Input
-          label="Project Geography (optional)"
-          name="projectGeography"
-          placeholder="County, region, or service area"
-        />
-
         <Textarea
-          label="Project Description"
+          label="What should we help you solve?"
           name="description"
           defaultValue={defaultDescription}
-          placeholder="What decision are you trying to make? What constraints are you working with?"
-          rows={7}
+          placeholder="What decision, workflow, deployment, or deadline are you trying to move forward?"
+          rows={5}
           required
         />
+
+        <details className="rounded-2xl border border-[color:var(--line)] bg-[color:var(--fog)]/40 p-4">
+          <summary className="cursor-pointer text-sm font-semibold text-[color:var(--ink)]">
+            Optional scoping details
+          </summary>
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="budgetRange" className="mb-1.5 block text-sm font-medium text-[color:var(--ink)]">
+                Budget Range <span className="font-normal text-[color:var(--foreground)]/62">(optional)</span>
+              </label>
+              <select
+                id="budgetRange"
+                name="budgetRange"
+                defaultValue=""
+                className="flex h-11 w-full rounded-xl border border-[color:var(--line)] bg-[color:var(--background)] px-3.5 py-2 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
+              >
+                <option value="">Select a range</option>
+                {budgetRanges.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <Input
+              label="Desired Start Window (optional)"
+              name="desiredStartDate"
+              type="date"
+            />
+
+            <div className="sm:col-span-2">
+              <Input
+                label="Project Geography (optional)"
+                name="projectGeography"
+                placeholder="County, region, or service area"
+              />
+            </div>
+          </div>
+        </details>
 
         {turnstileSiteKey && (
           <>
@@ -360,8 +378,11 @@ export function ContactIntakeForm({
                 ? 'Request OpenPlan Fit Review'
                 : fundingReadinessIntent
                   ? 'Request Funding Readiness Review'
-                  : 'Submit Inquiry'}
+                  : 'Request discovery'}
         </Button>
+        <p className="text-xs leading-5 text-[color:var(--foreground)]/68">
+          Typical response: 1–2 business days. If this is urgent, email nathaniel@natfordplanning.com directly.
+        </p>
       </form>
     </>
   ) : (

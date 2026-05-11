@@ -14,6 +14,7 @@ import {
   readinessLabel,
   readinessNote,
   sourceAvailabilityLabel,
+  supportCtaForProject,
 } from '@/data/open-source-projects'
 
 export const metadata: Metadata = {
@@ -23,9 +24,9 @@ export const metadata: Metadata = {
 }
 
 const stats = [
-  { label: 'Catalog posture', value: 'Selective + useful' },
-  { label: 'Success metric', value: 'Adoption + deployments' },
-  { label: 'Paid offer', value: 'Implementation + support' },
+  { label: 'What you can inspect', value: 'Source, demos, docs' },
+  { label: 'What we support', value: 'Deployment + custom forks' },
+  { label: 'First paid step', value: 'Fit audit or scoped sprint' },
 ]
 
 export default function ProductsPage() {
@@ -36,22 +37,22 @@ export default function ProductsPage() {
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] lg:items-end">
             <div className="max-w-4xl">
               <span className="pill border-white/20 bg-white/10 text-white">Product and source catalog</span>
-              <h1 className="section-title mt-5 text-5xl leading-[0.94] text-white md:text-7xl">
-                Not a product shelf. A set of building blocks.
+              <h1 className="section-title mt-5 text-[2.75rem] leading-[0.96] text-white sm:text-5xl md:text-7xl">
+                Open tools your team can inspect. Support when the work gets serious.
               </h1>
               <p className="mt-6 max-w-3xl text-lg leading-8 text-white/82">
-                Nat Ford publishes and packages useful primitives for planning, GIS, drone data, modeling, AI workflows,
+                Nat Ford publishes and packages useful building blocks for planning, GIS, drone data, modeling, AI workflows,
                 business operations, and planner training. Use the public source where it is published. Hire us when you
                 need deployment, customization, integration, onboarding, or a 24-hour response support lane.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button asChild size="lg" variant="secondary">
-                  <Link href="/open-source">
-                    Read the philosophy <ArrowRight className="ml-2 h-4 w-4" />
+                <Button asChild size="lg">
+                  <Link href="/contact?topic=open-source-support&intent=discovery">
+                    Scope implementation support <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-white/35 text-white hover:border-white hover:text-white">
-                  <Link href="/contact?topic=custom-software">Scope implementation support</Link>
+                  <Link href="/open-source">Read the open-source position</Link>
                 </Button>
               </div>
             </div>
@@ -113,7 +114,10 @@ export default function ProductsPage() {
           </div>
 
           <div className="grid gap-5 lg:grid-cols-2">
-            {openSourceProjects.map((project) => (
+            {openSourceProjects.map((project) => {
+              const supportCta = supportCtaForProject(project)
+
+              return (
               <Card key={project.slug} id={project.slug} className="scroll-mt-28 p-0">
                 <CardContent className="p-6 md:p-7">
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
@@ -197,6 +201,12 @@ export default function ProductsPage() {
                     {project.licenseNote}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
+                    <Link
+                      href={supportCta.href}
+                      className="inline-flex items-center rounded-full bg-[color:var(--pine)] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-white hover:bg-[color:var(--pine-deep)]"
+                    >
+                      {supportCta.label} <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                    </Link>
                     {project.repoUrl ? (
                       <>
                         <a
@@ -235,7 +245,8 @@ export default function ProductsPage() {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+              )
+            })}
           </div>
         </Container>
       </Section>
