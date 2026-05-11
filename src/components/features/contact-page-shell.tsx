@@ -9,6 +9,7 @@ type ContactPageShellProps = {
   subtitle: string
   initialIntent?: string
   initialTopic?: string
+  initialInquiry?: string
   initialProduct?: string
   initialTier?: string
 }
@@ -18,6 +19,7 @@ export function ContactPageShell({
   subtitle,
   initialIntent = '',
   initialTopic = '',
+  initialInquiry = '',
   initialProduct = '',
   initialTier = '',
 }: ContactPageShellProps) {
@@ -52,6 +54,7 @@ export function ContactPageShell({
                 <ContactIntakeForm
                   initialIntent={initialIntent}
                   initialTopic={initialTopic}
+                  initialInquiry={initialInquiry}
                   initialProduct={initialProduct}
                   initialTier={initialTier}
                 />

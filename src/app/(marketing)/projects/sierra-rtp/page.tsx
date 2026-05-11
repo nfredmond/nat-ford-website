@@ -203,7 +203,7 @@ export default function SierraRTPCaseStudy() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild variant="secondary" size="lg">
-                <Link href="/contact">Schedule Consultation</Link>
+                <Link href="/contact?intent=discovery&topic=planning-support">Schedule Consultation</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-[#1F4E2E]">
                 <Link href="/projects">View More Projects</Link>

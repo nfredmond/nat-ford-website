@@ -101,7 +101,7 @@ export default function AboutPage() {
 
               <div className="mt-7 flex flex-col sm:flex-row gap-3">
                 <Button asChild size="lg" variant="secondary">
-                  <Link href="/contact">Book Intro Call</Link>
+                  <Link href="/contact?intent=discovery">Book Intro Call</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-white/35 text-white hover:bg-white/10 hover:text-white">
                   <a href="https://linkedin.com/in/nfredmond" target="_blank" rel="noopener noreferrer">
@@ -232,7 +232,7 @@ export default function AboutPage() {
             <p className="mt-4 text-lg text-[color:var(--foreground)]/82 dark:text-white/80">Start with a focused intake and we’ll map the fastest credible path from analysis to implementation.</p>
             <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
               <Button asChild variant="secondary" size="lg">
-                <Link href="/contact">Schedule Consultation</Link>
+                <Link href="/contact?intent=discovery">Schedule Consultation</Link>
               </Button>
               <Button
                 asChild

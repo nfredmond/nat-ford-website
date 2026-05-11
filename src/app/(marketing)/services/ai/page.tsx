@@ -57,7 +57,7 @@ export default function AIServicePage() {
                   Best fit for teams that need faster output cycles without compromising citation integrity and clarity.
                 </p>
                 <Button asChild className="mt-5 w-full">
-                  <Link href="/contact">Request Workflow Audit</Link>
+                  <Link href="/contact?intent=discovery&topic=ai-documentation">Request Workflow Audit</Link>
                 </Button>
               </CardContent>
             </Card>

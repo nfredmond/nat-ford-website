@@ -57,7 +57,7 @@ export default function AerialServicePage() {
                   Need a site capture plan? We’ll scope airspace, timing, outputs, and integration with your planning workflow.
                 </p>
                 <Button asChild className="mt-5 w-full">
-                  <Link href="/contact">Request Aerial Scope</Link>
+                  <Link href="/contact?intent=discovery&topic=aerial-mapping">Request Aerial Scope</Link>
                 </Button>
               </CardContent>
             </Card>

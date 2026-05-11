@@ -115,7 +115,7 @@ export default function PlanningServicePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg">
-                <Link href="/contact">Request Information Package</Link>
+                <Link href="/contact?intent=discovery&topic=planning-support">Request Information Package</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <Link href="/projects">View Planning Projects</Link>
@@ -238,7 +238,7 @@ export default function PlanningServicePage() {
       <SectionEndCTA
         heading="Ready to start your planning project?"
         subhead="Schedule a free consultation to discuss your community’s needs, timeline, and funding opportunities."
-        primary={{ href: '/contact', label: 'Schedule Consultation' }}
+        primary={{ href: '/contact?intent=discovery&topic=planning-support', label: 'Schedule Consultation' }}
       />
     </>
   )

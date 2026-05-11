@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
     const product = normalize(payload.product).toLowerCase()
     const tier = normalize(payload.tier)
 
-    if (!firstName || !lastName || !email || !organization || !inquiryType || !timeline || !description) {
+    if (!firstName || !lastName || !email || !inquiryType || !description) {
       return badRequest('Please complete all required fields.')
     }
 
@@ -156,9 +156,9 @@ export async function POST(req: NextRequest) {
       first_name: firstName,
       last_name: lastName,
       email,
-      organization,
+      organization: organization || 'Not provided',
       inquiry_type: inquiryType,
-      timeline,
+      timeline: timeline || 'Not specified',
       description,
       source_path: sourcePath,
       ip_address: forwardedFor,

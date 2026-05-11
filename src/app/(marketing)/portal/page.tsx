@@ -126,7 +126,7 @@ export default async function PortalPage() {
                   Review open-source projects
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/contact?intent=discovery&topic=portal-support"
                   className="rounded-xl border border-[color:var(--line)] bg-[color:var(--fog)]/45 px-4 py-3 text-sm font-medium text-[color:var(--foreground)] hover:bg-[color:var(--fog)]"
                 >
                   Request support or scope changes

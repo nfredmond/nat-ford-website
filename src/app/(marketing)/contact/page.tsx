@@ -23,6 +23,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
       subtitle="Share the essentials first. We’ll respond within 1–2 business days with a practical next step for implementation support, custom software, planning, GIS, grant, or aerial work."
       initialIntent={firstParam(params.intent)}
       initialTopic={firstParam(params.topic)}
+      initialInquiry={firstParam(params.inquiry) || firstParam(params.service)}
       initialProduct={firstParam(params.product)}
       initialTier={firstParam(params.tier)}
     />

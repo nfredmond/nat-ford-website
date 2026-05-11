@@ -58,7 +58,7 @@ export default function GISServicePage() {
                   Need a GIS-first scope? We’ll map data sources, analysis needs, and the fastest production path.
                 </p>
                 <Button asChild className="mt-5 w-full">
-                  <Link href="/contact">Request GIS Intake</Link>
+                  <Link href="/contact?intent=discovery&topic=gis-mapping">Request GIS Intake</Link>
                 </Button>
               </CardContent>
             </Card>

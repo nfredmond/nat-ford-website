@@ -127,7 +127,7 @@ export default function ProcessPage() {
               We’ll scope a delivery path with milestones, review points, and funding relevance from day one.
             </p>
             <Button asChild size="lg" className="mt-7">
-              <Link href="/contact">Discuss Your Project</Link>
+              <Link href="/contact?intent=discovery">Discuss Your Project</Link>
             </Button>
           </div>
         </Container>

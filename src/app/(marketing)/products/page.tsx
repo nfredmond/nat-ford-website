@@ -151,7 +151,7 @@ export default function ProductsPage() {
                         </a>
                       ) : (
                         <Link
-                          href="/contact?topic=custom-software"
+                          href={`/contact?intent=discovery&topic=custom-software&product=${encodeURIComponent(project.slug)}`}
                           className="inline-flex items-center justify-center rounded-full bg-[color:var(--pine)] px-3.5 py-2 text-sm font-semibold text-white transition hover:bg-[color:var(--pine-deep)]"
                         >
                           Discuss access <ArrowRight className="ml-2 h-4 w-4" />
@@ -236,7 +236,7 @@ export default function ProductsPage() {
                       </>
                     ) : (
                       <Link
-                        href="/contact?topic=custom-software"
+                        href={`/contact?intent=discovery&topic=custom-software&product=${encodeURIComponent(project.slug)}`}
                         className="inline-flex items-center rounded-full border border-[color:var(--line)] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.1em] hover:border-[color:var(--pine)] hover:text-[color:var(--pine)]"
                       >
                         Discuss implementation <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
@@ -314,7 +314,7 @@ export default function ProductsPage() {
               </p>
             </div>
             <Button asChild size="lg" variant="secondary">
-              <Link href="/contact?topic=open-source-support">
+              <Link href="/contact?intent=discovery&topic=open-source-support">
                 Talk about a supported deployment <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -325,7 +325,7 @@ export default function ProductsPage() {
       <SectionEndCTA
         heading="Bring the open-source base. We will help make it operational."
         subhead="Start with a scoped implementation conversation for a custom fork, managed deployment, data migration, staff onboarding, or support agreement."
-        primary={{ label: 'Request implementation support', href: '/contact?topic=open-source-support' }}
+        primary={{ label: 'Request implementation support', href: '/contact?intent=discovery&topic=open-source-support' }}
         secondary={{ label: 'Read the open-source position', href: '/open-source' }}
       />
     </>

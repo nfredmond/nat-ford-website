@@ -58,7 +58,7 @@ export default function GrantsServicePage() {
                 </p>
                 <div className="mt-5 space-y-3">
                   <Button asChild className="w-full">
-                    <Link href="/contact">Request Grant Intake</Link>
+                    <Link href="/contact?intent=discovery&topic=grant-strategy">Request Grant Intake</Link>
                   </Button>
                   <Button asChild variant="outline" className="w-full">
                     <Link href="/funding-readiness-scorecard">Try the Funding Readiness Scorecard</Link>

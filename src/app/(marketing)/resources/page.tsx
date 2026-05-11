@@ -277,7 +277,7 @@ export default function ResourcesPage() {
                 size="lg"
                 className="border-[color:var(--line)] text-[color:var(--ink)] hover:border-[color:var(--pine)] hover:bg-[color:var(--background)] hover:text-[color:var(--pine)] dark:border-white/35 dark:text-white dark:hover:bg-white/10 dark:hover:text-white"
               >
-                <Link href="/contact">Schedule Consultation</Link>
+                <Link href="/contact?intent=discovery">Schedule Consultation</Link>
               </Button>
             </div>
           </div>

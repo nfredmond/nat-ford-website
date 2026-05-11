@@ -6,6 +6,7 @@ import { Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { buildContactPrefill, budgetRanges, inquiryTypes, timelines } from '@/lib/contact-prefill'
 
 declare global {
   interface Window {
@@ -15,50 +16,12 @@ declare global {
   }
 }
 
-const inquiryTypes = [
-  'Open-source software support',
-  'Custom software development',
-  'Planning support',
-  'GIS / mapping',
-  'Grant strategy',
-  'OpenPlan product',
-  'Ads automation product',
-  'General inquiry',
-]
-
-const timelines = ['Immediate (0-30 days)', 'Near-term (1-3 months)', 'Planning horizon (3+ months)']
-
-const budgetRanges = ['$3.5K – $8.5K', '$8.5K – $18K', '$18K +', 'Not sure yet']
-
-const checkoutInquiryByProduct: Record<string, string> = {
-  openplan: 'OpenPlan product',
-  'ads-automation': 'Ads automation product',
-  'drone-ops': 'General inquiry',
-  'planner-ai-workflow-guide-v2': 'General inquiry',
-}
-
-const checkoutProductLabel: Record<string, string> = {
-  openplan: 'OpenPlan Software',
-  'ads-automation': 'Marketing & Planning Analytics Software',
-  'drone-ops': 'DroneOps Intelligence',
-  'planner-ai-workflow-guide-v2': 'AI-Assisted Planning Workflows',
-}
-
-const supportProductLabel: Record<string, string> = {
-  openplan: 'OpenPlan',
-  opengeo: 'OpenGeo',
-  'aerial-intel-platform': 'Aerial Intel Platform',
-  clawmodeler: 'ClawModeler',
-  'ads-chatbot': 'Marketing & Planning Analytics Software',
-  clawchat: 'ClawChat',
-  'planner-ai-workflow-guide-v2': 'AI-Assisted Planning Workflows',
-}
-
 const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''
 
 type ContactIntakeFormProps = {
   initialIntent?: string
   initialTopic?: string
+  initialInquiry?: string
   initialProduct?: string
   initialTier?: string
 }
@@ -66,6 +29,7 @@ type ContactIntakeFormProps = {
 export function ContactIntakeForm({
   initialIntent = '',
   initialTopic = '',
+  initialInquiry = '',
   initialProduct = '',
   initialTier = '',
 }: ContactIntakeFormProps) {
@@ -74,75 +38,19 @@ export function ContactIntakeForm({
   const [error, setError] = React.useState<string | null>(null)
   const [turnstileToken, setTurnstileToken] = React.useState('')
 
-  const requestIntent = initialIntent.toLowerCase()
-  const requestTopic = initialTopic.toLowerCase()
-  const checkoutProduct = initialProduct.toLowerCase()
-  const checkoutTier = initialTier
-
-  const checkoutIntent = ['subscription', 'checkout', 'purchase'].includes(requestIntent)
-  const pilotUpdatesIntent = ['updates', 'pilot-updates', 'waitlist-updates'].includes(requestIntent)
-  const discoveryIntent = requestIntent === 'discovery'
-  const fitConversationIntent = ['fit', 'discuss-fit'].includes(requestIntent)
-  const fundingReadinessIntent = ['scorecard-review', 'funding-readiness-review'].includes(requestIntent) || requestTopic === 'funding-readiness-scorecard'
-  const openPlanIntent = requestTopic === 'openplan' || requestTopic === 'open-source-support' || checkoutProduct === 'openplan'
-  const customSoftwareIntent = requestTopic === 'custom-software'
-
-  const defaultInquiryType = fundingReadinessIntent
-    ? 'Grant strategy'
-    : customSoftwareIntent
-      ? 'Custom software development'
-      : requestTopic === 'open-source-support'
-        ? 'Open-source software support'
-        : checkoutInquiryByProduct[checkoutProduct] || (openPlanIntent ? 'OpenPlan product' : '')
-  const defaultTimeline = checkoutIntent
-    ? timelines[0]
-    : pilotUpdatesIntent
-      ? timelines[2]
-      : discoveryIntent || fitConversationIntent || fundingReadinessIntent
-        ? timelines[1]
-        : ''
-  const checkoutLabel = checkoutProductLabel[checkoutProduct] || checkoutProduct
-  const supportLabel = supportProductLabel[checkoutProduct] || checkoutLabel || checkoutProduct
-  const defaultDescription = checkoutIntent
-    ? ['Access/support request', `Product: ${checkoutLabel}`, checkoutTier ? `Prior selected tier: ${checkoutTier}` : null, '', 'Please share the right open-source setup, managed deployment, support, or access next step.']
-        .filter(Boolean)
-        .join('\n')
-    : pilotUpdatesIntent && openPlanIntent
-      ? ['OpenPlan updates request', 'Product: OpenPlan Software', '', 'Please keep me informed about open-source releases, managed deployment availability, pilot timing, and major product updates.']
-          .filter(Boolean)
-          .join('\n')
-      : fitConversationIntent && openPlanIntent
-        ? ['OpenPlan / open-source support request', 'Product: OpenPlan Software', '', 'Please help me assess whether OpenPlan, a custom fork, or managed open-source deployment is the right fit for our workflow.']
-            .filter(Boolean)
-            .join('\n')
-        : customSoftwareIntent
-          ? [
-              'Custom software / AI implementation request',
-              '',
-              'Workflow or problem to solve:',
-              'Current tools or systems involved:',
-              'Users / roles who need access:',
-              'What would make this successful in the next 30-90 days?',
-            ].join('\n')
-          : requestTopic === 'open-source-support'
-            ? [
-                'Open-source deployment/support request',
-                '',
-                `Project or repo of interest: ${supportLabel || ''}`,
-                'Do you need hosting, custom fork, onboarding, support, or all of the above?',
-                'Current data/systems involved:',
-                'Timeline or urgency:',
-              ].join('\n')
-            : fundingReadinessIntent
-              ? [
-                  'Funding readiness review request',
-                  '',
-                  'If available, include your score band or current score from the Funding Readiness Scorecard.',
-                  'Target funding window / program:',
-                  'Top readiness gaps or concerns:',
-                  'What outcome would be most helpful from a review?',
-                ].join('\n')
-              : ''
+  const {
+    requestIntent,
+    requestTopic,
+    checkoutProduct,
+    checkoutTier,
+    contextNotice,
+    defaultInquiryType,
+    defaultTimeline,
+    defaultDescription,
+    submitLabel,
+    successTitle,
+    successMessage,
+  } = buildContactPrefill({ initialIntent, initialTopic, initialInquiry, initialProduct, initialTier })
 
   React.useEffect(() => {
     if (!turnstileSiteKey) return
@@ -221,34 +129,10 @@ export function ContactIntakeForm({
       <p className="mb-5 text-sm leading-6 text-[color:var(--foreground)]/78">
         Send the essential details now. Budget, exact dates, and geography are helpful but optional — we can sort those out in discovery.
       </p>
-      {checkoutIntent ? (
+      {contextNotice ? (
         <div className="mb-6 rounded-xl border border-[color:var(--pine)]/25 bg-[color:var(--sand)]/35 px-4 py-3 text-sm text-[color:var(--foreground)]/85">
-          <p className="font-semibold text-[color:var(--pine)]">Access/support request detected</p>
-          <p className="mt-1">
-            We captured your selected product context{checkoutTier ? ` (${checkoutTier})` : ''}. Complete the form and we’ll send the right open-source setup, managed deployment, or support next step.
-          </p>
-        </div>
-      ) : null}
-      {pilotUpdatesIntent && openPlanIntent ? (
-        <div className="mb-6 rounded-xl border border-[color:var(--pine)]/25 bg-[color:var(--sand)]/35 px-4 py-3 text-sm text-[color:var(--foreground)]/85">
-          <p className="font-semibold text-[color:var(--pine)]">OpenPlan pilot updates request</p>
-          <p className="mt-1">
-            This intake will be labeled for OpenPlan update follow-up so it can be separated from immediate managed-support requests.
-          </p>
-        </div>
-      ) : null}
-      {fitConversationIntent && openPlanIntent ? (
-        <div className="mb-6 rounded-xl border border-[color:var(--pine)]/25 bg-[color:var(--sand)]/35 px-4 py-3 text-sm text-[color:var(--foreground)]/85">
-          <p className="font-semibold text-[color:var(--pine)]">OpenPlan / open-source support request</p>
-          <p className="mt-1">We captured that you want a fit discussion first, not a forced checkout path.</p>
-        </div>
-      ) : null}
-      {fundingReadinessIntent ? (
-        <div className="mb-6 rounded-xl border border-[color:var(--pine)]/25 bg-[color:var(--sand)]/35 px-4 py-3 text-sm text-[color:var(--foreground)]/85">
-          <p className="font-semibold text-[color:var(--pine)]">Funding readiness review request</p>
-          <p className="mt-1">
-            Use this intake to share your score, timeline, and the main gaps you want help prioritizing. This is a scoped review request, not a guarantee of funding success.
-          </p>
+          <p className="font-semibold text-[color:var(--pine)]">{contextNotice.title}</p>
+          <p className="mt-1">{contextNotice.body}</p>
         </div>
       ) : null}
       <form key={`${requestTopic}:${requestIntent}:${checkoutProduct}:${checkoutTier}`} onSubmit={handleSubmit} className="space-y-4">
@@ -370,15 +254,7 @@ export function ContactIntakeForm({
 
         <Button type="submit" size="lg" disabled={isSubmitting || (Boolean(turnstileSiteKey) && !turnstileToken)}>
           <Send className="mr-2 h-4 w-4" />
-          {isSubmitting
-            ? 'Submitting…'
-            : pilotUpdatesIntent && openPlanIntent
-              ? 'Request OpenPlan Updates'
-              : fitConversationIntent && openPlanIntent
-                ? 'Request OpenPlan Fit Review'
-                : fundingReadinessIntent
-                  ? 'Request Funding Readiness Review'
-                  : 'Request discovery'}
+          {isSubmitting ? 'Submitting…' : submitLabel}
         </Button>
         <p className="text-xs leading-5 text-[color:var(--foreground)]/68">
           Typical response: 1–2 business days. If this is urgent, email nathaniel@natfordplanning.com directly.
@@ -391,23 +267,9 @@ export function ContactIntakeForm({
         <Send className="h-6 w-6" />
       </div>
       <h3 className="text-2xl font-semibold text-[color:var(--ink)]">
-        {pilotUpdatesIntent && openPlanIntent
-          ? 'OpenPlan update request received'
-          : fitConversationIntent && openPlanIntent
-            ? 'OpenPlan fit request received'
-            : fundingReadinessIntent
-              ? 'Funding readiness request received'
-              : 'Inquiry received'}
+        {successTitle}
       </h3>
-      <p className="mt-3 text-[color:var(--foreground)]/75">
-        {pilotUpdatesIntent && openPlanIntent
-          ? 'Thanks — your request is now labeled for OpenPlan pilot-update follow-up. We typically respond within 1–2 business days.'
-          : fitConversationIntent && openPlanIntent
-            ? 'Thanks — your request is now labeled for OpenPlan fit follow-up. We typically respond within 1–2 business days.'
-            : fundingReadinessIntent
-              ? 'Thanks — your request is now labeled for funding-readiness follow-up. We typically respond within 1–2 business days.'
-              : 'Thanks — your message is now in our intake pipeline. We typically respond within 1–2 business days.'}
-      </p>
+      <p className="mt-3 text-[color:var(--foreground)]/75">{successMessage}</p>
       <Button variant="outline" className="mt-6" onClick={() => setSubmitted(false)}>
         Submit Another Inquiry
       </Button>

@@ -428,7 +428,7 @@ export default function GrantLabPage() {
                 <Link href="/openplan" className="inline-flex items-center rounded-full border border-white/45 bg-white/14 px-4 py-2 font-semibold text-white hover:bg-white/22">
                   See OpenPlan inclusion <ArrowRight className="ml-1.5 h-4 w-4" />
                 </Link>
-                <Link href="/contact?inquiry=custom-grant-ai" className="inline-flex items-center rounded-full border border-white/40 bg-black/10 px-4 py-2 font-semibold text-white/95 hover:bg-white/12">
+                <Link href="/contact?intent=discovery&topic=custom-software&inquiry=custom-grant-ai" className="inline-flex items-center rounded-full border border-white/40 bg-black/10 px-4 py-2 font-semibold text-white/95 hover:bg-white/12">
                   Request custom build
                 </Link>
               </div>
@@ -793,7 +793,7 @@ export default function GrantLabPage() {
                     OpenPlan managed support
                   </Link>
                   , and available as a{' '}
-                  <Link href="/contact?inquiry=custom-grant-ai" className="font-semibold text-[color:var(--pine)]">
+                  <Link href="/contact?intent=discovery&topic=custom-software&inquiry=custom-grant-ai" className="font-semibold text-[color:var(--pine)]">
                     custom-built client solution
                   </Link>
                   .
