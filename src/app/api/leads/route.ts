@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { buildLeadRoutingMeta, normalizeLeadRoutingValue } from '@/lib/lead-routing'
 
 type LeadPayload = {
   firstName: string
@@ -55,9 +56,9 @@ export async function POST(req: NextRequest) {
     const desiredStartDate = normalize(payload.desiredStartDate)
     const sourcePath = normalize(payload.sourcePath) || '/contact'
     const turnstileToken = normalize(payload.turnstileToken)
-    const topic = normalize(payload.topic).toLowerCase()
-    const intent = normalize(payload.intent).toLowerCase()
-    const product = normalize(payload.product).toLowerCase()
+    const topic = normalizeLeadRoutingValue(payload.topic)
+    const intent = normalizeLeadRoutingValue(payload.intent)
+    const product = normalizeLeadRoutingValue(payload.product)
     const tier = normalize(payload.tier)
 
     if (!firstName || !lastName || !email || !inquiryType || !description) {
@@ -162,25 +163,17 @@ export async function POST(req: NextRequest) {
       description,
       source_path: sourcePath,
       ip_address: forwardedFor,
-      meta: {
+      meta: buildLeadRoutingMeta({
         ip: forwardedFor,
-        user_agent: userAgent,
+        userAgent,
         topic,
         intent,
         product,
         tier,
-        budget_range: budgetRange || null,
-        project_geography: projectGeography || null,
-        desired_start_date: desiredStartDate || null,
-        routing_hint:
-          topic === 'openplan' && intent === 'updates'
-            ? 'openplan-pilot-updates'
-            : topic === 'openplan' && ['fit', 'discovery', 'discuss-fit'].includes(intent)
-              ? 'openplan-fit-conversation'
-              : topic === 'openplan'
-                ? 'openplan-general'
-                : null,
-      },
+        budgetRange,
+        projectGeography,
+        desiredStartDate,
+      }),
     })
 
     if (error) {

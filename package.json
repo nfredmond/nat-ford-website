@@ -16,7 +16,8 @@
     "packet:ai-planning-workflows-approval": "node scripts/ai-planning-workflows-approval-packet.mjs",
     "proof:ai-planning-workflows-fulfillment": "node scripts/ai-planning-workflows-fulfillment-proof.mjs",
     "test:services-links": "node scripts/test-services-page-links.mjs",
-    "test:contact-prefill": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-contact-prefill.mjs"
+    "test:contact-prefill": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-contact-prefill.mjs",
+    "test:lead-routing": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-lead-routing.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

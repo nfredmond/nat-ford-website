@@ -7,6 +7,7 @@ import { Section } from '@/components/layout/section'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { LEAD_INBOX_COOKIE, isLeadInboxAuthorized } from '@/lib/security/lead-inbox-auth'
+import { leadTriageLabel } from '@/lib/lead-routing'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,6 +19,9 @@ type LeadMeta = {
   product?: string | null
   tier?: string | null
   routing_hint?: string | null
+  triage_label?: string | null
+  triage_priority?: 'normal' | 'high' | string | null
+  triage_reason?: string | null
   budget_range?: string | null
   project_geography?: string | null
   desired_start_date?: string | null
@@ -237,7 +241,7 @@ function routingLabel(routingHint?: string | null) {
     case 'openplan-general':
       return 'OpenPlan · General'
     default:
-      return null
+      return routingHint ? leadTriageLabel(routingHint) : null
   }
 }
 
@@ -817,15 +821,40 @@ export default async function LeadInboxPage({
                       </div>
                     </div>
 
-                    {routingLabel(lead.meta?.routing_hint) ? (
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        <span className="inline-flex rounded-full border border-[color:var(--pine)]/20 bg-[color:var(--sand)]/45 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[color:var(--pine)]">
-                          {routingLabel(lead.meta?.routing_hint)}
-                        </span>
-                        {lead.meta?.tier ? (
-                          <span className="inline-flex rounded-full border border-[color:var(--line)] bg-[color:var(--background)] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[color:var(--foreground)]/72">
-                            Tier: {lead.meta.tier}
+                    {routingLabel(lead.meta?.routing_hint) || lead.meta?.topic || lead.meta?.intent || lead.meta?.product ? (
+                      <div className="mt-4 rounded-2xl border border-[color:var(--line)] bg-[linear-gradient(135deg,rgba(250,247,241,0.82),rgba(255,255,255,1))] p-3">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="inline-flex rounded-full border border-[color:var(--pine)]/20 bg-[color:var(--sand)]/45 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[color:var(--pine)]">
+                            {lead.meta?.triage_label || routingLabel(lead.meta?.routing_hint) || 'Routed intake'}
                           </span>
+                          {lead.meta?.triage_priority === 'high' ? (
+                            <span className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-amber-800">
+                              High triage
+                            </span>
+                          ) : null}
+                          {lead.meta?.topic ? (
+                            <span className="inline-flex rounded-full border border-[color:var(--line)] bg-[color:var(--background)] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[color:var(--foreground)]/72">
+                              Topic: {lead.meta.topic}
+                            </span>
+                          ) : null}
+                          {lead.meta?.intent ? (
+                            <span className="inline-flex rounded-full border border-[color:var(--line)] bg-[color:var(--background)] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[color:var(--foreground)]/72">
+                              Intent: {lead.meta.intent}
+                            </span>
+                          ) : null}
+                          {lead.meta?.product ? (
+                            <span className="inline-flex rounded-full border border-[color:var(--line)] bg-[color:var(--background)] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[color:var(--foreground)]/72">
+                              Product: {lead.meta.product}
+                            </span>
+                          ) : null}
+                          {lead.meta?.tier ? (
+                            <span className="inline-flex rounded-full border border-[color:var(--line)] bg-[color:var(--background)] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[color:var(--foreground)]/72">
+                              Tier: {lead.meta.tier}
+                            </span>
+                          ) : null}
+                        </div>
+                        {lead.meta?.triage_reason ? (
+                          <p className="mt-2 text-xs leading-5 text-[color:var(--foreground)]/66">{lead.meta.triage_reason}</p>
                         ) : null}
                       </div>
                     ) : null}

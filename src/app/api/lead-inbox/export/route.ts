@@ -26,6 +26,9 @@ type LeadRow = {
     intent?: string | null
     product?: string | null
     tier?: string | null
+    triage_label?: string | null
+    triage_priority?: string | null
+    triage_reason?: string | null
   } | null
 }
 
@@ -126,6 +129,9 @@ export async function GET(req: NextRequest) {
     'intent',
     'product',
     'tier',
+    'triage_label',
+    'triage_priority',
+    'triage_reason',
     'ip_address',
     'notes',
     'description',
@@ -152,6 +158,9 @@ export async function GET(req: NextRequest) {
         row.meta?.intent || '',
         row.meta?.product || '',
         row.meta?.tier || '',
+        row.meta?.triage_label || '',
+        row.meta?.triage_priority || '',
+        row.meta?.triage_reason || '',
         row.ip_address || '',
         row.notes || '',
         row.description,
