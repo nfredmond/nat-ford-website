@@ -119,7 +119,7 @@ export default function OpenPlanPage() {
                   variant="outline"
                   className="border-white/35 bg-white/8 text-white hover:bg-white/14 hover:text-white"
                 >
-                  <Link href="/contact/openplan-fit">Discuss OpenPlan fit</Link>
+                  <Link href="/contact/openplan-fit?tier=Open-source%20fit%20audit">Discuss OpenPlan fit</Link>
                 </Button>
               </div>
             </div>
@@ -342,7 +342,7 @@ export default function OpenPlanPage() {
             </p>
             <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
               <Button asChild variant="secondary" size="lg">
-                <Link href="/contact/openplan-fit">Discuss OpenPlan fit</Link>
+                <Link href="/contact/openplan-fit?tier=Open-source%20fit%20audit">Discuss OpenPlan fit</Link>
               </Button>
               <Button
                 asChild
