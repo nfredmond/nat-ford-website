@@ -2,7 +2,7 @@ export type OpenSourceProject = {
   name: string
   slug: string
   status: 'Active build' | 'Public alpha' | 'Release track' | 'Commercial guide'
-  category: 'Planning OS' | 'Geospatial' | 'Aerial intelligence' | 'Modeling' | 'Operations' | 'Training product'
+  category: 'Planning software' | 'Geospatial' | 'Aerial intelligence' | 'Modeling' | 'Operations' | 'Training product'
   summary: string
   repoUrl?: string
   demoUrl?: string
@@ -86,9 +86,9 @@ export const openSourceProjects: OpenSourceProject[] = [
     name: 'OpenPlan',
     slug: 'openplan',
     status: 'Active build',
-    category: 'Planning OS',
+    category: 'Planning software',
     summary:
-      'Free, open-source planning operating system for rural RTPAs, counties, agencies, consultants, and public-interest planning teams — with projects, funding, maps, reports, evidence, and implementation work kept in one spine.',
+      'Free, open-source planning software for rural RTPAs, counties, agencies, consultants, and public-interest planning teams — with projects, funding, maps, reports, evidence, and implementation work kept in one spine.',
     repoUrl: 'https://github.com/nfredmond/openplan',
     licenseSpdx: 'Apache-2.0',
     demoUrl: 'https://openplan-natford.vercel.app',
@@ -196,14 +196,14 @@ export const implementationOffers = [
     examples: ['custom modules', 'local data schemas', 'agency report templates', 'merge-forward maintenance'],
   },
   {
-    name: 'Enterprise onboarding and identity',
-    summary: 'We wire up the unglamorous but essential parts: roles, access, SSO-style onboarding, staff training, and governance.',
-    examples: ['enterprise SSO and onboarding', 'role design', 'workspace provisioning', 'admin documentation'],
+    name: 'Team onboarding and identity planning',
+    summary: 'We plan and configure the unglamorous but essential parts: roles, access, staff onboarding, training, and governance. SSO or identity-provider work is scoped only when the deployment actually needs it.',
+    examples: ['role/access setup', 'identity-provider scoping when needed', 'staff onboarding', 'admin documentation'],
   },
   {
-    name: '24-hour response support and operations',
-    summary: 'For teams that need confidence, we provide an operator lane for urgent fixes, QA, uptime checks, and release triage.',
-    examples: ['24-hour response target for priority issues', 'bug triage', 'security patch support', 'monthly improvement review'],
+    name: 'Priority support and operations',
+    summary: 'For teams that need confidence, we provide a scoped operator lane for urgent fixes, QA, uptime checks, and release triage.',
+    examples: ['agreed priority-response terms', 'bug triage', 'security patch support', 'monthly improvement review'],
   },
 ]
 
@@ -230,6 +230,6 @@ export const implementationPackages = [
     name: 'Operator support lane',
     bestFor: 'Teams running open-source tools in public, production, or deadline-sensitive environments.',
     deliverable: 'Ongoing support lane for triage, upgrades, release notes, QA checks, and monthly improvement review.',
-    includes: ['24-hour response target for priority issues', 'bug triage', 'security/update review', 'monthly operations memo'],
+    includes: ['agreed priority-response terms', 'bug triage', 'security/update review', 'monthly operations memo'],
   },
 ]

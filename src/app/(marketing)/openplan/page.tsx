@@ -10,7 +10,7 @@ import { implementationOffers, licenseLabel, openSourceProjects, readinessLabel,
 export const metadata: Metadata = {
   title: 'OpenPlan',
   description:
-    'OpenPlan is a free, open-source planning operating system for keeping projects, decisions, risks, datasets, maps, grants, and reports in one operational thread.',
+    'OpenPlan is free, open-source planning software for keeping projects, decisions, risks, datasets, maps, grants, and reports in one operational thread.',
 }
 
 const openPlanProject = openSourceProjects.find((project) => project.slug === 'openplan')
@@ -46,7 +46,7 @@ const goodFitSignals = [
 const managedSupportSignals = [
   'You want Nat Ford to host, configure, administer, and monitor OpenPlan for your team.',
   'You need a custom agency or company edition with your data model, branding, roles, and reporting templates.',
-  'You want onboarding, training, enterprise SSO/role setup, 24-hour response support, and merge-forward maintenance.',
+  'You want onboarding, training, role/access setup, scoped priority-support terms, and merge-forward maintenance.',
 ]
 
 const faqItems = [
@@ -58,7 +58,7 @@ const faqItems = [
   {
     question: 'What is OpenPlan?',
     answer:
-      'OpenPlan is a modular planning operating system designed to keep projects, decisions, risks, datasets, map-based analysis, funding, grants, programs, engagement, evidence packets, and reports in one operational thread.',
+      'OpenPlan is modular planning software designed to keep projects, decisions, risks, datasets, map-based analysis, funding, grants, programs, engagement, evidence packets, and reports in one operational thread.',
   },
   {
     question: 'Who is it for?',
@@ -101,7 +101,7 @@ export default function OpenPlanPage() {
             <div className="max-w-4xl">
               <span className="pill border-white/20 bg-white/10 text-white">OpenPlan — free and open source</span>
               <h1 className="section-title mt-5 text-5xl leading-[0.94] text-white md:text-6xl">
-                A planning operating system anyone can inspect, fork, and adapt.
+                Planning software anyone can inspect, fork, and adapt.
               </h1>
               <p className="mt-5 max-w-3xl text-lg leading-8 text-white/82">
                 OpenPlan keeps projects, decisions, risks, datasets, maps, grants, programs, and reports in one operational
@@ -119,7 +119,7 @@ export default function OpenPlanPage() {
                   variant="outline"
                   className="border-white/35 bg-white/8 text-white hover:bg-white/14 hover:text-white"
                 >
-                  <Link href="/contact/openplan-fit">Request managed setup</Link>
+                  <Link href="/contact/openplan-fit">Discuss OpenPlan fit</Link>
                 </Button>
               </div>
             </div>
@@ -136,7 +136,7 @@ export default function OpenPlanPage() {
                 </div>
               </div>
               <div className="mt-4 space-y-3">
-                {['Public repo', 'Self-host path', 'Custom agency fork', 'Managed deployment', 'Data setup', '24-hour response'].map((item, index) => (
+                {['Public repo', 'Self-host path', 'Custom agency fork', 'Managed deployment', 'Data setup', 'Support terms'].map((item, index) => (
                   <div
                     key={item}
                     className="flex items-center justify-between rounded-2xl border border-white/12 bg-black/10 px-4 py-3"
@@ -148,7 +148,7 @@ export default function OpenPlanPage() {
                 ))}
               </div>
               <p className="mt-4 text-sm leading-relaxed text-white/72">
-                The useful promise is not a locked subscription. It is a forkable operational spine with real support when your team needs production confidence.
+                The useful promise is not a locked subscription. It is a forkable planning spine with scoped support when your team needs production confidence.
               </p>
             </Card>
           </div>
@@ -281,7 +281,7 @@ export default function OpenPlanPage() {
           <div className="max-w-4xl">
             <span className="pill">Managed OpenPlan support</span>
             <h2 className="section-title mt-5 text-4xl text-[color:var(--ink)] md:text-5xl">
-              Use it free. Hire us when it needs to become your operating system.
+              Use it free. Hire us when it needs to run reliably for your team.
             </h2>
             <p className="mt-4 text-[color:var(--foreground)]/80">
               The public code is the base. The paid work is deployment, custom configuration, data migration, permissions,
@@ -343,11 +343,11 @@ export default function OpenPlanPage() {
               Want OpenPlan without becoming the deployment team?
             </h2>
             <p className="mt-4 text-lg text-[color:var(--foreground)]/82 dark:text-white/80">
-              We can run it, customize it, onboard your team, wire up your data, and keep the fork healthy while the open-source base keeps improving.
+              We can help run it, customize it, onboard your team, wire up your data, and maintain a supported fork while the open-source base keeps improving.
             </p>
             <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
               <Button asChild variant="secondary" size="lg">
-                <Link href="/contact/openplan-fit">Request managed setup</Link>
+                <Link href="/contact/openplan-fit">Discuss OpenPlan fit</Link>
               </Button>
               <Button
                 asChild
