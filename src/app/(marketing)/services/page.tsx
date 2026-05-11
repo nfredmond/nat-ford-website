@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { ArrowRight, Code2, Database, FileText, MapPin, Plane, Sparkles } from 'lucide-react'
 import { Container } from '@/components/layout/container'
 import { Section } from '@/components/layout/section'
-import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { SectionEndCTA } from '@/components/features/section-end-cta'
 import type { Metadata } from 'next'
@@ -104,7 +103,7 @@ export default function ServicesPage() {
         <Container>
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.85fr)] lg:items-center">
             <div className="max-w-3xl">
-              <span className="pill">Service portfolio</span>
+              <span className="nf-kicker"><span>Service portfolio</span><span>Decision support</span></span>
               <h1 className="section-title mt-4 text-[2.35rem] leading-[0.97] text-white sm:text-5xl md:text-6xl">
                 Services that help agencies decide, fund, map, and{' '}
                 <span className="text-[color:var(--copper)]">deliver the work</span>.
@@ -191,62 +190,58 @@ export default function ServicesPage() {
       <Section spacing="xl">
         <Container>
           <div className="mb-10 max-w-3xl">
-            <span className="pill">Six integrated lanes</span>
+            <span className="nf-kicker"><span>Six integrated lanes</span><span>One delivery thread</span></span>
             <h2 className="section-title mt-4 text-4xl text-[color:var(--ink)] md:text-5xl">
               Each service stands alone. Together, they compress the delivery cycle.
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-5">
+          <div className="divide-y divide-[color:var(--line)] border-y border-[color:var(--line)]">
             {services.map((service, index) => {
               const Icon = service.icon
               const num = String(index + 1).padStart(2, '0')
               return (
-                <Card key={service.name} hover className="overflow-hidden p-0">
-                  <div className="grid grid-cols-1 lg:grid-cols-[auto_minmax(0,1fr)_minmax(0,0.82fr)_auto]">
-                    <div className="flex items-center justify-center border-b border-[color:var(--line)] bg-[color:var(--sand)]/45 px-5 py-4 lg:border-b-0 lg:border-r lg:px-6 lg:py-7">
-                      <span className="font-display text-3xl font-semibold text-[color:var(--pine)]">{num}</span>
-                    </div>
-
-                    <div className="border-b border-[color:var(--line)] p-6 lg:border-b-0 lg:border-r lg:p-7">
-                      <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[color:var(--sand)] text-[color:var(--pine)]">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <h3 className="mt-4 text-2xl font-semibold text-[color:var(--ink)] md:text-[1.7rem]">
-                        {service.name}
-                      </h3>
-                      <p className="mt-2.5 max-w-xl text-[1rem] text-[color:var(--foreground)]/78">
-                        {service.description}
-                      </p>
-                    </div>
-
-                    <div className="border-b border-[color:var(--line)] p-6 lg:border-b-0 lg:border-r lg:p-7">
-                      <p className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/58">
-                        Typical outcomes
-                      </p>
-                      <ul className="mt-3 space-y-2">
-                        {service.outcomes.map((item) => (
-                          <li
-                            key={item}
-                            className="flex items-start gap-2 text-sm text-[color:var(--foreground)]/80"
-                          >
-                            <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--copper)]" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="flex items-center p-6 lg:p-7">
-                      <Button asChild variant="outline" className="w-full whitespace-nowrap lg:w-auto">
-                        <Link href={service.href}>
-                          View service details
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
-                    </div>
+                <article
+                  key={service.name}
+                  className="group grid grid-cols-1 gap-0 bg-[color:var(--background)] transition-colors hover:bg-[color:var(--fog)]/42 lg:grid-cols-[5.5rem_minmax(0,1fr)_minmax(280px,0.72fr)_auto]"
+                >
+                  <div className="flex items-start justify-between border-b border-[color:var(--line)] px-4 py-5 lg:block lg:border-b-0 lg:border-r lg:px-5 lg:py-7">
+                    <span className="font-display text-4xl font-semibold leading-none text-[color:var(--pine)]">{num}</span>
+                    <Icon className="h-5 w-5 text-[color:var(--copper)] lg:mt-8" aria-hidden="true" />
                   </div>
-                </Card>
+
+                  <div className="border-b border-[color:var(--line)] px-5 py-5 lg:border-b-0 lg:border-r lg:px-7 lg:py-7">
+                    <h3 className="text-2xl font-semibold text-[color:var(--ink)] md:text-[1.7rem]">
+                      {service.name}
+                    </h3>
+                    <p className="mt-2.5 max-w-2xl text-[1rem] text-[color:var(--foreground)]/78">
+                      {service.description}
+                    </p>
+                  </div>
+
+                  <div className="border-b border-[color:var(--line)] px-5 py-5 lg:border-b-0 lg:border-r lg:px-7 lg:py-7">
+                    <p className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/58">
+                      Typical outcomes
+                    </p>
+                    <ul className="mt-3 space-y-2">
+                      {service.outcomes.map((item) => (
+                        <li key={item} className="grid grid-cols-[1rem_1fr] gap-2 text-sm text-[color:var(--foreground)]/80">
+                          <span className="mt-2 h-px bg-[color:var(--copper)]" aria-hidden="true" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="flex items-center px-5 py-5 lg:px-7 lg:py-7">
+                    <Button asChild variant="outline" className="w-full whitespace-nowrap rounded-none border-[color:var(--pine)]/35 bg-transparent lg:w-auto">
+                      <Link href={service.href}>
+                        View details
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </div>
+                </article>
               )
             })}
           </div>

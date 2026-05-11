@@ -99,7 +99,7 @@ export default function OpenPlanPage() {
         <Container>
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(320px,0.85fr)] lg:items-end">
             <div className="max-w-4xl">
-              <span className="pill border-white/20 bg-white/10 text-white">OpenPlan — free and open source</span>
+              <span className="nf-kicker text-white"><span>OpenPlan</span><span>Free and open source</span></span>
               <h1 className="section-title mt-5 text-5xl leading-[0.94] text-white md:text-6xl">
                 Planning software anyone can inspect, fork, and adapt.
               </h1>
@@ -124,33 +124,27 @@ export default function OpenPlanPage() {
               </div>
             </div>
 
-            <Card className="relative border-white/16 bg-white/8 p-5 text-white shadow-2xl backdrop-blur-sm">
-              <div className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent" />
-              <div className="flex items-center justify-between gap-3 border-b border-white/12 pb-4">
+            <aside className="border-y border-white/20 py-5 text-white lg:border-l lg:border-y-0 lg:py-0 lg:pl-6">
+              <div className="flex items-center justify-between gap-3 border-b border-white/16 pb-4">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/62">Commercial model</p>
                   <p className="mt-1 text-lg font-semibold">Free code + paid stewardship</p>
                 </div>
-                <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/15 bg-white/10">
-                  <GitFork className="h-5 w-5" />
-                </div>
+                <GitFork className="h-5 w-5 text-[color:var(--sand)]" aria-hidden="true" />
               </div>
-              <div className="mt-4 space-y-3">
+              <div className="divide-y divide-white/12">
                 {['Public repo', 'Self-host path', 'Custom agency fork', 'Managed deployment', 'Data setup', 'Support terms'].map((item, index) => (
-                  <div
-                    key={item}
-                    className="flex items-center justify-between rounded-2xl border border-white/12 bg-black/10 px-4 py-3"
-                  >
-                    <span className="text-sm text-white/72">0{index + 1}</span>
+                  <div key={item} className="grid grid-cols-[2.5rem_1fr_auto] items-center gap-3 py-3">
+                    <span className="text-sm text-white/62">0{index + 1}</span>
                     <span className="font-medium text-white">{item}</span>
-                    <span className="h-2.5 w-2.5 rounded-full bg-[color:var(--sand)] shadow-[0_0_18px_rgba(243,223,181,0.85)]" />
+                    <span className="h-px w-8 bg-[color:var(--sand)]/75" aria-hidden="true" />
                   </div>
                 ))}
               </div>
-              <p className="mt-4 text-sm leading-relaxed text-white/72">
+              <p className="border-t border-white/16 pt-4 text-sm leading-relaxed text-white/72">
                 The useful promise is not a locked subscription. It is a forkable planning spine with scoped support when your team needs production confidence.
               </p>
-            </Card>
+            </aside>
           </div>
         </Container>
       </Section>
@@ -178,15 +172,16 @@ export default function OpenPlanPage() {
               </a>
             </div>
           ) : null}
-          <div className="grid gap-4 md:grid-cols-3">
-            {continuityLanes.map((lane) => (
-              <Card key={lane.title} className="border-[color:var(--line)] bg-[color:var(--background)] p-6">
-                <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-[color:var(--sand)]/65 text-[color:var(--pine)]">
-                  <Map className="h-5 w-5" />
+          <div className="grid border-y border-[color:var(--line)] md:grid-cols-3 md:divide-x md:divide-[color:var(--line)]">
+            {continuityLanes.map((lane, index) => (
+              <article key={lane.title} className="border-b border-[color:var(--line)] bg-[color:var(--background)] px-5 py-6 last:border-b-0 md:border-b-0 md:px-6">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/55">Lane 0{index + 1}</span>
+                  <Map className="h-4 w-4 text-[color:var(--copper)]" aria-hidden="true" />
                 </div>
                 <h2 className="mt-4 text-xl font-semibold text-[color:var(--ink)]">{lane.title}</h2>
                 <p className="mt-2 text-sm leading-relaxed text-[color:var(--foreground)]/78">{lane.body}</p>
-              </Card>
+              </article>
             ))}
           </div>
         </Container>
@@ -196,7 +191,7 @@ export default function OpenPlanPage() {
         <Container>
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.9fr)] lg:items-start">
             <div>
-              <span className="pill">Best fit</span>
+              <span className="nf-kicker"><span>Best fit</span><span>Operational continuity</span></span>
               <h2 className="section-title mt-5 text-4xl text-[color:var(--ink)] md:text-5xl">
                 Built for lean teams that need continuity, not software sprawl.
               </h2>
