@@ -78,9 +78,48 @@ const openSourceBeliefs = [
 ]
 
 const proofStats = [
-  { label: 'Northern California practice', value: 'Planning, GIS, aerial, and implementation' },
-  { label: 'FAA Part 107', value: 'Drone capture tied to planning evidence' },
-  { label: 'Public-sector delivery', value: `${openSourceProjects.length}+ open-source lanes with paid stewardship` },
+  { label: 'Buyer-visible evidence', value: 'Public repos, live tools, sample PDFs, and license notes' },
+  { label: 'Public-sector fit', value: 'RTPA, county, grant, GIS, aerial, and VMT workflows' },
+  { label: 'Proof boundary', value: 'No invented case studies; inspect what exists now' },
+]
+
+const publicProofLinks = [
+  {
+    label: 'Public repository',
+    title: 'OpenPlan source code',
+    body: 'Inspect the planning operating-system codebase, license posture, and active build direction before a scoping call.',
+    href: 'https://github.com/nfredmond/openplan',
+    cta: 'Open GitHub repo',
+    external: true,
+  },
+  {
+    label: 'Source directory',
+    title: 'Open-source project catalog',
+    body: 'Compare public repos, release-track entries, license labels, readiness notes, and the paid support boundary in one place.',
+    href: '/open-source#projects',
+    cta: 'Review source signals',
+  },
+  {
+    label: 'Sample deliverable PDF',
+    title: 'Capability one-pager',
+    body: 'A concise agency/vendor-facing summary of planning, GIS, aerial, software, and implementation capabilities. Sample artifact, not a client case study.',
+    href: '/NFPA_Capability_OnePager.pdf',
+    cta: 'View PDF',
+    external: true,
+  },
+  {
+    label: 'Public worksheet',
+    title: 'Funding readiness scorecard',
+    body: 'A structured intake artifact for match, scope, benefits, schedule, evidence gaps, and grant-readiness conversations.',
+    href: '/funding-readiness-scorecard',
+    cta: 'Try the worksheet',
+  },
+]
+
+const buyerProofSignals = [
+  'Open-source links are separated from release-track and commercial-guide items so buyers can tell what is inspectable today.',
+  'Sample PDFs and worksheets show working product/deliverable shape without implying confidential client endorsement.',
+  'Paid implementation offers describe the actual procurement decision: deploy, customize, host, support, or run a fit audit first.',
 ]
 
 export default function HomePage() {
@@ -269,6 +308,69 @@ export default function HomePage() {
               </Card>
               )
             })}
+          </div>
+        </Container>
+      </Section>
+
+      <Section spacing="xl" className="border-y border-[color:var(--line)] bg-[#101820] text-white">
+        <Container size="xl">
+          <div className="grid gap-10 lg:grid-cols-[0.42fr_0.58fr] lg:items-start">
+            <div className="lg:sticky lg:top-28">
+              <div className="flex items-center gap-3 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/58">
+                <ShieldCheck className="h-4 w-4 text-[color:var(--copper)]" />
+                Public-sector proof
+              </div>
+              <h2 className="section-title mt-4 text-4xl text-white md:text-5xl">
+                Evidence a buyer can open before the first meeting.
+              </h2>
+              <p className="mt-5 text-white/76">
+                This is intentionally bounded: concrete source links, sample deliverables, and working public tools where
+                they exist — not inflated case studies or confidential client claims dressed up for marketing.
+              </p>
+              <div className="mt-7 rounded-[1.5rem] border border-white/14 bg-white/[0.06] p-5">
+                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/50">What this helps decide</p>
+                <ul className="mt-4 space-y-3 text-sm leading-6 text-white/72">
+                  {buyerProofSignals.map((signal) => (
+                    <li key={signal} className="flex gap-3">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--copper)]" />
+                      <span>{signal}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="divide-y divide-white/12 rounded-[2rem] border border-white/14 bg-white/[0.07] shadow-2xl shadow-black/20">
+              {publicProofLinks.map((item, index) => (
+                <div key={item.title} className="grid gap-5 p-6 md:grid-cols-[4.25rem_1fr_auto] md:items-start md:p-7">
+                  <div className="font-display text-4xl leading-none text-[color:var(--copper)]">
+                    {String(index + 1).padStart(2, '0')}
+                  </div>
+                  <div>
+                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/48">{item.label}</p>
+                    <h3 className="mt-2 text-2xl font-semibold text-white">{item.title}</h3>
+                    <p className="mt-3 max-w-2xl text-sm leading-6 text-white/72">{item.body}</p>
+                  </div>
+                  {item.external ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center rounded-full border border-white/22 px-4 py-2 text-sm font-semibold text-white transition hover:border-[color:var(--copper)] hover:text-[color:var(--copper)]"
+                    >
+                      {item.cta} <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="inline-flex items-center justify-center rounded-full border border-white/22 px-4 py-2 text-sm font-semibold text-white transition hover:border-[color:var(--copper)] hover:text-[color:var(--copper)]"
+                    >
+                      {item.cta} <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </Container>
       </Section>
