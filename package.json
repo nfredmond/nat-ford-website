@@ -19,7 +19,8 @@
     "test:public-accessibility-smoke": "node scripts/test-public-accessibility-smoke.mjs",
     "test:contact-prefill": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-contact-prefill.mjs",
     "test:lead-routing": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-lead-routing.mjs",
-    "test:openplan-intake-traceability": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-openplan-intake-traceability.mjs"
+    "test:openplan-intake-traceability": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/test-openplan-intake-traceability.mjs",
+    "test:openplan-claim-guardrail": "node scripts/test-openplan-claim-guardrail.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
