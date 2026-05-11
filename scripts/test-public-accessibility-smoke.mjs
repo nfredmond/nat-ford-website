@@ -88,6 +88,11 @@ function listFiles(dirRelPath) {
 
 const failures = []
 
+function assertRegex(source, regex, message) {
+  if (!regex.test(source)) failures.push(message)
+}
+
+
 const sharedSource = sharedLandmarkFiles.map(readRel).join('\n')
 const sharedLandmarks = hasLandmarks(sharedSource)
 for (const [name, present] of Object.entries(sharedLandmarks)) {
@@ -110,6 +115,43 @@ for (const file of searchableFiles) {
   if (/perfect app/i.test(source)) failures.push(`Risky phrase "perfect app" found in ${file}.`)
 }
 
+
+const homeSource = collectStaticSource('src/app/(marketing)/page.tsx')
+assertRegex(
+  homeSource,
+  /<div className=['"]mt-8 flex flex-col gap-3 sm:flex-row['"]>[\s\S]*?<Link href=['"]\/contact\?topic=open-source-support&intent=discovery['"]>[\s\S]*?Get implementation support[\s\S]*?<\/Link>/i,
+  'Home hero should keep the primary mobile-stacked CTA first and routed to the open-source support discovery contact target.',
+)
+assertRegex(
+  homeSource,
+  /<Link href=['"]\/products['"]>[\s\S]*?Browse public projects[\s\S]*?<\/Link>/i,
+  'Home hero should keep the secondary public-projects CTA accessible with visible text.',
+)
+assertRegex(
+  homeSource,
+  /<Link href=['"]\/open-source['"]>[\s\S]*?Read the open-source position[\s\S]*?<\/Link>/i,
+  'Home hero should keep the tertiary open-source position CTA accessible with visible text.',
+)
+
+const openPlanSource = collectStaticSource('src/app/(marketing)/openplan/page.tsx')
+const openPlanFitTarget = '/contact/openplan-fit?tier=Open-source%20fit%20audit'
+const openPlanFitCtas = [...openPlanSource.matchAll(/<Link\s+href=['"]([^'"]+)['"][^>]*>[\s\S]*?Discuss OpenPlan fit[\s\S]*?<\/Link>/gi)].map((match) => match[1])
+if (openPlanFitCtas.length !== 2 || openPlanFitCtas.some((href) => href !== openPlanFitTarget)) {
+  failures.push(`OpenPlan public page should keep both visible fit CTAs routed to ${openPlanFitTarget}; found ${JSON.stringify(openPlanFitCtas)}.`)
+}
+
+const contactShellSource = collectStaticSource('src/components/features/contact-page-shell.tsx')
+assertRegex(
+  contactShellSource,
+  /<Link href=['"]#contact-form['"]>[\s\S]*?Start intake form[\s\S]*?<\/Link>/i,
+  'Contact hero should keep a visible above-fold intake CTA targeting #contact-form.',
+)
+assertRegex(
+  contactShellSource,
+  /<Card id=['"]contact-form['"][^>]*>[\s\S]*?<ContactIntakeForm[\s\S]*?initialIntent=\{initialIntent\}[\s\S]*?initialTopic=\{initialTopic\}[\s\S]*?initialInquiry=\{initialInquiry\}[\s\S]*?initialProduct=\{initialProduct\}[\s\S]*?initialTier=\{initialTier\}[\s\S]*?\/>/i,
+  'Contact page should keep the #contact-form intake surface and preserve routed intake context props.',
+)
+
 const contactSource = collectStaticSource('src/app/(marketing)/contact/page.tsx')
 const contactHasAnchor = /id=['"]contact-form['"]/.test(contactSource) || /href=['"]#contact-form['"]/.test(contactSource)
 const contactHasAboveFoldCta = /(Start intake form|Schedule discovery|Start a focused intake)/i.test(contactSource)
@@ -129,3 +171,4 @@ console.log('- Exactly one static H1 per checked route')
 console.log('- Shared marketing landmarks present')
 console.log('- Risky phrase absent: "perfect app"')
 console.log('- Contact page intake anchor/CTA present')
+console.log('- Home, OpenPlan, and contact mobile-priority CTAs route to expected targets')
