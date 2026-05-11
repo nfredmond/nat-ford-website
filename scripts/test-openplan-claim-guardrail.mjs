@@ -11,7 +11,7 @@ const bannedPatterns = [
   /24-hour/i,
   /24 hour/i,
   /enterprise\s+SSO/i,
-  /planning operating system/i,
+  /planning workbench/i,
   /self-serve/i,
   /automatic provisioning/i,
   /grant award prediction/i,
