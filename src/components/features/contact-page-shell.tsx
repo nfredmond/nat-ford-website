@@ -1,7 +1,9 @@
+import Link from 'next/link'
 import { Clock, Linkedin, Mail, MapPin, Phone, ShieldCheck } from 'lucide-react'
 import { Container } from '@/components/layout/container'
 import { Section } from '@/components/layout/section'
 import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { ContactIntakeForm } from '@/components/features/contact-intake-form'
 
 type ContactPageShellProps = {
@@ -33,6 +35,12 @@ export function ContactPageShell({
               <h1 className="section-title mt-5 text-[2.75rem] leading-[0.96] text-white sm:text-5xl md:text-6xl">{title}</h1>
               <p className="mt-5 max-w-3xl text-lg text-white/84">{subtitle}</p>
 
+              <div className="mt-6">
+                <Button asChild size="lg" variant="secondary">
+                  <Link href="#contact-form">Start intake form</Link>
+                </Button>
+              </div>
+
               <div className="mt-8 hidden gap-3 text-sm font-semibold text-white/82 sm:grid sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/16 bg-white/[0.07] p-4">Northern California planning practice</div>
                 <div className="rounded-2xl border border-white/16 bg-white/[0.07] p-4">FAA Part 107 aerial capture</div>
@@ -49,7 +57,7 @@ export function ContactPageShell({
               </div>
             </div>
 
-            <Card className="bg-[color:var(--background)] text-[color:var(--foreground)] shadow-2xl">
+            <Card id="contact-form" className="scroll-mt-24 bg-[color:var(--background)] text-[color:var(--foreground)] shadow-2xl">
               <CardContent className="p-5 sm:p-7">
                 <ContactIntakeForm
                   initialIntent={initialIntent}
@@ -69,7 +77,7 @@ export function ContactPageShell({
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
               <Card>
                 <CardContent className="space-y-4 p-6">
-                  <h3 className="text-lg font-semibold text-[color:var(--ink)]">Contact Information</h3>
+                  <h2 className="text-lg font-semibold text-[color:var(--ink)]">Contact Information</h2>
 
                   <div className="flex items-start gap-3 text-sm text-[color:var(--foreground)]/78">
                     <MapPin className="mt-0.5 h-4 w-4 text-[color:var(--pine)]" />
@@ -104,7 +112,7 @@ export function ContactPageShell({
 
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="mb-3 text-lg font-semibold text-[color:var(--ink)]">Response Expectations</h3>
+                  <h2 className="mb-3 text-lg font-semibold text-[color:var(--ink)]">Response Expectations</h2>
                   <div className="flex items-start gap-3 text-sm text-[color:var(--foreground)]/78">
                     <Clock className="mt-0.5 h-4 w-4 text-[color:var(--pine)]" />
                     <span>Typical response: 1–2 business days. For urgent matters, email directly.</span>
@@ -114,7 +122,7 @@ export function ContactPageShell({
 
               <Card className="border-[color:var(--line)] bg-[color:var(--fog)]/75 text-[color:var(--ink)] dark:border-white/15 dark:bg-[#101c27] dark:text-white">
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-[color:var(--ink)] dark:text-white">Discovery First</h3>
+                  <h2 className="text-lg font-semibold text-[color:var(--ink)] dark:text-white">Discovery First</h2>
                   <p className="mt-2 text-sm text-[color:var(--foreground)]/78 dark:text-white/78">
                     Every new engagement begins with a scoped intake so recommendations remain realistic, fair, and executable.
                   </p>

@@ -47,7 +47,7 @@ const principles = [
 
 const manifesto = [
   'Most organizations do not need another black-box subscription. They need software they can inspect, adapt, and keep using when their workflow gets weird.',
-  'The future is not one perfect app with every possible feature. The future is a strong spine of open tools, clear primitives, and local adaptations that agents and people can extend.',
+  'The future is not one all-purpose app with every possible feature. The future is a strong spine of open tools, clear primitives, and local adaptations that agents and people can extend.',
   'Fork count matters. Reuse matters. A tool that gets copied, modified, and deployed in strange places is doing its job.',
   'Nat Ford will make money by being excellent stewards: setup, custom versions, hosting, support, training, integrations, and planning expertise — not by hiding useful code behind a tollbooth.',
 ]

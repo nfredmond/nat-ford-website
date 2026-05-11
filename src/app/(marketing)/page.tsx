@@ -140,10 +140,10 @@ export default function HomePage() {
                 <span>Open-source planning, GIS, AI, and operations software</span>
               </div>
 
-              <h1 className="section-title mt-6 text-[2.75rem] leading-[0.96] text-[color:var(--ink)] dark:text-white sm:text-6xl lg:text-[5.45rem]">
+              <h1 className="section-title mt-5 text-[2.35rem] leading-[0.98] text-[color:var(--ink)] dark:text-white sm:mt-6 sm:text-6xl lg:text-[5.45rem]">
                 Free open-source software. Paid stewardship. Planning work that holds up in public.
               </h1>
-              <p className="mt-6 max-w-3xl text-lg leading-8 text-[color:var(--foreground)]/82 dark:text-white/85 sm:text-xl">
+              <p className="mt-5 max-w-3xl text-lg leading-8 text-[color:var(--foreground)]/82 dark:text-white/85 sm:mt-6 sm:text-xl">
                 Nat Ford builds free and open-source tools for transportation planning, geospatial analysis, drone mapping,
                 modeling, and business operations. We make money by helping agencies and companies deploy, customize,
                 administer, and support the software when the work has to hold up in public.
