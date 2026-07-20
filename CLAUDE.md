@@ -66,7 +66,7 @@ Structured site data lives in `src/data/` as JSON/TS (`projects.json`, `services
 
 ### Brand assets
 
-Logos live in `public/logos/`. Header swaps light/dark variants via `dark:hidden` / `dark:block` on two `<Image>` tags. Footer always uses the white wordmark on the dark `#0f1720` background. Favicons at the App Router conventional paths: `src/app/favicon.ico`, `src/app/icon.png`, `src/app/apple-icon.png`. The brand kit master is `new logos/` (see its README + `01_Final_Official_Logo_Suite/06_DOCUMENTS/Simple_Brand_Guide.txt` — note "Light" = for light backgrounds, "Dark" = for dark backgrounds).
+Logos live in `public/logos/` (`nf-wordmark-{light,dark}.{png,svg}`, `nf-monogram-square-{light,dark}.{png,svg}`). The wordmark is a complete lockup (badge + name), so pages use it on its own. Header swaps light/dark variants via `dark:hidden` / `dark:block`; the footer uses the light wordmark on the dark `#0b120f` band. Favicons at the App Router conventional paths: `src/app/favicon.ico`, `src/app/icon.png`, `src/app/apple-icon.png`. Naming: "Light" = for light backgrounds, "Dark" = for dark backgrounds. The raw brand-kit master lives in design handoff / Drive, not in this repo.
 
 ### Vercel / Next 16 notes
 

@@ -5,9 +5,6 @@
     },
     "vercel": {
       "url": "https://mcp.vercel.com"
-    },
-    "github": {
-      "command": "/home/narford/.openclaw/workspace/scripts/github_mcp.sh"
     }
   }
 }
