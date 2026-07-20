@@ -19,10 +19,11 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Nathaniel Ford Redmond is a transportation planner and GIS practitioner in the Sierra foothills of Northern California who also builds the open-source planning software. FAA Part 107 remote pilot.',
+    'Nathaniel Ford Redmond is a master’s-trained transportation and urban planner in Northern California, from rural counties to San Francisco, who also builds the open-source planning software. FAA Part 107 remote pilot.',
 }
 
 const facts = [
+  { label: 'Education', value: 'Master’s in urban planning' },
   { label: 'Base', value: 'Sierra foothills, near Grass Valley, CA' },
   { label: 'Reach', value: 'Remote-first across the U.S.; field work when it helps' },
   { label: 'Certification', value: 'FAA Part 107 remote pilot' },
@@ -77,7 +78,7 @@ const priorEmployment = [
     employer: 'San Francisco County Transportation Authority',
     years: '2017–2018',
     highlights: [
-      'Supported ConnectSF and Vision Zero analysis and reporting.',
+      'Supported ConnectSF long-range planning and Vision Zero safety analysis for San Francisco.',
       'Assisted with survey work, community workshops, and policy research.',
       'Produced planning materials for technical and public audiences.',
     ],
@@ -115,15 +116,18 @@ export default function AboutPage() {
                 Nathaniel Ford Redmond
               </h1>
               <p className="lead reveal reveal-3 measure-wide mt-6 text-[color:var(--muted)]">
-                I&rsquo;m a transportation planner and GIS practitioner in the Sierra foothills of
-                Northern California. For most of a decade I&rsquo;ve delivered the everyday work of a
-                small planning shop: regional and active transportation plans, VMT and carbon
-                analysis, grant packages, and the maps a board actually reads.
+                I&rsquo;m a master&rsquo;s-trained transportation and urban planner based in the Sierra
+                foothills of Northern California. My work spans the state&rsquo;s planning range:
+                regional and active transportation plans across rural counties, and the denser urban
+                questions I first took on as a planner at the San Francisco County Transportation
+                Authority.
               </p>
               <p className="reveal reveal-3 measure-wide mt-4 text-[color:var(--muted)]">
-                I also build the software that work runs on, and I keep it open. The same person
-                writes the code and the memo, so the methods stay legible, the assumptions are
-                stated, and the recommendation is something you can fund and build.
+                I also build the software that work runs on, and I keep it open. The goal is plain:
+                put expert-level planning tools within reach of the small cities, counties, and
+                Tribal governments that can rarely afford them. The same person writes the code and
+                the memo, so the methods stay legible, the assumptions are stated, and the
+                recommendation is something you can fund and build.
               </p>
 
               <div className="reveal reveal-4 mt-9 flex flex-wrap items-center gap-3">
@@ -142,7 +146,7 @@ export default function AboutPage() {
                 </a>
               </div>
 
-              <dl className="reveal reveal-5 mt-9 grid gap-x-8 gap-y-4 border-t border-[color:var(--line)] pt-7 sm:grid-cols-3">
+              <dl className="reveal reveal-5 mt-9 grid grid-cols-2 gap-x-8 gap-y-4 border-t border-[color:var(--line)] pt-7 lg:grid-cols-4">
                 {facts.map((fact) => (
                   <div key={fact.label}>
                     <dt className="label">{fact.label}</dt>
@@ -243,7 +247,8 @@ export default function AboutPage() {
             </h2>
             <p className="measure mt-5 text-[color:var(--muted)]">
               Nat Ford Planning is newer than the record below. These are the roles that built the
-              method, most of it in rural Northern California.
+              method, from rural county networks in Northern California to urban corridors in San
+              Francisco.
             </p>
           </div>
 
@@ -320,10 +325,10 @@ export default function AboutPage() {
             <p className="index-label text-[color:var(--copper)]">Get in touch</p>
             <h2 className="display-2 mt-5 text-white">Tell me what you&rsquo;re working on.</h2>
             <p className="mt-5 text-white/70">
-              If you run a small agency, a consultancy, or a public-interest team and you&rsquo;re
-              trying to do more with a lean crew, that is exactly who this is for. No sales team, no
-              funnel. Start with a scoping conversation and we&rsquo;ll map the fastest credible path
-              from analysis to implementation.
+              If you run a small city, a county, a Tribal government, a consultancy, or a
+              public-interest team and you&rsquo;re trying to do more with a lean crew, that is exactly
+              who this is for. No sales team, no funnel. Start with a scoping conversation and
+              we&rsquo;ll map the fastest credible path from analysis to implementation.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
               <Button asChild size="lg">
