@@ -159,8 +159,8 @@ export default function AboutPage() {
             </div>
 
             {/* Figure plate — the headshot as a report plate */}
-            <figure className="reveal reveal-5 lg:justify-self-end">
-              <div className="plate aspect-[4/5] w-full max-w-sm">
+            <figure className="reveal reveal-5 w-full max-w-sm lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full">
                 <Image
                   src="/images/headshot.png"
                   alt="Portrait of Nathaniel Ford Redmond, founder of Nat Ford Planning & Analysis"

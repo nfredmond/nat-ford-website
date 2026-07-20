@@ -68,8 +68,8 @@ export default function EthicsPage() {
             </div>
 
             {/* Figure plate */}
-            <figure className="reveal reveal-5 lg:justify-self-end">
-              <div className="plate aspect-[4/5] w-full max-w-md">
+            <figure className="reveal reveal-5 w-full max-w-md lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full">
                 <Image
                   src="/images/site/drone-intersection-topdown-2026-03.jpg"
                   alt="Top-down aerial capture of a rural intersection and its surrounding street grid"
@@ -225,8 +225,8 @@ export default function EthicsPage() {
               </div>
             </div>
 
-            <figure className="lg:justify-self-end">
-              <div className="plate aspect-[5/4] w-full max-w-lg">
+            <figure className="w-full max-w-lg lg:justify-self-end">
+              <div className="plate aspect-[5/4] w-full">
                 <Image
                   src="/images/site/drone-town-overview-2026-03.jpg"
                   alt="Aerial overview of a small Northern California town and its street grid"

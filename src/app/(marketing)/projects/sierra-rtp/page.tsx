@@ -81,8 +81,8 @@ export default function SierraRTPCaseStudy() {
             </div>
 
             {/* Figure plate */}
-            <figure className="lg:justify-self-end">
-              <div className="plate aspect-[4/5] w-full max-w-md">
+            <figure className="w-full max-w-md lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full">
                 <Image
                   src="/images/site/drone-corridor-valley-2026-03.jpg"
                   alt="Aerial view of a rural highway corridor threading through a high-elevation Northern California valley"

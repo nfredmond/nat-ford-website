@@ -112,8 +112,8 @@ export default function GrantsServicePage() {
             </div>
 
             {/* Figure plate */}
-            <figure className="reveal reveal-5 lg:justify-self-end">
-              <div className="plate aspect-[4/5] w-full max-w-md">
+            <figure className="reveal reveal-5 w-full max-w-md lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full">
                 <Image
                   src="/images/site/drone-mainstreet-parking-2026-03.jpg"
                   alt="Aerial view of a Northern California main street, its parking, and pedestrian crossings — the kind of corridor ATP and HSIP funding targets"
