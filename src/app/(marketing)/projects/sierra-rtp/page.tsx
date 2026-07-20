@@ -8,7 +8,7 @@ import { ContourField } from '@/components/features/contour-field'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Sierra County RTP — Case Study',
+  title: 'Sierra County RTP — Planning Experience',
   description:
     'A regional transportation plan for a high-elevation rural county: SWITRS/HPMS/ACS data on a PostGIS model, defensible performance targets, and a fiscally constrained project list aligned to SB-1, IIJA, and SHOPP. Prior-role work at Green DOT Transportation Solutions.',
 }

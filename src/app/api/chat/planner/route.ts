@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { getSupabaseAdminClient } from '@/lib/supabase/admin'
-import { buildScopeKey, fetchUsageSnapshot, findActiveAiBan, logUsageEvent } from '@/lib/ai-usage'
+import { buildScopeKey, fetchUsageSnapshot, logUsageEvent } from '@/lib/ai-usage'
 import { getCensusContextForPrompt } from '@/lib/census'
 import { sanitizeForLog, sanitizeTextForLog } from '@/lib/security/redact-secrets'
+import { jsonError, getRequesterIp, estimateTokens, extractOutputText, enforceAiBan } from '@/lib/ai-guard'
 
 export const runtime = 'nodejs'
 
@@ -16,8 +17,6 @@ const MAX_CONTEXT_MESSAGES = 16
 const MAX_MESSAGE_CHARS = 4000
 const MAX_TOTAL_INPUT_CHARS = 24000
 const MAX_OUTPUT_TOKENS = 1800
-const AI_BAN_CHECK_FAIL_OPEN = process.env.AI_BAN_CHECK_FAIL_OPEN === 'true'
-const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
 const GUEST_GRACE_MS = 10 * 60 * 1000
 const GUEST_MAX_REQUESTS_PER_HOUR = 60
@@ -94,28 +93,6 @@ function getStateStore(): PlannerStateStore {
   return globalThis.__plannerChatState
 }
 
-function jsonError(message: string, status = 400, extras: Record<string, unknown> = {}) {
-  return NextResponse.json({ ok: false, message, ...extras }, { status })
-}
-
-function shouldFailOpenBanCheck() {
-  return !IS_PRODUCTION && AI_BAN_CHECK_FAIL_OPEN
-}
-
-function banCheckUnavailableResponse() {
-  return jsonError('Safety systems are temporarily unavailable. Please retry in a moment.', 503)
-}
-
-function getRequesterIp(req: NextRequest): string {
-  const forwarded = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-  const realIp = req.headers.get('x-real-ip')?.trim()
-  return forwarded || realIp || 'unknown-ip'
-}
-
-function estimateTokens(text: string): number {
-  return Math.ceil(text.length / 4)
-}
-
 function normalizeRateWindow(state: VisitorState, now: number, windowMs = 60 * 60 * 1000) {
   state.requests = state.requests.filter((timestamp) => now - timestamp <= windowMs)
 }
@@ -139,38 +116,6 @@ function enforceFallbackRateLimit(
   state.lastRequestAt = now
   state.requests.push(now)
   return null
-}
-
-function extractOutputText(payload: unknown): string {
-  if (!payload || typeof payload !== 'object') return ''
-
-  const maybeText = (payload as { output_text?: unknown }).output_text
-  if (typeof maybeText === 'string' && maybeText.trim().length > 0) {
-    return maybeText.trim()
-  }
-
-  const output = (payload as { output?: unknown }).output
-  if (!Array.isArray(output)) return ''
-
-  const parts: string[] = []
-  for (const item of output) {
-    if (!item || typeof item !== 'object') continue
-
-    const content = (item as { content?: unknown }).content
-    if (!Array.isArray(content)) continue
-
-    for (const block of content) {
-      if (!block || typeof block !== 'object') continue
-      const blockType = (block as { type?: unknown }).type
-      const text = (block as { text?: unknown }).text
-
-      if ((blockType === 'output_text' || blockType === 'text') && typeof text === 'string' && text.trim()) {
-        parts.push(text.trim())
-      }
-    }
-  }
-
-  return parts.join('\n\n').trim()
 }
 
 function buildPreferenceInstruction(preferences?: z.infer<typeof preferenceSchema>): string {
@@ -237,59 +182,16 @@ export async function POST(req: NextRequest) {
 
     let guestExpiresAt: number | null = null
 
-    if (!admin) {
-      if (!shouldFailOpenBanCheck()) {
-        console.error('Planner abuse-control check unavailable', {
-          route: ROUTE_KEY,
-          reason: 'missing_admin_client',
-          failOpen: shouldFailOpenBanCheck(),
-        })
-        return banCheckUnavailableResponse()
-      }
-    } else {
-      try {
-        const ban = await findActiveAiBan(admin, {
-          route: ROUTE_KEY,
-          userId,
-          visitorId: visitorId ?? null,
-          ip,
-        })
-
-        if (ban) {
-          try {
-            await logUsageEvent(admin, {
-              scopeKey,
-              route: ROUTE_KEY,
-              requesterKind,
-              userId,
-              visitorId: visitorId ?? null,
-              ip,
-              status: 'blocked',
-              metadata: {
-                reason: ban.reason ?? 'blocked_by_admin',
-                route: ROUTE_KEY,
-                banId: ban.id,
-                key_source: keySource,
-              },
-            })
-          } catch (logError) {
-            console.error('Planner blocked-event log failed', sanitizeForLog(logError))
-          }
-
-          return jsonError('This AI tool is temporarily unavailable for this session.', 403)
-        }
-      } catch (banError) {
-        console.error('Planner abuse-control check failed', {
-          route: ROUTE_KEY,
-          failOpen: shouldFailOpenBanCheck(),
-          error: sanitizeForLog(banError),
-        })
-
-        if (!shouldFailOpenBanCheck()) {
-          return banCheckUnavailableResponse()
-        }
-      }
-    }
+    const banResponse = await enforceAiBan(admin, {
+      routeKey: ROUTE_KEY,
+      scopeKey,
+      requesterKind,
+      userId,
+      visitorId: visitorId ?? null,
+      ip,
+      keySource,
+    })
+    if (banResponse) return banResponse
 
     // Guest grace remains in-memory to keep UX consistent even if usage events table is unavailable.
     if (!user) {
