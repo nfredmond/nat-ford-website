@@ -45,6 +45,11 @@
   --line: #d8d2c2;         /* warm hairline */
   --line-strong: #c3bba4;
 
+  /* Error state — AA on paper/surface for body-size text */
+  --danger: #a1352a;
+  --danger-surface: #f6e7e3;
+  --danger-line: #dbb7ae;
+
   /* On-color text + interaction (mode-aware for AA) */
   --on-pine: #ffffff;
   --on-copper: #20160a;
@@ -78,6 +83,10 @@
 
   --line: #26332b;
   --line-strong: #35473c;
+
+  --danger: #e2907f;
+  --danger-surface: #2b1712;
+  --danger-line: #5c3129;
 
   --on-pine: #08130c;
   --on-copper: #20160a;
@@ -375,6 +384,8 @@ a.provenance:hover {
 }
 .hero-mesh .index-label,
 .on-dark .index-label { color: var(--copper); }
+.hero-mesh .label,
+.on-dark .label { color: color-mix(in srgb, #fff 64%, transparent); }
 .hero-mesh .section-title { color: #fff; }
 .nf-kicker {
   display: flex; flex-wrap: wrap; gap: 0.85rem; align-items: center;
@@ -494,6 +505,14 @@ a.provenance:hover {
   border-radius: 3px;
 }
 .dark :focus-visible { outline-color: var(--pine-soft); }
+
+/* Cards that wrap a visually-hidden input (e.g. scorecard radio options)
+   must still show keyboard focus on the visible card. */
+label:has(input.sr-only:focus-visible) {
+  outline: 2px solid var(--pine);
+  outline-offset: 2px;
+}
+.dark label:has(input.sr-only:focus-visible) { outline-color: var(--pine-soft); }
 
 .skip-link {
   position: absolute;

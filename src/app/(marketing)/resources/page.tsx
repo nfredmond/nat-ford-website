@@ -272,7 +272,7 @@ export default function ResourcesPage() {
               maps to your state, tribal, county or county-equivalent, RTPA, transportation
               commission, or MPO context on request.
             </p>
-            <p className="mt-3 max-w-2xl text-sm text-[color:var(--faint)]">
+            <p className="mt-3 max-w-2xl text-sm text-[color:var(--muted)]">
               Dates are indicative. Confirm the current call or NOFO window with the
               administering agency before you plan around it.
             </p>
@@ -294,6 +294,9 @@ export default function ResourcesPage() {
                 className="pl-10"
               />
             </div>
+            <p aria-live="polite" className="data mt-2 text-xs text-[color:var(--muted)]">
+              {filteredPrograms.length} of {fundingPrograms.length} programs shown
+            </p>
 
             {filteredPrograms.length > 0 ? (
               <ul className="mt-6 space-y-4">

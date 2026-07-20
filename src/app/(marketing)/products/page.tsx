@@ -179,7 +179,7 @@ export default function ProductsPage() {
                     </div>
 
                     <p className="measure-wide mt-5 text-[color:var(--muted)]">{project.summary}</p>
-                    <p className="measure-wide mt-3 text-sm leading-6 text-[color:var(--faint)]">
+                    <p className="measure-wide mt-3 text-sm leading-6 text-[color:var(--muted)]">
                       {readinessNote(project.status)}
                     </p>
 
@@ -205,7 +205,7 @@ export default function ProductsPage() {
                       </div>
                     </div>
 
-                    <p className="mt-5 text-xs leading-5 text-[color:var(--faint)]">
+                    <p className="mt-5 text-xs leading-5 text-[color:var(--muted)]">
                       {project.licenseNote}
                     </p>
 

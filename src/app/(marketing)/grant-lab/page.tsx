@@ -526,8 +526,11 @@ export default function GrantLabPage() {
                 <form className="mt-5 space-y-4" onSubmit={onGenerateDraft}>
                   <p className="label">Step 1 of 3 — Program + applicant context</p>
                   <div>
-                    <label className="mb-1.5 block text-sm font-medium text-[color:var(--ink)]">Grant program *</label>
+                    <label htmlFor="grant-program" className="mb-1.5 block text-sm font-medium text-[color:var(--ink)]">
+                      Grant program *
+                    </label>
                     <select
+                      id="grant-program"
                       value={context.grantProgram}
                       onChange={(event) => setContext((prev) => ({ ...prev, grantProgram: event.target.value }))}
                       className="h-11 w-full rounded-xl border border-[color:var(--line)] bg-[color:var(--background)] px-3.5 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
@@ -654,6 +657,7 @@ export default function GrantLabPage() {
                       <textarea
                         value={context.readiness}
                         onChange={(event) => setContext((prev) => ({ ...prev, readiness: event.target.value }))}
+                        aria-label="Project readiness"
                         placeholder="Readiness: outreach completed, CEQA/NEPA status, right-of-way, design progress"
                         className="min-h-[80px] w-full rounded-xl border border-[color:var(--line)] bg-[color:var(--background)] px-3.5 py-2.5 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
                       />
@@ -661,6 +665,7 @@ export default function GrantLabPage() {
                       <textarea
                         value={context.scoringPriorities}
                         onChange={(event) => setContext((prev) => ({ ...prev, scoringPriorities: event.target.value }))}
+                        aria-label="Scoring priorities"
                         placeholder="Scoring priorities (e.g., disadvantaged communities, school safety, state of readiness)"
                         className="min-h-[80px] w-full rounded-xl border border-[color:var(--line)] bg-[color:var(--background)] px-3.5 py-2.5 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
                       />
@@ -669,12 +674,14 @@ export default function GrantLabPage() {
                         <textarea
                           value={context.risks}
                           onChange={(event) => setContext((prev) => ({ ...prev, risks: event.target.value }))}
+                          aria-label="Risks and constraints"
                           placeholder="Risks and constraints"
                           className="min-h-[80px] w-full rounded-xl border border-[color:var(--line)] bg-[color:var(--background)] px-3.5 py-2.5 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
                         />
                         <textarea
                           value={context.extraNotes}
                           onChange={(event) => setContext((prev) => ({ ...prev, extraNotes: event.target.value }))}
+                          aria-label="Additional context and board priorities"
                           placeholder="Additional context / board priorities"
                           className="min-h-[80px] w-full rounded-xl border border-[color:var(--line)] bg-[color:var(--background)] px-3.5 py-2.5 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
                         />
@@ -745,7 +752,12 @@ export default function GrantLabPage() {
                   ))}
                 </div>
 
-                <div className="mt-4 max-h-[560px] space-y-3 overflow-y-auto rounded-2xl border border-[color:var(--line)] bg-[color:var(--background)]/80 p-3">
+                <div
+                  role="log"
+                  aria-live="polite"
+                  aria-label="Draft and revision conversation"
+                  className="mt-4 max-h-[560px] space-y-3 overflow-y-auto rounded-2xl border border-[color:var(--line)] bg-[color:var(--background)]/80 p-3"
+                >
                   {messages.map((message, index) => (
                     <div
                       key={`${message.role}-${index}`}
@@ -779,6 +791,7 @@ export default function GrantLabPage() {
                       }
                     }}
                     rows={4}
+                    aria-label="Ask for revisions to the draft"
                     placeholder="Ask for edits, tone changes, section additions, or stronger score alignment..."
                     className="min-h-[96px] flex-1 resize-none rounded-xl border border-[color:var(--line)] bg-[color:var(--background)] px-3 py-2 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
                   />
@@ -789,7 +802,11 @@ export default function GrantLabPage() {
 
                 <p className="mt-2 text-xs text-[color:var(--foreground)]/72">Enter to send • Shift+Enter for a new line</p>
 
-                {error && <p className="mt-3 text-sm text-red-600 dark:text-red-400">{error}</p>}
+                {error && (
+                  <p role="alert" className="mt-3 text-sm text-[color:var(--danger)]">
+                    {error}
+                  </p>
+                )}
 
                 <div className="mt-4 rounded-xl border border-[color:var(--line)] bg-[color:var(--fog)] p-3 text-sm text-[color:var(--foreground)]/78">
                   Start with a{' '}
