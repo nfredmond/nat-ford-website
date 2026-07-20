@@ -1,256 +1,348 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, Code2, Database, FileText, MapPin, Plane, Sparkles } from 'lucide-react'
+import {
+  ArrowRight,
+  Code2,
+  Database,
+  FileText,
+  MapPin,
+  Plane,
+  Sparkles,
+} from 'lucide-react'
+import type { Metadata } from 'next'
 import { Container } from '@/components/layout/container'
 import { Section } from '@/components/layout/section'
 import { Button } from '@/components/ui/button'
 import { SectionEndCTA } from '@/components/features/section-end-cta'
-import type { Metadata } from 'next'
+import { ContourField } from '@/components/features/contour-field'
+import JsonLd from '@/components/features/json-ld'
+import servicesData from '@/data/services.json'
 
 export const metadata: Metadata = {
   title: 'Services',
   description:
-    'Planning, GIS, funding strategy, open-source software deployment, and custom software development for agencies, consultancies, and companies with real workflow problems.'
+    'Transportation planning, GIS, aerial mapping, grant strategy, and custom open-source software for agencies and mission-driven companies in Northern California and beyond.',
 }
 
 const services = [
   {
-    name: 'Urban & Transportation Planning',
-    description:
-      'Regional plans, active transportation plans, corridor strategy, and board-ready packages grounded in what staff can actually deliver.',
+    name: 'Transportation planning',
     icon: MapPin,
     href: '/services/planning',
-    outcomes: [
-      'Clear project prioritization tied to constraints',
-      'Defensible analysis narratives for public review',
-      'Implementation-ready scope and phasing guidance',
+    description:
+      'RTPs, active transportation plans, corridor strategy, and VMT screening, scoped to what your staff can actually carry.',
+    deliverables: [
+      'RTP and ATP documents',
+      'Corridor and safety analysis',
+      'Board-ready packages and exhibits',
     ],
   },
   {
-    name: 'GIS & Spatial Analysis',
-    description:
-      'Map products, spatial data cleanup, and practical analysis that turn scattered information into clear recommendations.',
+    name: 'GIS & spatial analysis',
     icon: Database,
     href: '/services/gis',
-    outcomes: [
-      'PostGIS-backed reproducible workflows',
-      'Hotspot and accessibility mapping that withstands scrutiny',
-      'Production-friendly map exports for reports and presentations',
+    description:
+      'PostGIS pipelines, web maps, and analysis that turn scattered layers into something a board can read and trust.',
+    deliverables: [
+      'Reproducible PostGIS workflows',
+      'Accessibility and hotspot mapping',
+      'Print and web map exports',
     ],
   },
   {
-    name: 'Aerial Mapping & Photogrammetry',
-    description:
-      'FAA-certified drone capture and measurable map outputs for corridors, sites, assets, and public-facing evidence.',
+    name: 'Aerial mapping',
     icon: Plane,
     href: '/services/aerial',
-    outcomes: [
-      'Orthomosaics and terrain products for planning context',
-      'Faster field-to-analysis turnaround',
-      'Visual evidence packages for stakeholder alignment',
+    description:
+      'FAA Part 107 drone capture with measurable outputs: orthomosaics, terrain models, and before-and-after evidence.',
+    deliverables: [
+      'Orthomosaics and terrain models',
+      'Corridor and site capture',
+      'Visual evidence for stakeholders',
     ],
   },
   {
-    name: 'Funding & Grant Services',
-    description:
-      'Grant fit checks, benefit framing, and package assembly for teams that need a stronger, cleaner submission.',
+    name: 'Grants & funding',
     icon: FileText,
     href: '/services/grants',
-    outcomes: [
-      'Program alignment and timing clarity',
-      'Stronger benefit framing with cleaner logic chains',
-      'Submission-ready package discipline',
+    description:
+      'ATP, HSIP, CRP, and FTA strategy, narrative drafting, and readiness reviews for teams that need a cleaner submission.',
+    deliverables: [
+      'Program fit and timing',
+      'Benefit framing and narratives',
+      'Submission-ready packages',
     ],
   },
   {
-    name: 'Open-Source & Custom Software',
-    description:
-      'Open-source project deployment, custom internal tools, AI workflows, dashboards, portals, automations, and supported company-specific forks.',
+    name: 'Open-source & custom software',
     icon: Code2,
     href: '/open-source',
-    outcomes: [
-      'Free code with paid implementation support',
-      'Custom forks, hosting, onboarding, and support',
-      'Software for planning teams and non-planning companies alike',
+    description:
+      'Free, open code with paid deployment: custom forks, hosting, onboarding, and support, for planning teams and companies alike.',
+    deliverables: [
+      'Managed deployments and forks',
+      'Dashboards, portals, and automations',
+      'AI workflows for real processes',
     ],
   },
   {
-    name: 'AI-Enabled Documentation',
-    description:
-      'Human-reviewed drafting, tables, figures, and QA support that shortens production without handing judgment to a black box.',
+    name: 'AI-enabled documentation',
     icon: Sparkles,
     href: '/services/ai',
-    outcomes: [
-      'Shorter production cycles without quality loss',
-      'Methods and assumptions clarity in final documents',
-      'Reduced formatting and revision churn',
+    description:
+      'Human-reviewed drafting, tables, figures, and QA that shortens production without handing judgment to a black box.',
+    deliverables: [
+      'Drafted sections and tables',
+      'Methods and assumptions clarity',
+      'Fewer formatting and revision cycles',
     ],
   },
 ]
 
-const capabilityMatrix = [
-  { label: 'Plans', value: 'RTP · ATP · corridor packages' },
-  { label: 'Maps', value: 'GIS · QA · public exhibits' },
-  { label: 'Field evidence', value: 'FAA Part 107 drone capture' },
-  { label: 'Funding', value: 'Fit · scoring · grant packages' },
-  { label: 'Software', value: 'Open source · AI · internal tools' },
+const firstCall = [
+  {
+    heading: 'A recommended next step',
+    body: 'In plain English, what to do first, and whether the thing is even worth building.',
+  },
+  {
+    heading: 'A rough level of effort',
+    body: 'An order-of-magnitude range for time and cost, not a number tuned to win the work.',
+  },
+  {
+    heading: 'The main risks',
+    body: 'The two or three things most likely to bite the schedule or the budget.',
+  },
 ]
 
 export default function ServicesPage() {
   return (
     <>
-      <Section spacing="md" className="hero-mesh text-white">
-        <Container>
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.85fr)] lg:items-center">
-            <div className="max-w-3xl">
-              <span className="nf-kicker"><span>Service portfolio</span><span>Decision support</span></span>
-              <h1 className="section-title mt-4 text-[2.35rem] leading-[0.97] text-white sm:text-5xl md:text-6xl">
-                Services that help agencies decide, fund, map, and{' '}
-                <span className="text-[color:var(--copper)]">deliver the work</span>.
-              </h1>
-              <p className="mt-4 max-w-2xl text-base leading-7 text-white/84 sm:text-lg">
-                Nat Ford combines planning, GIS, drone mapping, grant support, and custom software so public teams and mission-driven companies can move from messy inputs to usable deliverables without starting over three times.
+      <JsonLd data={servicesData} />
+
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="worksurface relative overflow-hidden border-b border-[color:var(--line)]">
+        <ContourField animate className="opacity-90" />
+        <Container size="xl" className="relative py-16 md:py-24 lg:py-28">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+            <div>
+              <p className="index-label reveal reveal-1">
+                Services · planning · GIS · aerial · funding · software
               </p>
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
+              <h1 className="display-1 reveal reveal-2 mt-6 text-[color:var(--ink)]">
+                Six services, run by the person who builds the software.
+              </h1>
+              <p className="lead reveal reveal-3 measure-wide mt-6 text-[color:var(--muted)]">
+                Transportation planning, GIS, aerial capture, grant strategy, and custom software.
+                Nathaniel Ford Redmond does the analysis and writes the code, so the judgment and the
+                tools stay in one head, and every deliverable can hold up in public.
+              </p>
+
+              <div className="reveal reveal-4 mt-9 flex flex-wrap items-center gap-3">
+                <Button asChild size="lg">
                   <Link href="/contact?intent=discovery">
-                    Schedule a 30-minute discovery call <ArrowRight className="ml-2 h-4 w-4" />
+                    Book a discovery call <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="w-full border-white/35 text-white hover:border-white hover:text-white sm:w-auto">
-                  <Link href="/contact?intent=discovery&topic=custom-software">Tell us what you need built</Link>
+                <Button asChild size="lg" variant="outline">
+                  <Link href="/contact?intent=discovery&topic=custom-software">
+                    Scope custom software
+                  </Link>
                 </Button>
+                <Link
+                  href="/open-source"
+                  className="inline-flex items-center gap-1.5 px-2 py-2 text-[0.95rem] font-medium text-[color:var(--muted)] transition-colors hover:text-[color:var(--pine)] dark:hover:text-[color:var(--pine-soft)]"
+                >
+                  or how the open-source model works
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
               </div>
-              <p className="mt-3 text-sm text-white/72">
-                You will leave the first call with a plain-English next step, rough level of effort, and the main risks to watch.
-              </p>
             </div>
 
-            <div className="rounded-2xl border border-white/18 bg-white/[0.06] p-5 backdrop-blur-sm">
-              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.13em] text-white/78">
-                What a buyer can expect
-              </p>
-              <dl className="mt-4 space-y-2.5">
-                {capabilityMatrix.map((item) => (
-                  <div key={item.label} className="flex items-baseline justify-between gap-4 border-b border-white/10 pb-2 last:border-b-0 last:pb-0">
-                    <dt className="text-xs font-semibold uppercase tracking-[0.1em] text-white/78">{item.label}</dt>
-                    <dd className="text-right text-sm text-white/88">{item.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      <Section spacing="sm" className="border-y border-[color:var(--line)] bg-[color:var(--background)]/90">
-        <Container>
-          <div className="grid gap-3 text-sm font-semibold text-[color:var(--foreground)]/78 md:grid-cols-4">
-            <div className="border-t border-[color:var(--line)] pt-3 md:border-t-0 md:border-l md:pl-4 md:pt-0">Northern California planning practice</div>
-            <div className="border-t border-[color:var(--line)] pt-3 md:border-t-0 md:border-l md:pl-4 md:pt-0">FAA Part 107 aerial capture</div>
-            <div className="border-t border-[color:var(--line)] pt-3 md:border-t-0 md:border-l md:pl-4 md:pt-0">Public-sector board-ready deliverables</div>
-            <div className="border-t border-[color:var(--line)] pt-3 md:border-t-0 md:border-l md:pl-4 md:pt-0">Open-source software with paid support</div>
-          </div>
-        </Container>
-      </Section>
-
-      <Section spacing="md" className="border-y border-[color:var(--line)] bg-[color:var(--background)]/85">
-        <Container>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <figure className="relative h-60 overflow-hidden rounded-2xl border border-[color:var(--line)]">
-              <Image
-                src="/images/site/drone-intersection-topdown-2026-03.jpg"
-                alt="Top-down drone capture of a civic intersection used for lane and safety analysis"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0f1f2f]/70 via-[#0f1f2f]/20 to-transparent" />
-              <figcaption className="absolute bottom-3 left-4 right-4 text-xs font-medium uppercase tracking-[0.12em] text-white/90">
-                Top-down capture · lane & safety analysis
-              </figcaption>
-            </figure>
-            <figure className="relative h-60 overflow-hidden rounded-2xl border border-[color:var(--line)]">
-              <Image
-                src="/images/site/drone-town-overview-2026-03.jpg"
-                alt="Oblique drone overview of a small-town street network and surrounding valley context"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0f1f2f]/70 via-[#0f1f2f]/20 to-transparent" />
-              <figcaption className="absolute bottom-3 left-4 right-4 text-xs font-medium uppercase tracking-[0.12em] text-white/90">
-                Oblique overview · corridor & context
-              </figcaption>
+            {/* Figure plate */}
+            <figure className="reveal reveal-5 lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full max-w-md">
+                <Image
+                  src="/images/site/drone-mainstreet-parking-2026-03.jpg"
+                  alt="Aerial view of a small-town main street showing the parking and curb layout used in a corridor study"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b120f]/78 via-transparent to-transparent" />
+                <figcaption className="plate-caption absolute inset-x-4 bottom-3.5 flex items-center justify-between">
+                  <span>Fig. 01 · Main-street corridor, aerial</span>
+                  <span className="text-[color:var(--copper)]">FAA Part 107</span>
+                </figcaption>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="provenance">Northern California</span>
+                <span className="provenance">Field capture → board packet</span>
+              </div>
             </figure>
           </div>
         </Container>
-      </Section>
+      </section>
 
-      <Section spacing="xl">
-        <Container>
-          <div className="mb-10 max-w-3xl">
-            <span className="nf-kicker"><span>Six integrated lanes</span><span>One delivery thread</span></span>
-            <h2 className="section-title mt-4 text-4xl text-[color:var(--ink)] md:text-5xl">
-              Each service stands alone. Together, they compress the delivery cycle.
+      {/* ── The six lanes ────────────────────────────────────── */}
+      <Section spacing="lg">
+        <Container size="xl">
+          <div className="max-w-2xl">
+            <p className="index-label">Six lanes</p>
+            <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+              Six services. Each stands on its own.
             </h2>
+            <p className="measure mt-5 text-[color:var(--muted)]">
+              Most projects pull from two or three of these. You do not have to buy the whole stack,
+              and I will tell you when a lane is not worth the spend.
+            </p>
           </div>
 
-          <div className="divide-y divide-[color:var(--line)] border-y border-[color:var(--line)]">
+          <ul className="mt-10 divide-y divide-[color:var(--line)] border-y border-[color:var(--line)]">
             {services.map((service, index) => {
               const Icon = service.icon
               const num = String(index + 1).padStart(2, '0')
               return (
-                <article
+                <li
                   key={service.name}
-                  className="group grid grid-cols-1 gap-0 bg-[color:var(--background)] transition-colors hover:bg-[color:var(--fog)]/42 lg:grid-cols-[5.5rem_minmax(0,1fr)_minmax(280px,0.72fr)_auto]"
+                  className="group relative grid gap-5 py-8 md:grid-cols-[3.25rem_minmax(0,1fr)_auto] md:items-start md:gap-8"
                 >
-                  <div className="flex items-start justify-between border-b border-[color:var(--line)] px-4 py-5 lg:block lg:border-b-0 lg:border-r lg:px-5 lg:py-7">
-                    <span className="font-display text-4xl font-semibold leading-none text-[color:var(--pine)]">{num}</span>
-                    <Icon className="h-5 w-5 text-[color:var(--copper)] lg:mt-8" aria-hidden="true" />
+                  <div className="flex items-center gap-3 md:flex-col md:items-start md:gap-4">
+                    <span className="data text-2xl font-medium text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
+                      {num}
+                    </span>
+                    <Icon
+                      className="h-5 w-5 text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]"
+                      aria-hidden="true"
+                    />
                   </div>
 
-                  <div className="border-b border-[color:var(--line)] px-5 py-5 lg:border-b-0 lg:border-r lg:px-7 lg:py-7">
-                    <h3 className="text-2xl font-semibold text-[color:var(--ink)] md:text-[1.7rem]">
-                      {service.name}
+                  <div>
+                    <h3 className="font-display text-2xl font-semibold text-[color:var(--ink)]">
+                      <Link
+                        href={service.href}
+                        className="after:absolute after:inset-0 group-hover:underline"
+                      >
+                        {service.name}
+                      </Link>
                     </h3>
-                    <p className="mt-2.5 max-w-2xl text-[1rem] text-[color:var(--foreground)]/78">
+                    <p className="measure mt-2.5 text-[color:var(--muted)]">
                       {service.description}
                     </p>
-                  </div>
-
-                  <div className="border-b border-[color:var(--line)] px-5 py-5 lg:border-b-0 lg:border-r lg:px-7 lg:py-7">
-                    <p className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/58">
-                      Typical outcomes
-                    </p>
-                    <ul className="mt-3 space-y-2">
-                      {service.outcomes.map((item) => (
-                        <li key={item} className="grid grid-cols-[1rem_1fr] gap-2 text-sm text-[color:var(--foreground)]/80">
-                          <span className="mt-2 h-px bg-[color:var(--copper)]" aria-hidden="true" />
+                    <ul className="mt-4 space-y-2">
+                      {service.deliverables.map((item) => (
+                        <li
+                          key={item}
+                          className="flex gap-2.5 text-sm leading-6 text-[color:var(--foreground)]/80"
+                        >
+                          <span
+                            className="mt-[0.6rem] h-px w-3 shrink-0 bg-[color:var(--copper)]"
+                            aria-hidden="true"
+                          />
                           <span>{item}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="flex items-center px-5 py-5 lg:px-7 lg:py-7">
-                    <Button asChild variant="outline" className="w-full whitespace-nowrap rounded-none border-[color:var(--pine)]/35 bg-transparent lg:w-auto">
-                      <Link href={service.href}>
-                        View details
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
+                  <div className="md:self-center md:pl-4">
+                    <span
+                      aria-hidden="true"
+                      className="inline-flex items-center gap-1.5 whitespace-nowrap text-sm font-medium text-[color:var(--pine)] group-hover:underline dark:text-[color:var(--pine-soft)]"
+                    >
+                      View details <ArrowRight className="h-4 w-4" />
+                    </span>
                   </div>
-                </article>
+                </li>
               )
             })}
+          </ul>
+        </Container>
+      </Section>
+
+      {/* ── Aerial evidence accent ───────────────────────────── */}
+      <Section
+        spacing="lg"
+        className="border-y border-[color:var(--line)] bg-[color:var(--surface-2)]/50"
+      >
+        <Container size="xl">
+          <div className="max-w-2xl">
+            <p className="index-label">Field to figure</p>
+            <h2 className="display-3 mt-5 text-[color:var(--ink)]">
+              Aerial capture, turned into something measurable.
+            </h2>
+            <p className="measure mt-4 text-[color:var(--muted)]">
+              FAA Part 107 flights produce orthomosaics and terrain models the rest of the work can
+              measure against, not just overhead photos for a slide.
+            </p>
           </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+            <figure className="plate aspect-[16/10]">
+              <Image
+                src="/images/site/drone-intersection-topdown-2026-03.jpg"
+                alt="Top-down drone capture of a civic intersection used for lane geometry and safety analysis"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0b120f]/78 via-transparent to-transparent" />
+              <figcaption className="plate-caption absolute inset-x-4 bottom-3.5 flex items-center justify-between">
+                <span>Top-down · lane &amp; safety analysis</span>
+                <span className="text-[color:var(--copper)]">Orthomosaic</span>
+              </figcaption>
+            </figure>
+            <figure className="plate aspect-[16/10]">
+              <Image
+                src="/images/site/drone-town-overview-2026-03.jpg"
+                alt="Oblique drone overview of a small-town street network and its surrounding valley context"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0b120f]/78 via-transparent to-transparent" />
+              <figcaption className="plate-caption absolute inset-x-4 bottom-3.5 flex items-center justify-between">
+                <span>Oblique · corridor &amp; context</span>
+                <span className="text-[color:var(--copper)]">Terrain model</span>
+              </figcaption>
+            </figure>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── The discovery call ───────────────────────────────── */}
+      <Section spacing="lg" className="worksurface">
+        <Container size="xl">
+          <div className="max-w-2xl">
+            <p className="index-label">The discovery call</p>
+            <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+              Thirty minutes, and you leave with a plan.
+            </h2>
+            <p className="measure mt-5 text-[color:var(--muted)]">
+              No sales team, no funnel. We talk through the problem, and you get concrete answers you
+              can take back to your team.
+            </p>
+          </div>
+
+          <ol className="mt-10 grid gap-5 md:grid-cols-3">
+            {firstCall.map((item, i) => (
+              <li key={item.heading} className="surface-card flex flex-col p-6">
+                <span className="data text-sm text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 className="mt-3 font-display text-xl font-semibold text-[color:var(--ink)]">
+                  {item.heading}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">{item.body}</p>
+              </li>
+            ))}
+          </ol>
         </Container>
       </Section>
 
       <SectionEndCTA
         heading="Not sure where to start?"
-        subhead="Start with a 30-minute intake and we’ll recommend a scope that matches your timeline, budget, and decision risk."
+        subhead="Start with a 30-minute call. You will leave with a recommended scope for your timeline, budget, and the risks that matter."
         primary={{ href: '/contact?intent=discovery', label: 'Schedule discovery' }}
         secondary={{ href: '/contact?intent=discovery&topic=custom-software', label: 'Scope a project' }}
       />

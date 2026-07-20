@@ -91,7 +91,8 @@ export const openSourceProjects: OpenSourceProject[] = [
       'Free, open-source planning software for rural RTPAs, counties, agencies, consultants, and public-interest planning teams — with projects, funding, maps, reports, evidence, and implementation work kept in one spine.',
     repoUrl: 'https://github.com/nfredmond/openplan',
     licenseSpdx: 'Apache-2.0',
-    demoUrl: 'https://openplan-natford.vercel.app',
+    // demoUrl omitted — the hosted demo is paused (returns HTTP 402).
+    // Re-add 'https://openplan-natford.vercel.app' once the deployment is live again.
     licenseNote: 'Source code is licensed under Apache-2.0 unless the repository marks a specific file or asset otherwise; see LICENSE-NOTICE for exclusions.',
     paidSupport:
       'Managed deployment, custom county/RTPA/agency editions, hosting/admin, role design, staff onboarding, GIS/data setup, agency-specific RTP/ATP/grant templates, support, and planning services.',

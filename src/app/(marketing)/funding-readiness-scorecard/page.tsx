@@ -4,8 +4,8 @@ import type { Metadata } from 'next'
 import { FundingReadinessScorecard } from '@/components/features/funding-readiness-scorecard'
 import { Container } from '@/components/layout/container'
 import { Section } from '@/components/layout/section'
-import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { ContourField } from '@/components/features/contour-field'
 import {
   fundingReadinessBands,
   fundingReadinessCommonGaps,
@@ -13,6 +13,12 @@ import {
 } from '@/data/funding-readiness-scorecard'
 
 const domains = Array.from(new Set(fundingReadinessQuestions.map((question) => question.domain)))
+
+const whatItIs = [
+  'A 10-question check grounded in real application packaging work.',
+  'Plain-English readiness bands: Needs Foundation Work, Almost Ready, Ready to Pursue.',
+  'A way to align staff internally before you spend scarce time on a live funding window.',
+]
 
 export const metadata: Metadata = {
   title: 'Funding Readiness Scorecard',
@@ -23,120 +29,159 @@ export const metadata: Metadata = {
 export default function FundingReadinessScorecardPage() {
   return (
     <>
-      <Section spacing="lg" className="border-b border-[color:var(--line)] bg-[color:var(--background)]">
-        <Container>
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.72fr_0.28fr] lg:items-end">
-            <div className="max-w-4xl">
-              <span className="pill">Resource</span>
-              <h1 className="section-title mt-5 text-5xl leading-[0.96] text-[color:var(--ink)] md:text-6xl">
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="worksurface relative overflow-hidden border-b border-[color:var(--line)]">
+        <ContourField animate className="opacity-90" />
+        <Container size="xl" className="relative py-16 md:py-24">
+          <div className="grid items-end gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+            <div>
+              <p className="index-label reveal reveal-1">Resource · Grants &amp; funding</p>
+              <h1 className="display-1 reveal reveal-2 mt-6 text-[color:var(--ink)]">
                 Funding Readiness Scorecard
               </h1>
-              <p className="mt-5 max-w-3xl text-lg text-[color:var(--foreground)]/82">
-                A practical self-check for rural transportation agencies, small towns, counties, RTPAs, transportation commissions,
-                and tribal governments that need to know whether a project package is actually ready for a funding push.
+              <p className="lead reveal reveal-3 measure-wide mt-6 text-[color:var(--muted)]">
+                A practical self-check for rural agencies, small towns, counties, RTPAs, transportation
+                commissions, and tribal governments that need to know whether a project package is
+                actually ready for a funding push.
               </p>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <div className="reveal reveal-4 mt-9 flex flex-col gap-3 sm:flex-row">
                 <Button asChild size="lg">
-                  <a href="#scorecard">Start the scorecard</a>
+                  <a href="#scorecard">
+                    Start the scorecard <ArrowRight className="h-4 w-4" />
+                  </a>
                 </Button>
                 <Button asChild variant="outline" size="lg">
                   <a href="/Funding_Readiness_Scorecard_Worksheet.pdf" download>
-                    <Download className="mr-2 h-4 w-4" />
+                    <Download className="h-4 w-4" />
                     Download worksheet
                   </a>
                 </Button>
               </div>
+              <p className="data reveal reveal-5 mt-7 text-xs text-[color:var(--muted)]">
+                10 questions · 20 points · 3 readiness bands
+              </p>
             </div>
 
-            <Card className="border-[color:var(--line)] bg-[color:var(--fog)]/42 text-[color:var(--ink)]">
-              <CardContent className="p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/62">What this is</p>
-                <ul className="mt-4 space-y-3 text-sm text-[color:var(--foreground)]/82">
-                  <li className="flex items-start gap-2.5">
-                    <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--copper)]" />
-                    <span>10-question readiness check grounded in real application packaging work.</span>
+            {/* What this is — a report plate, not a heading */}
+            <div className="surface-card reveal reveal-5 p-6 md:p-7 lg:justify-self-end">
+              <p className="label">What this is</p>
+              <ul className="mt-4 space-y-3.5">
+                {whatItIs.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm leading-6 text-[color:var(--muted)]">
+                    <ArrowRight
+                      className="mt-1 h-4 w-4 shrink-0 text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]"
+                      aria-hidden="true"
+                    />
+                    <span>{item}</span>
                   </li>
-                  <li className="flex items-start gap-2.5">
-                    <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--copper)]" />
-                    <span>Plain-English readiness bands: Needs Foundation Work, Almost Ready, and Ready to Pursue.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--copper)]" />
-                    <span>Useful for internal alignment before you spend scarce time on a live funding window.</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
+                ))}
+              </ul>
+            </div>
           </div>
         </Container>
-      </Section>
+      </section>
 
-      <Section spacing="md" className="border-y border-[color:var(--line)] bg-[color:var(--background)]/84">
-        <Container>
-          <div className="grid grid-cols-1 gap-5 lg:grid-cols-[0.62fr_0.38fr]">
-            <div>
-              <p className="pill mb-4">How to use it</p>
-              <h2 className="section-title text-4xl text-[color:var(--ink)] md:text-5xl">
+      {/* ── How to use it + the one honest caveat ────────────── */}
+      <Section spacing="lg">
+        <Container size="xl">
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <p className="index-label">How to use it</p>
+              <h2 className="display-2 mt-5 text-[color:var(--ink)]">
                 Pressure-test the package before the deadline pressure hits.
               </h2>
-              <p className="mt-4 max-w-3xl text-lg text-[color:var(--foreground)]/82">
-                The scorecard is designed to surface avoidable weakness early: fuzzy scope, shaky cost logic, unorganized evidence,
-                unclear approvals, or missing narrative support. It is not a promise of funding. It is a cleaner way to see what still needs work.
+              <p className="measure mt-5 text-[color:var(--muted)]">
+                The scorecard surfaces avoidable weakness early: fuzzy scope, shaky cost logic,
+                unorganized evidence, unclear approvals, or missing narrative support. Run it with the
+                staff who own each piece and you will know where the real gaps are before a deadline
+                forces the question.
               </p>
-              <div className="mt-5 rounded-2xl border border-[color:var(--line)] bg-[color:var(--background)] px-5 py-4 text-sm text-[color:var(--foreground)]/78">
-                <strong className="text-[color:var(--ink)]">Important note:</strong> This tool is a practical self-assessment. It does not determine grant eligibility,
-                regulatory sufficiency, board readiness, or award likelihood on its own.
+
+              <div className="surface-inset mt-7 max-w-xl p-5">
+                <p className="label">One honest caveat</p>
+                <p className="mt-3 text-sm leading-6 text-[color:var(--foreground)]/85">
+                  A high score is not a guarantee of funding. This is a self-check, not a ruling on
+                  grant eligibility, regulatory sufficiency, or award likelihood. It tells you whether
+                  the package is organized enough to defend, and what to fix first.
+                </p>
               </div>
             </div>
 
-            <Card>
-              <CardContent className="p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/62">Domains covered</p>
-                <div className="mt-4 flex flex-wrap gap-2.5">
-                  {domains.map((domain) => (
-                    <span
-                      key={domain}
-                      className="inline-flex rounded-full border border-[color:var(--line)] bg-[color:var(--sand)]/42 px-3 py-1.5 text-sm font-semibold text-[color:var(--ink)]"
-                    >
-                      {domain}
-                    </span>
+            <div>
+              <p className="label">Domains covered</p>
+              <ul className="mt-4 flex flex-wrap gap-2.5">
+                {domains.map((domain) => (
+                  <li
+                    key={domain}
+                    className="inline-flex rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-3 py-1.5 text-sm font-medium text-[color:var(--ink)]"
+                  >
+                    {domain}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-8">
+                <p className="label">Common gaps we see</p>
+                <ul className="mt-4 divide-y divide-[color:var(--line)] border-y border-[color:var(--line)]">
+                  {fundingReadinessCommonGaps.map((gap) => (
+                    <li key={gap} className="flex items-start gap-3 py-4 text-sm leading-6 text-[color:var(--muted)]">
+                      <ClipboardList
+                        className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]"
+                        aria-hidden="true"
+                      />
+                      <span>{gap}</span>
+                    </li>
                   ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── Result bands ─────────────────────────────────────── */}
+      <Section spacing="lg" className="border-y border-[color:var(--line)] bg-[color:var(--surface-2)]/50">
+        <Container size="xl">
+          <div className="max-w-2xl">
+            <p className="index-label">Result bands</p>
+            <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+              Three outcomes, one clear next step.
+            </h2>
+            <p className="measure mt-5 text-[color:var(--muted)]">
+              Score each question the same way, then read your total against these bands. Each one comes
+              with the move that matters most from where you stand.
+            </p>
+          </div>
+
+          <ol className="mt-10 grid gap-5 md:grid-cols-3">
+            {fundingReadinessBands.map((band, i) => (
+              <li key={band.name} className="surface-card flex flex-col p-6 md:p-7">
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="data text-sm text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="data text-xs text-[color:var(--muted)]">{band.rangeLabel}</span>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        </Container>
-      </Section>
-
-      <Section spacing="xl">
-        <Container>
-          <div className="max-w-3xl">
-            <p className="pill mb-4">Result bands</p>
-            <h2 className="section-title text-4xl text-[color:var(--ink)] md:text-5xl">Three simple outcomes. Clear next step.</h2>
-          </div>
-
-          <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
-            {fundingReadinessBands.map((band) => (
-              <Card key={band.name} hover className="h-full">
-                <CardContent className="flex h-full flex-col p-6">
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/62">{band.rangeLabel}</p>
-                  <h3 className="mt-3 text-2xl font-semibold text-[color:var(--ink)]">{band.name}</h3>
-                  <p className="mt-3 text-sm text-[color:var(--foreground)]/78">{band.summary}</p>
-                  <p className="mt-4 text-sm text-[color:var(--foreground)]/78">{band.guidance}</p>
-                </CardContent>
-              </Card>
+                <h3 className="display-3 mt-3 text-[color:var(--ink)]">{band.name}</h3>
+                <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">{band.summary}</p>
+                <p className="mt-4 border-t border-[color:var(--line)] pt-4 text-sm leading-6 text-[color:var(--foreground)]/85">
+                  {band.guidance}
+                </p>
+              </li>
             ))}
-          </div>
+          </ol>
         </Container>
       </Section>
 
-      <Section id="scorecard" spacing="xl" className="border-y border-[color:var(--line)] bg-[color:var(--fog)]/64">
-        <Container>
-          <div className="mb-8 max-w-3xl">
-            <p className="pill mb-4">Interactive self-assessment</p>
-            <h2 className="section-title text-4xl text-[color:var(--ink)] md:text-5xl">Score your current package.</h2>
-            <p className="mt-4 text-lg text-[color:var(--foreground)]/82">
-              Answer each question using the same standard: not in place, partial, or ready. Once complete, you will see your current readiness band and a recommended next move.
+      {/* ── Interactive scorecard ────────────────────────────── */}
+      <Section id="scorecard" spacing="xl" className="worksurface border-b border-[color:var(--line)]">
+        <Container size="xl">
+          <div className="mb-10 max-w-2xl">
+            <p className="index-label">Interactive self-assessment</p>
+            <h2 className="display-2 mt-5 text-[color:var(--ink)]">Score your current package.</h2>
+            <p className="measure mt-5 text-[color:var(--muted)]">
+              Answer each question using the same standard: not in place, partial, or ready. Once you
+              finish, you will see your current readiness band and a recommended next move.
             </p>
           </div>
 
@@ -144,77 +189,52 @@ export default function FundingReadinessScorecardPage() {
         </Container>
       </Section>
 
-      <Section spacing="xl">
-        <Container>
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <Card>
-              <CardContent className="p-6 sm:p-7">
-                <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[color:var(--sand)] text-[color:var(--pine)]">
-                  <ClipboardList className="h-5 w-5" />
-                </div>
-                <h2 className="mt-4 text-3xl font-semibold text-[color:var(--ink)]">Common gaps we see</h2>
-                <ul className="mt-5 space-y-3">
-                  {fundingReadinessCommonGaps.map((gap) => (
-                    <li key={gap} className="flex items-start gap-2.5 text-sm text-[color:var(--foreground)]/78">
-                      <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--copper)]" />
-                      <span>{gap}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6 sm:p-7">
-                <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[color:var(--sand)] text-[color:var(--pine)]">
-                  <FileText className="h-5 w-5" />
-                </div>
-                <h2 className="mt-4 text-3xl font-semibold text-[color:var(--ink)]">Worksheet download</h2>
-                <p className="mt-4 text-[0.98rem] text-[color:var(--foreground)]/78">
-                  Prefer an offline version for internal staff review or a board packet prep meeting? Download the worksheet PDF and mark the same ten questions outside the browser.
-                </p>
-                <ul className="mt-5 space-y-3 text-sm text-[color:var(--foreground)]/78">
-                  <li className="flex items-start gap-2.5">
-                    <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--copper)]" />
-                    <span>Same ten scoring questions and result bands as the web version.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--copper)]" />
-                    <span>Extra notes space for ownership, missing evidence, and next actions.</span>
-                  </li>
-                </ul>
-                <Button asChild className="mt-6" size="lg">
+      {/* ── Worksheet + closing CTA ──────────────────────────── */}
+      <Section spacing="lg">
+        <Container size="xl">
+          <div className="grid gap-6 lg:grid-cols-2">
+            <article className="surface-card flex flex-col p-7 md:p-8">
+              <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[color:var(--surface-2)] text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]">
+                <FileText className="h-5 w-5" aria-hidden="true" />
+              </div>
+              <h2 className="display-3 mt-5 text-[color:var(--ink)]">Keep an offline copy.</h2>
+              <p className="mt-4 text-sm leading-6 text-[color:var(--muted)]">
+                Prefer to mark it up in a board packet prep meeting or route it to staff for review? The
+                worksheet PDF carries the same ten questions and result bands, plus notes space for
+                ownership, missing evidence, and next actions.
+              </p>
+              <div className="mt-6">
+                <Button asChild size="lg">
                   <a href="/Funding_Readiness_Scorecard_Worksheet.pdf" download>
-                    <Download className="mr-2 h-4 w-4" />
+                    <Download className="h-4 w-4" />
                     Download worksheet PDF
                   </a>
                 </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </Container>
-      </Section>
+              </div>
+            </article>
 
-      <Section spacing="lg" className="border-y border-[color:var(--line)] bg-[color:var(--sand)]/48">
-        <Container>
-          <div className="rounded-3xl border border-[color:var(--line)] bg-[color:var(--background)]/76 px-6 py-10 text-center md:px-10 md:py-12">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/62">Next step</p>
-            <h2 className="section-title mt-3 text-4xl text-[color:var(--ink)] md:text-5xl">
-              Want a tighter view of what to fix first?
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-[color:var(--foreground)]/82">
-              Nat Ford can help translate your score into a focused action plan: what to define, what evidence to organize, and what pieces need to be submission-ready before the next funding window.
-            </p>
-            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-              <Button asChild size="lg">
-                <Link href="/contact/funding-readiness">Request funding readiness review</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="/services/grants">
-                  View grant services <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
+            <article className="surface-card flex flex-col p-7 md:p-8">
+              <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[color:var(--surface-2)] text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]">
+                <ClipboardList className="h-5 w-5" aria-hidden="true" />
+              </div>
+              <h2 className="display-3 mt-5 text-[color:var(--ink)]">
+                Want a tighter view of what to fix first?
+              </h2>
+              <p className="mt-4 text-sm leading-6 text-[color:var(--muted)]">
+                Nat Ford can turn your score into a focused action plan: what to define, what evidence to
+                organize, and what pieces need to be submission-ready before the next funding window.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Button asChild size="lg">
+                  <Link href="/contact/funding-readiness">
+                    Request a review <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <Link href="/services/grants">View grant services</Link>
+                </Button>
+              </div>
+            </article>
           </div>
         </Container>
       </Section>

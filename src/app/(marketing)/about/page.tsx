@@ -1,32 +1,53 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import { Award, Code2, Layers, Mail, MapPin } from 'lucide-react'
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Linkedin,
+  Mail,
+  MapPin,
+  Layers,
+  FileText,
+  Plane,
+} from 'lucide-react'
 import { Container } from '@/components/layout/container'
 import { Section } from '@/components/layout/section'
-import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { ContourField } from '@/components/features/contour-field'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Nathaniel Ford Redmond is a transportation planner and GIS practitioner based in Northern California and serving agencies across the United States.',
+    'Nathaniel Ford Redmond is a transportation planner and GIS practitioner in the Sierra foothills of Northern California who also builds the open-source planning software. FAA Part 107 remote pilot.',
 }
 
-const expertise = [
+const facts = [
+  { label: 'Base', value: 'Sierra foothills, near Grass Valley, CA' },
+  { label: 'Reach', value: 'Remote-first across the U.S.; field work when it helps' },
+  { label: 'Certification', value: 'FAA Part 107 remote pilot' },
+]
+
+const capabilities = [
   {
     icon: MapPin,
-    title: 'Regional & Transportation Planning',
-    items: ['RTP/ATP development', 'Complete streets design support', 'VMT and carbon reduction analysis', 'Community-facing implementation strategy'],
+    title: 'Regional & transportation planning',
+    body: 'RTPs, ATPs, complete-streets support, VMT and carbon analysis, and the board materials that carry a recommendation.',
   },
   {
     icon: Layers,
-    title: 'GIS & Spatial Analytics',
-    items: ['PostGIS data systems', 'Interactive planning maps', 'Safety and accessibility diagnostics', 'Automated map/report pipelines'],
+    title: 'GIS & spatial analysis',
+    body: 'PostGIS data systems, interactive planning maps, safety and access diagnostics, and automated map and report pipelines.',
   },
   {
-    icon: Code2,
-    title: 'Funding & Grant Competitiveness',
-    items: ['Program fit and positioning', 'Narrative development', 'Benefit-cost framing', 'Grant package execution support'],
+    icon: FileText,
+    title: 'Grants & funding',
+    body: 'Program fit and positioning, narrative development, benefit-cost framing, and grant packages carried through submission.',
+  },
+  {
+    icon: Plane,
+    title: 'Aerial mapping',
+    body: 'FAA Part 107 drone capture, orthomosaics, and terrain models for corridor and site work.',
   },
 ]
 
@@ -36,19 +57,19 @@ const priorEmployment = [
     employer: 'Green DOT Transportation Solutions',
     years: '2021–2025',
     highlights: [
-      'Led and supported RTP/ATP planning across multiple Northern California counties as a representative delivery base now applied nationwide',
-      'Delivered VMT and carbon reduction integration work tied to implementable CIP pathways',
-      'Contributed to numerous grant applications including ATP, RAISE, TIRCP, and PROTECT',
+      'Led and supported RTP and ATP work across more than a dozen Northern California counties.',
+      'Built VMT and carbon-reduction analysis into implementable CIP pathways.',
+      'Contributed to grant applications including ATP, RAISE, TIRCP, and PROTECT.',
     ],
   },
   {
     title: 'Transportation Coordinator',
-    employer: 'gRide (Genentech commuter program)',
+    employer: 'gRide, Genentech commuter program',
     years: '2018–2021',
     highlights: [
-      'Coordinated multimodal commuter services including early electric bus deployment',
-      'Managed cross-system operations with transit, shuttle, ferry, and carpool components',
-      'Supported coalition coordination and commuter performance reporting',
+      'Coordinated multimodal commuter services, including an early electric-bus deployment.',
+      'Ran cross-system operations spanning transit, shuttle, ferry, and carpool.',
+      'Supported coalition coordination and commuter performance reporting.',
     ],
   },
   {
@@ -56,9 +77,9 @@ const priorEmployment = [
     employer: 'San Francisco County Transportation Authority',
     years: '2017–2018',
     highlights: [
-      'Supported ConnectSF and Vision Zero analysis and reporting',
-      'Assisted with survey work, community workshops, and policy research',
-      'Produced planning support materials for technical and public audiences',
+      'Supported ConnectSF and Vision Zero analysis and reporting.',
+      'Assisted with survey work, community workshops, and policy research.',
+      'Produced planning materials for technical and public audiences.',
     ],
   },
 ]
@@ -83,172 +104,252 @@ const counties = [
 export default function AboutPage() {
   return (
     <>
-      <Section spacing="lg" className="hero-mesh text-white">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 items-start">
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="worksurface relative overflow-hidden border-b border-[color:var(--line)]">
+        <ContourField animate className="opacity-90" />
+        <Container size="xl" className="relative py-16 md:py-24 lg:py-28">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
             <div>
-              <span className="pill">Founder Profile</span>
-              <h1 className="section-title mt-5 text-5xl md:text-6xl leading-[0.96] text-white">Nathaniel Ford Redmond</h1>
-              <p className="mt-5 text-lg text-white/85 max-w-3xl">
-                Nathaniel is a transportation planner and GIS practitioner based in Northern California and serving
-                agencies across the United States. His operating style is straightforward: clear assumptions,
-                defensible methods, and recommendations that can actually be funded and delivered.
+              <p className="index-label reveal reveal-1">Founder profile</p>
+              <h1 className="display-1 reveal reveal-2 mt-6 text-[color:var(--ink)]">
+                Nathaniel Ford Redmond
+              </h1>
+              <p className="lead reveal reveal-3 measure-wide mt-6 text-[color:var(--muted)]">
+                I&rsquo;m a transportation planner and GIS practitioner in the Sierra foothills of
+                Northern California. For most of a decade I&rsquo;ve delivered the everyday work of a
+                small planning shop: regional and active transportation plans, VMT and carbon
+                analysis, grant packages, and the maps a board actually reads.
               </p>
-              <p className="mt-4 text-base text-white/78 max-w-3xl">
-                He combines planning discipline with technical systems — including spatial data engineering,
-                automation, and product thinking — to reduce delivery friction from analysis through execution.
+              <p className="reveal reveal-3 measure-wide mt-4 text-[color:var(--muted)]">
+                I also build the software that work runs on, and I keep it open. The same person
+                writes the code and the memo, so the methods stay legible, the assumptions are
+                stated, and the recommendation is something you can fund and build.
               </p>
 
-              <div className="mt-7 flex flex-col sm:flex-row gap-3">
-                <Button asChild size="lg" variant="secondary">
-                  <Link href="/contact?intent=discovery">Book Intro Call</Link>
+              <div className="reveal reveal-4 mt-9 flex flex-wrap items-center gap-3">
+                <Button asChild size="lg">
+                  <Link href="/contact?intent=discovery">
+                    Talk to Nat <ArrowRight className="h-4 w-4" />
+                  </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-white/35 text-white hover:bg-white/10 hover:text-white">
-                  <a href="https://linkedin.com/in/nfredmond" target="_blank" rel="noopener noreferrer">
-                    View LinkedIn
-                  </a>
-                </Button>
+                <a
+                  href="https://www.linkedin.com/in/nfredmond"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline btn-lg"
+                >
+                  <Linkedin className="h-4 w-4" aria-hidden="true" /> LinkedIn
+                </a>
               </div>
+
+              <dl className="reveal reveal-5 mt-9 grid gap-x-8 gap-y-4 border-t border-[color:var(--line)] pt-7 sm:grid-cols-3">
+                {facts.map((fact) => (
+                  <div key={fact.label}>
+                    <dt className="label">{fact.label}</dt>
+                    <dd className="mt-1.5 text-sm leading-6 text-[color:var(--muted)]">
+                      {fact.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </div>
 
-            <Card className="bg-white/95">
-              <CardContent className="p-6 space-y-4">
+            {/* Figure plate — the headshot as a report plate */}
+            <figure className="reveal reveal-5 lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full max-w-sm">
+                <Image
+                  src="/images/headshot.png"
+                  alt="Portrait of Nathaniel Ford Redmond, founder of Nat Ford Planning & Analysis"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 36vw"
+                  className="object-cover object-[center_25%]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b120f]/72 via-transparent to-transparent" />
+                <figcaption className="plate-caption absolute inset-x-4 bottom-3.5 flex items-center justify-between">
+                  <span>Nathaniel Ford Redmond</span>
+                  <span className="text-[color:var(--copper)]">Grass Valley, CA</span>
+                </figcaption>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="provenance">FAA Part 107</span>
+                <a
+                  href="https://www.linkedin.com/in/nfredmond"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="provenance"
+                >
+                  <Linkedin className="h-3.5 w-3.5" aria-hidden="true" />
+                  linkedin.com/in/nfredmond
+                </a>
+              </div>
+            </figure>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── What I do ────────────────────────────────────────── */}
+      <Section spacing="lg">
+        <Container size="xl">
+          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+            <div>
+              <p className="index-label">What I do</p>
+              <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+                A planner who ships the software too.
+              </h2>
+              <p className="measure mt-5 text-[color:var(--muted)]">
+                The planning side is the core of the practice. The software exists to make that work
+                reusable and auditable, not to replace the judgment a corridor or a board still
+                needs. Both come from the same desk.
+              </p>
+              <Link
+                href="/services"
+                className="mt-6 inline-flex items-center gap-1.5 font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]"
+              >
+                See the services <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+
+            <ul className="grid gap-px overflow-hidden rounded-2xl border border-[color:var(--line)] bg-[color:var(--line)] sm:grid-cols-2">
+              {capabilities.map((cap) => {
+                const Icon = cap.icon
+                return (
+                  <li key={cap.title} className="flex h-full items-start gap-4 bg-[color:var(--surface)] p-6">
+                    <Icon
+                      className="mt-0.5 h-5 w-5 shrink-0 text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]"
+                      aria-hidden="true"
+                    />
+                    <div>
+                      <h3 className="font-display text-xl font-semibold text-[color:var(--ink)]">
+                        {cap.title}
+                      </h3>
+                      <p className="mt-1.5 text-sm leading-6 text-[color:var(--muted)]">{cap.body}</p>
+                    </div>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── Where the experience comes from ──────────────────── */}
+      <Section spacing="lg" className="border-y border-[color:var(--line)] bg-[color:var(--surface-2)]/50">
+        <Container size="xl">
+          <div className="max-w-2xl">
+            <p className="index-label">Prior roles</p>
+            <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+              Where the experience comes from.
+            </h2>
+            <p className="measure mt-5 text-[color:var(--muted)]">
+              Nat Ford Planning is newer than the record below. These are the roles that built the
+              method, most of it in rural Northern California.
+            </p>
+          </div>
+
+          <ul className="mt-10 divide-y divide-[color:var(--line)] border-y border-[color:var(--line)]">
+            {priorEmployment.map((role) => (
+              <li
+                key={role.employer}
+                className="grid gap-4 py-8 md:grid-cols-[minmax(0,16rem)_1fr] md:gap-10"
+              >
                 <div>
-                  <p className="text-xs uppercase tracking-[0.15em] text-[color:var(--foreground)]/68">Base</p>
-                  <p className="mt-1 font-semibold text-[color:var(--ink)]">Sierra Foothills · Near Grass Valley, CA</p>
-                </div>
-                <div className="h-px bg-[color:var(--line)]" />
-                <div>
-                  <p className="text-xs uppercase tracking-[0.15em] text-[color:var(--foreground)]/68">Email</p>
-                  <a className="mt-1 inline-block font-semibold text-[color:var(--pine)] hover:underline" href="mailto:nathaniel@natfordplanning.com">
-                    nathaniel@natfordplanning.com
-                  </a>
-                </div>
-                <div>
-                  <p className="text-xs uppercase tracking-[0.15em] text-[color:var(--foreground)]/68">Phone</p>
-                  <p className="mt-1 font-semibold text-[color:var(--ink)]">530-492-9775</p>
-                </div>
-                <div>
-                  <p className="text-xs uppercase tracking-[0.15em] text-[color:var(--foreground)]/68">Coverage</p>
-                  <p className="mt-1 text-sm text-[color:var(--foreground)]/78">
-                    Remote-first across the United States with in-person facilitation and field work when needed.
+                  <p className="data text-sm text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
+                    {role.years}
+                  </p>
+                  <h3 className="mt-2 font-display text-2xl font-semibold text-[color:var(--ink)]">
+                    {role.title}
+                  </h3>
+                  <p className="mt-1 text-sm font-medium text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]">
+                    {role.employer}
                   </p>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        </Container>
-      </Section>
-
-      <Section spacing="xl">
-        <Container>
-          <div className="max-w-3xl">
-            <span className="pill">Core Capabilities</span>
-            <h2 className="section-title mt-4 text-4xl md:text-5xl text-[color:var(--ink)]">Technical breadth, implementation discipline.</h2>
-          </div>
-
-          <div className="mt-9 grid grid-cols-1 md:grid-cols-3 gap-5">
-            {expertise.map((area) => {
-              const Icon = area.icon
-              return (
-                <Card key={area.title} hover>
-                  <CardContent className="p-6">
-                    <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[color:var(--sand)] text-[color:var(--pine)]">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <h3 className="mt-4 text-xl font-semibold text-[color:var(--ink)]">{area.title}</h3>
-                    <ul className="mt-3 space-y-2">
-                      {area.items.map((item) => (
-                        <li key={item} className="text-sm text-[color:var(--foreground)]/78">
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )
-            })}
-          </div>
-        </Container>
-      </Section>
-
-      <Section spacing="xl" className="bg-[color:var(--fog)]/65 border-y border-[color:var(--line)]">
-        <Container>
-          <div className="max-w-4xl">
-            <span className="pill">Background</span>
-            <h2 className="section-title mt-4 text-4xl md:text-5xl text-[color:var(--ink)]">Prior roles that shaped the operating approach.</h2>
-          </div>
-
-          <div className="mt-8 space-y-4">
-            {priorEmployment.map((role) => (
-              <Card key={role.employer}>
-                <CardContent className="p-6">
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                    <div>
-                      <h3 className="text-2xl font-semibold text-[color:var(--ink)]">{role.title}</h3>
-                      <p className="text-[color:var(--pine)] font-medium">{role.employer}</p>
-                    </div>
-                    <p className="text-sm font-semibold text-[color:var(--foreground)]/65">{role.years}</p>
-                  </div>
-
-                  <ul className="mt-4 space-y-2.5">
-                    {role.highlights.map((highlight) => (
-                      <li key={highlight} className="flex gap-2.5 items-start text-sm text-[color:var(--foreground)]/78">
-                        <Award className="mt-0.5 h-4 w-4 text-[color:var(--copper)] shrink-0" />
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+                <ul className="space-y-2.5 self-center">
+                  {role.highlights.map((highlight) => (
+                    <li
+                      key={highlight}
+                      className="flex items-start gap-3 text-sm leading-6 text-[color:var(--muted)]"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--copper)]"
+                      />
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </li>
             ))}
-          </div>
+          </ul>
         </Container>
       </Section>
 
+      {/* ── Counties (experience base) ───────────────────────── */}
       <Section spacing="lg">
-        <Container>
-          <div className="max-w-4xl">
-            <span className="pill">Representative Regional Experience</span>
-            <h2 className="section-title mt-4 text-4xl text-[color:var(--ink)]">Selected counties served in Northern California (experience base, now delivered nationwide).</h2>
-            <div className="mt-5 flex flex-wrap gap-2.5">
-              {counties.map((county) => (
-                <span
-                  key={county}
-                  className="inline-flex items-center rounded-full border border-[color:var(--line)] bg-[color:var(--background)] px-3 py-1.5 text-sm text-[color:var(--foreground)]/85"
-                >
-                  {county} County
-                </span>
-              ))}
-            </div>
+        <Container size="xl">
+          <div className="max-w-3xl">
+            <p className="index-label">Regional experience</p>
+            <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+              Counties the work has touched.
+            </h2>
+            <p className="measure mt-5 text-[color:var(--muted)]">
+              These Northern California counties are where the regional planning experience was
+              earned, delivered while I was at Green DOT. Read it as the ground the practice stands
+              on, not a Nat Ford client list.
+            </p>
           </div>
+
+          <ul className="mt-8 flex flex-wrap gap-2.5">
+            {counties.map((county) => (
+              <li
+                key={county}
+                className="data inline-flex items-center rounded-full border border-[color:var(--line)] bg-[color:var(--surface)] px-3 py-1.5 text-sm text-[color:var(--muted)]"
+              >
+                {county} County
+              </li>
+            ))}
+          </ul>
         </Container>
       </Section>
 
-      <Section spacing="lg" className="border-y border-[color:var(--line)] bg-[color:var(--fog)]/78 text-[color:var(--ink)] dark:bg-[#101c27] dark:text-white">
-        <Container>
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="section-title text-4xl text-[color:var(--ink)] dark:text-white md:text-5xl">Need a planner who can execute, not just advise?</h2>
-            <p className="mt-4 text-lg text-[color:var(--foreground)]/82 dark:text-white/80">Start with a focused intake and we’ll map the fastest credible path from analysis to implementation.</p>
-            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-              <Button asChild variant="secondary" size="lg">
-                <Link href="/contact?intent=discovery">Schedule Consultation</Link>
+      {/* ── Closing / contact ────────────────────────────────── */}
+      <section className="on-dark relative overflow-hidden border-t border-white/10 bg-[#0b120f] text-white">
+        <ContourField className="opacity-60" />
+        <Container size="xl" className="relative py-16 md:py-24">
+          <div className="max-w-2xl">
+            <p className="index-label text-[color:var(--copper)]">Get in touch</p>
+            <h2 className="display-2 mt-5 text-white">Tell me what you&rsquo;re working on.</h2>
+            <p className="mt-5 text-white/70">
+              If you run a small agency, a consultancy, or a public-interest team and you&rsquo;re
+              trying to do more with a lean crew, that is exactly who this is for. No sales team, no
+              funnel. Start with a scoping conversation and we&rsquo;ll map the fastest credible path
+              from analysis to implementation.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <Button asChild size="lg">
+                <Link href="/contact?intent=discovery">
+                  Talk to Nat <ArrowRight className="h-4 w-4" />
+                </Link>
               </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="border-[color:var(--line)] text-[color:var(--ink)] hover:border-[color:var(--pine)] hover:bg-[color:var(--background)] hover:text-[color:var(--pine)] dark:border-white/35 dark:text-white dark:hover:bg-white/10 dark:hover:text-white"
+              <a
+                href="https://www.linkedin.com/in/nfredmond"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-white/80 hover:text-white"
               >
-                <a href="mailto:nathaniel@natfordplanning.com">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Send Email
-                </a>
-              </Button>
+                <Linkedin className="h-4 w-4" aria-hidden="true" /> LinkedIn
+                <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </a>
+              <a
+                href="mailto:nathaniel@natfordplanning.com"
+                className="inline-flex items-center gap-1.5 font-mono text-sm text-white/80 hover:text-white"
+              >
+                <Mail className="h-4 w-4" aria-hidden="true" /> nathaniel@natfordplanning.com
+              </a>
             </div>
           </div>
         </Container>
-      </Section>
+      </section>
     </>
   )
 }

@@ -1,359 +1,436 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { CheckCircle2, ExternalLink, GitFork, Map, ShieldCheck, Sparkles, Wrench } from 'lucide-react'
+import {
+  ArrowRight,
+  ArrowUpRight,
+  CheckCircle2,
+  ExternalLink,
+  FileCheck2,
+  Gauge,
+  Github,
+  Map as MapIcon,
+  ShieldCheck,
+  Wrench,
+} from 'lucide-react'
 import { Container } from '@/components/layout/container'
 import { Section } from '@/components/layout/section'
-import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { implementationOffers, licenseLabel, openSourceProjects, readinessLabel, readinessNote } from '@/data/open-source-projects'
+import { ContourField } from '@/components/features/contour-field'
+import {
+  implementationOffers,
+  licenseLabel,
+  openSourceProjects,
+  readinessLabel,
+  readinessNote,
+  sourceAvailabilityLabel,
+} from '@/data/open-source-projects'
 
 export const metadata: Metadata = {
   title: 'OpenPlan',
   description:
-    'OpenPlan is free, open-source planning software for keeping projects, decisions, risks, datasets, maps, grants, and reports in one operational thread.',
+    'OpenPlan is free, open-source planning software: a living map behind every screen, grant narratives grounded to verifiable facts, a CEQA §15064.3 VMT screen, and a Planner Agent that acts only through audited, single-use approvals.',
 }
 
-const openPlanProject = openSourceProjects.find((project) => project.slug === 'openplan')
-
-const continuityLanes = [
+const capabilities = [
   {
-    title: 'Projects stay legible',
-    body: 'Scope, owners, blockers, and deliverables stay visible instead of dissolving into email and meeting notes.',
+    icon: MapIcon,
+    heading: 'A living map behind every screen',
+    body: 'Projects, corridors, RTP cycles, equity tracts, and public comments are layers you click, not static exhibits. The map is the worksurface, not a screenshot pasted into a report.',
   },
   {
-    title: 'Map context stays attached',
-    body: 'Analysis, linked datasets, and reporting context remain connected to the actual work instead of becoming isolated screenshots.',
+    icon: FileCheck2,
+    heading: 'Grant narratives that ground every fact',
+    body: 'The narrative drafter grounds every factual sentence to a verifiable workspace fact. Sentences it cannot ground get flagged, so a reviewer sees exactly what still needs a source before it goes to a funder.',
   },
   {
-    title: 'Risks and decisions stay alive',
-    body: 'The product is shaped around operational memory, not just dashboard snapshots.',
+    icon: Gauge,
+    heading: 'A CEQA §15064.3 VMT screen with a statutory memo',
+    body: 'Run a vehicle-miles-traveled screen over live Census and OSM data, then export a §15064.3 memo you can attach to the record.',
+  },
+  {
+    icon: ShieldCheck,
+    heading: 'A Planner Agent that keeps a ledger',
+    body: 'The agent is grounded in your workspace and acts only through hash-verified, single-use, time-limited approvals. Every action lands on a visible audit ledger.',
   },
 ]
 
 const fitProfiles = [
   'Rural RTPAs, counties, tribes, and transportation commissions',
-  'Small and mid-sized public agencies with real delivery pressure',
-  'Consultants supporting county, regional, rural, or tribal planning work',
-  'Lean teams that need better continuity, auditability, and follow-through',
+  'Small and mid-sized public agencies under real delivery pressure',
+  'Consultants supporting county, regional, and tribal planning work',
+  'Lean teams that need continuity, auditability, and follow-through',
 ]
 
 const goodFitSignals = [
-  'You already have active projects, recurring meetings, and real delivery handoffs to manage.',
-  'You want cleaner continuity across project state, map context, risks, grants, programs, and reporting.',
-  'You are comfortable using an open-source tool that can be forked, extended, and adapted to your local workflow.',
-]
-
-const managedSupportSignals = [
-  'You want Nat Ford to host, configure, administer, and monitor OpenPlan for your team.',
-  'You need a custom agency or company edition with your data model, branding, roles, and reporting templates.',
-  'You want onboarding, training, role/access setup, scoped priority-support terms, and merge-forward maintenance.',
+  'You have active projects, recurring meetings, and real handoffs to keep straight.',
+  'You want continuity across project state, maps, risks, grants, and reporting.',
+  'You are comfortable running open-source software you can fork and adapt.',
 ]
 
 const faqItems = [
   {
     question: 'Is OpenPlan free?',
     answer:
-      'Yes. The OpenPlan codebase is public and licensed for open-source reuse under the repository license. Teams can inspect, fork, or self-host it. Nat Ford charges for managed deployment, custom county/RTPA/agency editions, hosting/admin, onboarding, support, and surrounding planning services.',
+      'Yes. The code is public under Apache-2.0. You can inspect it, fork it, or self-host it. The paid side is managed deployment, a custom agency edition, onboarding, and support.',
   },
   {
     question: 'What is OpenPlan?',
     answer:
-      'OpenPlan is modular planning software designed to keep projects, decisions, risks, datasets, map-based analysis, funding, grants, programs, engagement, evidence packets, and reports in one operational thread.',
+      'Planning software that keeps projects, funding, maps, reports, and evidence on one spine, with a living map behind every screen and provenance on every number.',
   },
   {
     question: 'Who is it for?',
     answer:
-      'The strongest fit today is rural RTPAs, counties, tribes, transportation commissions, lean public-sector planning teams, and consultants supporting regional planning work.',
+      'Rural RTPAs, counties, tribes, and transportation commissions; small and mid-sized public agencies; and consultants supporting regional planning work.',
   },
   {
-    question: 'How is this different from a normal dashboard?',
+    question: 'How is it different from a dashboard?',
     answer:
-      'A dashboard reports status. OpenPlan is being built to preserve context across projects, decisions, meetings, datasets, maps, grants, and outputs so teams can move from evidence to action without losing the thread.',
+      'A dashboard reports status. OpenPlan holds the context: project state, map, decisions, grants, and evidence stay connected, so the next decision arrives with its sources attached.',
+  },
+  {
+    question: 'What does the AI actually do?',
+    answer:
+      'It drafts grant narratives grounded to workspace facts, and it runs a Planner Agent. The agent acts only through hash-verified, single-use, time-limited approvals, and every action is on a visible audit ledger. It supports review; it does not replace it.',
+  },
+  {
+    question: 'Can it run a CEQA VMT screen?',
+    answer:
+      'Yes. It runs a §15064.3 vehicle-miles-traveled screen over live Census and OSM data and exports a statutory memo. It is screening-grade, built to support qualified planning review, not a calibrated travel-demand forecast.',
   },
   {
     question: 'Why open source it?',
     answer:
-      'Because planning software should be reusable, inspectable, and adaptable. Agencies should not have to pay over and over for the same invisible scaffolding. Open code also lets people and AI agents build custom versions instead of waiting for a vendor to guess every edge case.',
+      'Agencies should not keep paying, separately and invisibly, for the same planning scaffolding. Open code is inspectable and forkable, so a county can adapt it instead of waiting on a vendor to guess every edge case.',
   },
   {
-    question: 'Can Nat Ford run OpenPlan for us?',
+    question: 'Can Nat Ford run it for us?',
     answer:
-      'Yes. That is the paid offer: managed deployment, custom fork, hosting/admin, data setup, templates, training, enterprise onboarding, and priority support.',
-  },
-  {
-    question: 'How should we think about AI here?',
-    answer:
-      'Carefully and practically. The useful standard is whether AI reduces rework, preserves context, and makes the next decision clearer. Final analysis still requires human judgment and review.',
-  },
-  {
-    question: 'How should we think about data readiness and mapping?',
-    answer:
-      'With explicit honesty. If geometry is ready, say so. If coverage exists but thematic support is partial, say that too. Trust matters more than flashy maps.',
+      'Yes. That is the paid offer: managed deployment, a custom county or agency edition, data setup, staff onboarding, and a support lane for when it has to work on a deadline.',
   },
 ]
 
 export default function OpenPlanPage() {
+  const openplan = openSourceProjects.find((project) => project.slug === 'openplan')!
+
+  const register = [
+    { label: 'Readiness', value: readinessLabel(openplan.status) },
+    { label: 'License', value: licenseLabel(openplan) },
+    { label: 'Source', value: sourceAvailabilityLabel(openplan) },
+  ]
+
   return (
     <>
-      <Section spacing="lg" className="hero-mesh overflow-hidden text-white">
-        <Container>
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(320px,0.85fr)] lg:items-end">
-            <div className="max-w-4xl">
-              <span className="nf-kicker text-white"><span>OpenPlan</span><span>Free and open source</span></span>
-              <h1 className="section-title mt-5 text-5xl leading-[0.94] text-white md:text-6xl">
-                Planning software anyone can inspect, fork, and adapt.
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="worksurface relative overflow-hidden border-b border-[color:var(--line)]">
+        <ContourField animate className="opacity-90" />
+        <Container size="xl" className="relative py-16 md:py-24 lg:py-28">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+            <div>
+              <p className="index-label reveal reveal-1">Open-source planning software</p>
+              <h1 className="display-1 reveal reveal-2 mt-6 text-[color:var(--ink)]">
+                An operating system for a planning department.
               </h1>
-              <p className="mt-5 max-w-3xl text-lg leading-8 text-white/82">
-                OpenPlan keeps projects, decisions, risks, datasets, maps, grants, programs, and reports in one operational
-                thread. The code is public because planning tools should be reusable building blocks, not black boxes.
+              <p className="lead reveal reveal-3 measure-wide mt-6 text-[color:var(--muted)]">
+                OpenPlan puts projects, funding, maps, reports, and evidence on one spine, with the
+                map as the worksurface and provenance on every number. The code is public. You can
+                read it, fork it, or run it yourself before we ever talk.
               </p>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <Button asChild size="lg" className="bg-white text-[color:var(--pine)] hover:bg-[color:var(--sand)]">
-                  <a href={openPlanProject?.repoUrl ?? 'https://github.com/nfredmond/openplan'} target="_blank" rel="noopener noreferrer">
-                    View GitHub repo <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
+
+              <div className="reveal reveal-4 mt-9 flex flex-wrap items-center gap-3">
+                <Button asChild size="lg">
+                  <Link href="/contact/openplan-fit?tier=Open-source%20fit%20audit">
+                    Discuss OpenPlan fit <ArrowRight className="h-4 w-4" />
+                  </Link>
                 </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="border-white/35 bg-white/8 text-white hover:bg-white/14 hover:text-white"
+                <a
+                  href={openplan.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline btn-lg"
                 >
-                  <Link href="/contact/openplan-fit?tier=Open-source%20fit%20audit">Discuss OpenPlan fit</Link>
-                </Button>
+                  <Github className="h-4 w-4" aria-hidden="true" /> Read the source
+                </a>
+                {openplan.demoUrl ? (
+                  <a
+                    href={openplan.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-2 py-2 text-[0.95rem] font-medium text-[color:var(--muted)] transition-colors hover:text-[color:var(--pine)] dark:hover:text-[color:var(--pine-soft)]"
+                  >
+                    See the live demo
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                ) : null}
               </div>
             </div>
 
-            <aside className="border-y border-white/20 py-5 text-white lg:border-l lg:border-y-0 lg:py-0 lg:pl-6">
-              <div className="flex items-center justify-between gap-3 border-b border-white/16 pb-4">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/62">Commercial model</p>
-                  <p className="mt-1 text-lg font-semibold">Free code + paid stewardship</p>
-                </div>
-                <GitFork className="h-5 w-5 text-[color:var(--sand)]" aria-hidden="true" />
+            {/* Figure plate */}
+            <figure className="reveal reveal-5 lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full max-w-md">
+                <Image
+                  src="/images/site/drone-town-overview-2026-03.jpg"
+                  alt="Aerial overview of a small Northern California town and its street grid"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b120f]/78 via-transparent to-transparent" />
+                <figcaption className="plate-caption absolute inset-x-4 bottom-3.5 flex items-center justify-between">
+                  <span>Fig. 01 · The department, on one map</span>
+                  <span className="text-[color:var(--copper)]">OpenPlan</span>
+                </figcaption>
               </div>
-              <div className="divide-y divide-white/12">
-                {['Public repo', 'Self-host path', 'Custom agency fork', 'Managed deployment', 'Data setup', 'Support terms'].map((item, index) => (
-                  <div key={item} className="grid grid-cols-[2.5rem_1fr_auto] items-center gap-3 py-3">
-                    <span className="text-sm text-white/62">0{index + 1}</span>
-                    <span className="font-medium text-white">{item}</span>
-                    <span className="h-px w-8 bg-[color:var(--sand)]/75" aria-hidden="true" />
-                  </div>
-                ))}
+              <div className="mt-4 flex flex-wrap gap-2">
+                <a
+                  href={openplan.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="provenance"
+                >
+                  <Github className="h-3.5 w-3.5" aria-hidden="true" />
+                  {openplan.licenseSpdx} · openplan
+                </a>
+                {openplan.demoUrl ? (
+                  <a
+                    href={openplan.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="provenance"
+                  >
+                    Live demo
+                  </a>
+                ) : null}
               </div>
-              <p className="border-t border-white/16 pt-4 text-sm leading-relaxed text-white/72">
-                The useful promise is not a locked subscription. It is a forkable planning spine with scoped support when your team needs production confidence.
+            </figure>
+          </div>
+
+          {/* Data register — every number carries its source */}
+          <dl className="relative mt-14 grid gap-px overflow-hidden rounded-2xl border border-[color:var(--line)] bg-[color:var(--line)] sm:grid-cols-2 lg:grid-cols-4">
+            {register.map((item) => (
+              <div key={item.label} className="bg-[color:var(--surface)] p-5">
+                <dt className="label">{item.label}</dt>
+                <dd className="data mt-2 text-lg text-[color:var(--ink)]">{item.value}</dd>
+              </div>
+            ))}
+            <a
+              href={`${openplan.repoUrl}/issues`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col justify-center gap-2 bg-[color:var(--surface)] p-5 transition-colors hover:bg-[color:var(--surface-2)]"
+            >
+              <span className="label">Roadmap</span>
+              <span className="inline-flex items-center gap-1.5 font-medium text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]">
+                Issues &amp; open work
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </span>
+            </a>
+          </dl>
+          <p className="relative mt-4 text-sm text-[color:var(--muted)]">{readinessNote(openplan.status)}</p>
+        </Container>
+      </section>
+
+      {/* ── What it does (the capabilities) ──────────────────── */}
+      <section className="on-dark relative overflow-hidden border-b border-white/10 bg-[#0b120f] text-white">
+        <ContourField className="opacity-60" />
+        <Container size="xl" className="relative py-16 md:py-24">
+          <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <p className="index-label text-[color:var(--copper)]">What it does</p>
+              <h2 className="display-2 mt-5 text-white">
+                Projects, funding, reports, and evidence on one spine.
+              </h2>
+              <p className="mt-5 text-white/70">
+                OpenPlan is not another dashboard. It puts the whole planning department on one map,
+                where analysis, funding records, and reporting stay attached to the work instead of
+                scattering into email and screenshots.
               </p>
-            </aside>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href={openplan.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline btn-lg"
+                >
+                  <Github className="h-4 w-4" aria-hidden="true" /> Read the source
+                </a>
+              </div>
+            </div>
+
+            <ul className="grid gap-px overflow-hidden rounded-2xl border border-white/12 bg-white/10 sm:grid-cols-2">
+              {capabilities.map((cap) => {
+                const Icon = cap.icon
+                return (
+                  <li key={cap.heading} className="bg-[#0b120f] p-6">
+                    <Icon className="h-5 w-5 text-[color:var(--copper)]" aria-hidden="true" />
+                    <h3 className="mt-4 font-display text-xl font-semibold text-white">
+                      {cap.heading}
+                    </h3>
+                    <p className="mt-2.5 text-sm leading-6 text-white/65">{cap.body}</p>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Who it's for ─────────────────────────────────────── */}
+      <Section spacing="lg">
+        <Container size="xl">
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <p className="index-label">Who it&rsquo;s for</p>
+              <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+                Built for lean teams that need continuity.
+              </h2>
+              <p className="measure mt-5 text-[color:var(--muted)]">
+                OpenPlan is shaped around real delivery rhythm: what is the project, what changed,
+                what is blocked, and what evidence supports the next move.
+              </p>
+              <ul className="mt-6 space-y-3">
+                {goodFitSignals.map((signal) => (
+                  <li key={signal} className="flex items-start gap-3 text-sm leading-6 text-[color:var(--muted)]">
+                    <CheckCircle2
+                      className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]"
+                      aria-hidden="true"
+                    />
+                    <span>{signal}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <ul className="grid gap-px overflow-hidden rounded-2xl border border-[color:var(--line)] bg-[color:var(--line)] sm:grid-cols-2">
+              {fitProfiles.map((profile) => (
+                <li key={profile} className="flex items-start gap-3 bg-[color:var(--surface)] p-6">
+                  <MapIcon
+                    className="mt-0.5 h-5 w-5 shrink-0 text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]"
+                    aria-hidden="true"
+                  />
+                  <span className="text-[color:var(--foreground)]/85">{profile}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </Container>
       </Section>
 
-      <Section spacing="md" className="border-y border-[color:var(--line)] bg-[color:var(--background)]/85">
-        <Container>
-          {openPlanProject ? (
-            <div className="mb-5 grid gap-3 rounded-[1.75rem] border border-[color:var(--line)] bg-[color:var(--fog)]/45 p-4 text-sm md:grid-cols-[0.8fr_0.8fr_1fr_auto] md:items-center">
-              <div>
-                <p className="text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/55">Readiness</p>
-                <p className="mt-1 font-semibold text-[color:var(--ink)]">{readinessLabel(openPlanProject.status)}</p>
-              </div>
-              <div>
-                <p className="text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/55">License</p>
-                <p className="mt-1 font-semibold text-[color:var(--ink)]">{licenseLabel(openPlanProject)}</p>
-              </div>
-              <p className="text-[color:var(--foreground)]/72">{readinessNote(openPlanProject.status)}</p>
-              <a
-                href={`${openPlanProject.repoUrl}/issues`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-full border border-[color:var(--line)] px-4 py-2 font-semibold hover:border-[color:var(--pine)] hover:text-[color:var(--pine)]"
-              >
-                Issues / roadmap <ExternalLink className="ml-2 h-4 w-4" />
-              </a>
-            </div>
-          ) : null}
-          <div className="grid border-y border-[color:var(--line)] md:grid-cols-3 md:divide-x md:divide-[color:var(--line)]">
-            {continuityLanes.map((lane, index) => (
-              <article key={lane.title} className="border-b border-[color:var(--line)] bg-[color:var(--background)] px-5 py-6 last:border-b-0 md:border-b-0 md:px-6">
-                <div className="flex items-center justify-between gap-4">
-                  <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/55">Lane 0{index + 1}</span>
-                  <Map className="h-4 w-4 text-[color:var(--copper)]" aria-hidden="true" />
+      {/* ── Use it free, hire the operators ──────────────────── */}
+      <Section spacing="lg" className="worksurface border-y border-[color:var(--line)]">
+        <Container size="xl">
+          <div className="max-w-2xl">
+            <p className="index-label">Managed OpenPlan</p>
+            <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+              Use it free. Hire us when it has to run for your team.
+            </h2>
+            <p className="measure mt-5 text-[color:var(--muted)]">
+              The public code is the base. The paid work is deployment, configuration, data
+              migration, permissions, onboarding, support, and keeping your fork moving with the
+              mainline.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2">
+            {implementationOffers.map((offer) => (
+              <article key={offer.name} className="surface-card p-6 md:p-7">
+                <div className="flex items-start gap-4">
+                  <Wrench
+                    className="mt-1 h-5 w-5 shrink-0 text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]"
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <h3 className="font-display text-xl font-semibold text-[color:var(--ink)]">
+                      {offer.name}
+                    </h3>
+                    <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">{offer.summary}</p>
+                  </div>
                 </div>
-                <h2 className="mt-4 text-xl font-semibold text-[color:var(--ink)]">{lane.title}</h2>
-                <p className="mt-2 text-sm leading-relaxed text-[color:var(--foreground)]/78">{lane.body}</p>
+                <ul className="mt-5 grid gap-2 text-sm text-[color:var(--muted)] sm:grid-cols-2">
+                  {offer.examples.map((example) => (
+                    <li key={example} className="border-t border-[color:var(--line)] pt-2">
+                      {example}
+                    </li>
+                  ))}
+                </ul>
               </article>
             ))}
           </div>
         </Container>
       </Section>
 
-      <Section spacing="xl">
-        <Container>
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.9fr)] lg:items-start">
-            <div>
-              <span className="nf-kicker"><span>Best fit</span><span>Operational continuity</span></span>
-              <h2 className="section-title mt-5 text-4xl text-[color:var(--ink)] md:text-5xl">
-                Built for lean teams that need continuity, not software sprawl.
+      {/* ── FAQ ──────────────────────────────────────────────── */}
+      <Section spacing="lg">
+        <Container size="xl">
+          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <p className="index-label">Common questions</p>
+              <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+                Straight answers before anyone commits.
               </h2>
-              <p className="mt-4 max-w-2xl text-[color:var(--foreground)]/80">
-                OpenPlan is designed around real planning delivery rhythm: what is the project, what changed, what is blocked,
-                what evidence supports the next move, and what still needs review.
+              <p className="measure mt-5 text-[color:var(--muted)]">
+                What it is, who it fits, what stage it is in, and how the AI is kept on a leash.
               </p>
-              <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                {fitProfiles.map((profile) => (
-                  <div
-                    key={profile}
-                    className="rounded-2xl border border-[color:var(--line)] bg-[color:var(--background)] px-4 py-4 text-sm text-[color:var(--foreground)]/82"
-                  >
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--pine)]" />
-                      <span>{profile}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
 
-            <Card className="border-[color:var(--pine)]/18 bg-[linear-gradient(180deg,rgba(244,240,233,0.94),rgba(255,255,255,1))] p-6">
-              <div className="flex items-center gap-3">
-                <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-[color:var(--pine)] text-white">
-                  <ShieldCheck className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[color:var(--pine)]/72">Messaging guardrail</p>
-                  <p className="text-xl font-semibold text-[color:var(--ink)]">Honest product language only</p>
-                </div>
-              </div>
-              <ul className="mt-5 space-y-3 text-sm leading-relaxed text-[color:var(--foreground)]/82">
-                <li>• Do not imply AI replaces planning judgment.</li>
-                <li>• Do not overstate data or mapping readiness.</li>
-                <li>• Do not publish client confidential information in open repos.</li>
-                <li>• Do not hide the fact that managed deployment/support is the paid path.</li>
-              </ul>
-              <p className="mt-5 rounded-2xl border border-[color:var(--pine)]/14 bg-white/70 px-4 py-4 text-sm text-[color:var(--foreground)]/78">
-                Open-source is the trust model. Human-reviewed planning, careful implementation, and support remain the operating model.
-              </p>
-            </Card>
-          </div>
-        </Container>
-      </Section>
-
-      <Section spacing="lg" className="border-y border-[color:var(--line)] bg-[color:var(--background)]/88">
-        <Container>
-          <div className="grid gap-5 lg:grid-cols-2">
-            <Card className="border-[color:var(--pine)]/18 bg-[color:var(--background)] p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[color:var(--pine)]/72">Good fit now</p>
-              <h2 className="mt-3 text-2xl font-semibold text-[color:var(--ink)]">Best for teams already doing real delivery work.</h2>
-              <div className="mt-5 space-y-3">
-                {goodFitSignals.map((item) => (
-                  <div key={item} className="rounded-2xl border border-[color:var(--line)] bg-[color:var(--fog)]/45 px-4 py-4 text-sm text-[color:var(--foreground)]/82">
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--pine)]" />
-                      <span>{item}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-            <Card className="border-[color:var(--line)] bg-[color:var(--fog)]/55 p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/62">Paid support is for</p>
-              <h2 className="mt-3 text-2xl font-semibold text-[color:var(--ink)]">Teams that want the open-source base without carrying all the operations burden.</h2>
-              <div className="mt-5 space-y-3">
-                {managedSupportSignals.map((item) => (
-                  <div key={item} className="rounded-2xl border border-[color:var(--line)] bg-[color:var(--background)] px-4 py-4 text-sm text-[color:var(--foreground)]/82">
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          </div>
-        </Container>
-      </Section>
-
-      <Section spacing="xl" className="border-y border-[color:var(--line)] bg-[color:var(--fog)]/72">
-        <Container>
-          <div className="max-w-4xl">
-            <span className="pill">Managed OpenPlan support</span>
-            <h2 className="section-title mt-5 text-4xl text-[color:var(--ink)] md:text-5xl">
-              Use it free. Hire us when it needs to run reliably for your team.
-            </h2>
-            <p className="mt-4 text-[color:var(--foreground)]/80">
-              The public code is the base. The paid work is deployment, custom configuration, data migration, permissions,
-              onboarding, support, security patching, and keeping your fork moving with the mainline.
-            </p>
-          </div>
-
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {implementationOffers.map((offer) => (
-              <Card key={offer.name} className="border-[color:var(--line)] bg-[color:var(--background)] p-6">
-                <div className="flex items-start gap-4">
-                  <Wrench className="mt-1 h-5 w-5 shrink-0 text-[color:var(--pine)]" />
-                  <div>
-                    <h3 className="text-xl font-semibold text-[color:var(--ink)]">{offer.name}</h3>
-                    <p className="mt-3 text-sm leading-6 text-[color:var(--foreground)]/76">{offer.summary}</p>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      <Section spacing="xl">
-        <Container>
-          <div className="max-w-4xl">
-            <span className="pill">OpenPlan FAQ</span>
-            <h2 className="section-title mt-5 text-4xl text-[color:var(--ink)] md:text-5xl">Straight answers before anyone commits.</h2>
-            <p className="mt-4 max-w-3xl text-[color:var(--foreground)]/80">
-              This page is designed to keep the OpenPlan offer clear: what it is, who it fits, what stage it is in, and how we talk about AI, mapping, support, and open source without bluffing.
-            </p>
-          </div>
-
-          <div className="mt-8 max-w-4xl space-y-3">
-            {faqItems.map((faq) => (
-              <Card key={faq.question} className="border-[color:var(--line)] bg-[color:var(--background)]">
-                <CardContent className="p-0">
-                  <details className="group px-5 py-4">
-                    <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-lg font-semibold text-[color:var(--ink)]">
-                      <span>{faq.question}</span>
-                      <span className="mt-1 text-[color:var(--pine)] transition group-open:rotate-45">+</span>
-                    </summary>
-                    <p className="mt-3 text-sm leading-relaxed text-[color:var(--foreground)]/78">{faq.answer}</p>
-                  </details>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      <Section spacing="lg" className="border-y border-[color:var(--line)] bg-[color:var(--fog)]/78 text-[color:var(--ink)] dark:bg-[#101c27] dark:text-white">
-        <Container>
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[color:var(--pine)] text-white shadow-lg shadow-[color:var(--pine)]/20">
-              <Sparkles className="h-5 w-5" />
+            <div className="divide-y divide-[color:var(--line)] border-y border-[color:var(--line)]">
+              {faqItems.map((faq) => (
+                <details key={faq.question} className="group py-1.5">
+                  <summary className="flex cursor-pointer list-none items-start justify-between gap-4 py-4 font-display text-xl font-semibold text-[color:var(--ink)]">
+                    <span>{faq.question}</span>
+                    <span
+                      aria-hidden="true"
+                      className="mt-1 shrink-0 text-[color:var(--copper-ink)] transition-transform group-open:rotate-45 dark:text-[color:var(--copper)]"
+                    >
+                      +
+                    </span>
+                  </summary>
+                  <p className="measure pb-5 text-[color:var(--muted)]">{faq.answer}</p>
+                </details>
+              ))}
             </div>
-            <h2 className="section-title mt-5 text-4xl text-[color:var(--ink)] dark:text-white md:text-5xl">
-              Want OpenPlan without becoming the deployment team?
-            </h2>
-            <p className="mt-4 text-lg text-[color:var(--foreground)]/82 dark:text-white/80">
-              We can help run it, customize it, onboard your team, wire up your data, and maintain a supported fork while the open-source base keeps improving.
-            </p>
-            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-              <Button asChild variant="secondary" size="lg">
-                <Link href="/contact/openplan-fit?tier=Open-source%20fit%20audit">Discuss OpenPlan fit</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="border-[color:var(--line)] text-[color:var(--ink)] hover:border-[color:var(--pine)] hover:bg-[color:var(--background)] hover:text-[color:var(--pine)] dark:border-white/35 dark:text-white dark:hover:bg-white/10 dark:hover:text-white"
-              >
-                <a href={openPlanProject?.repoUrl ?? 'https://github.com/nfredmond/openplan'} target="_blank" rel="noopener noreferrer">
-                  View GitHub repo
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── Closing ──────────────────────────────────────────── */}
+      <Section spacing="lg" className="worksurface border-t border-[color:var(--line)]">
+        <Container size="xl">
+          <div className="surface-card overflow-hidden p-8 md:p-12">
+            <div className="max-w-2xl">
+              <p className="index-label">Get started</p>
+              <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+                Want OpenPlan without becoming the deployment team?
+              </h2>
+              <p className="measure mt-5 text-[color:var(--muted)]">
+                Start with a fit audit. The honest first answer is sometimes not to build it. From
+                there the work only goes as far as it needs to: managed deployment, a custom edition,
+                data setup, onboarding, or a support lane.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+                <Button asChild size="lg">
+                  <Link href="/contact/openplan-fit?tier=Open-source%20fit%20audit">
+                    Discuss OpenPlan fit <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <a
+                  href={openplan.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]"
+                >
+                  <Github className="h-4 w-4" aria-hidden="true" /> Read the source
+                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                 </a>
-              </Button>
+                <a
+                  href="mailto:nathaniel@natfordplanning.com"
+                  className="font-mono text-sm text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]"
+                >
+                  nathaniel@natfordplanning.com
+                </a>
+              </div>
             </div>
           </div>
         </Container>

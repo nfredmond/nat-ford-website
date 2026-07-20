@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Source_Sans_3 } from "next/font/google";
+import { Cormorant_Garamond, Source_Sans_3, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeScript } from "./theme-script";
 
@@ -13,6 +13,12 @@ const body = Source_Sans_3({
   subsets: ["latin"],
   variable: "--font-body",
   weight: ["400", "500", "600", "700"],
+});
+
+const mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -72,7 +78,7 @@ export default function RootLayout({
         <ThemeScript />
       </head>
       <body
-        className={`${display.variable} ${body.variable} font-body antialiased transition-colors duration-200 bg-[color:var(--background)] text-[color:var(--foreground)]`}
+        className={`${display.variable} ${body.variable} ${mono.variable} font-body antialiased flex min-h-dvh flex-col bg-[color:var(--background)] text-[color:var(--foreground)]`}
       >
         {children}
       </body>
