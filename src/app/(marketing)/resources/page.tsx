@@ -3,12 +3,19 @@
 import * as React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Calendar, Download, FileText, Search } from 'lucide-react'
+import {
+  ArrowRight,
+  Calendar,
+  ClipboardCheck,
+  Download,
+  FileText,
+  Search,
+} from 'lucide-react'
 import { Container } from '@/components/layout/container'
 import { Section } from '@/components/layout/section'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { ContourField } from '@/components/features/contour-field'
 
 const fundingPrograms = [
   {
@@ -67,26 +74,10 @@ const fundingPrograms = [
   },
 ]
 
-const resources = [
-  {
-    title: 'Capability One-Pager',
-    description:
-      'Current service overview with explicit attribution that representative project experience was completed at Green DOT Transportation Solutions (Senior Transportation Planner + Project Manager, ~4 years), not by Nat Ford.',
-    file: '/NFPA_Capability_OnePager.pdf',
-    ready: true,
-  },
-  {
-    title: 'GIS Readiness Assessment',
-    description: 'Checklist for agencies preparing to operationalize GIS workflows.',
-    file: '#',
-    ready: false,
-  },
-  {
-    title: 'Grant Application Playbook',
-    description: 'Structured framework for stronger narratives and submission discipline.',
-    file: '#',
-    ready: false,
-  },
+const scorecardFacts = [
+  { label: 'Questions', value: '10' },
+  { label: 'Output', value: 'Readiness band' },
+  { label: 'Formats', value: 'Web + PDF' },
 ]
 
 export default function ResourcesPage() {
@@ -101,188 +92,290 @@ export default function ResourcesPage() {
 
   return (
     <>
-      <Section spacing="lg" className="hero-mesh text-white">
-        <Container>
-          <div className="max-w-4xl">
-            <span className="pill">Resources</span>
-            <h1 className="section-title mt-5 text-5xl md:text-6xl leading-[0.96] text-white">Tools, references, and funding intelligence.</h1>
-            <p className="mt-5 text-lg text-white/82 max-w-3xl">
-              Practical resources for planning teams that need clear direction, strong grant positioning, and reusable
-              templates.
-            </p>
-          </div>
-        </Container>
-      </Section>
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="worksurface relative overflow-hidden border-b border-[color:var(--line)]">
+        <ContourField animate className="opacity-90" />
+        <Container size="xl" className="relative py-16 md:py-24 lg:py-28">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+            <div>
+              <p className="index-label reveal reveal-1">Resources</p>
+              <h1 className="display-1 reveal reveal-2 mt-6 text-[color:var(--ink)]">
+                Funding intelligence, free to take.
+              </h1>
+              <p className="lead reveal reveal-3 measure-wide mt-6 text-[color:var(--muted)]">
+                A working grant calendar for federal and California programs, a ten-question
+                readiness scorecard, and the current capability one-pager. Read them here, or
+                download them and work offline. No form wall.
+              </p>
 
-      <Section spacing="md" className="border-y border-[color:var(--line)] bg-[color:var(--background)]/85">
-        <Container>
-          <div className="relative h-56 overflow-hidden rounded-2xl border border-[color:var(--line)]">
-            <Image
-              src="/images/site/drone-intersection-topdown-2026-03.jpg"
-              alt="Top-down drone intersection view for planning and grant resource context"
-              fill
-              className="object-cover"
-              sizes="100vw"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0d1c2a]/65 via-[#0d1c2a]/25 to-transparent" />
-          </div>
-        </Container>
-      </Section>
-
-      <Section spacing="xl">
-        <Container>
-          <div className="rounded-3xl border border-[color:var(--line)] bg-[color:var(--fog)]/72 p-6 md:p-8">
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-[0.68fr_0.32fr] lg:items-center">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/62">Featured tool</p>
-                <h2 className="section-title mt-3 text-4xl text-[color:var(--ink)] md:text-5xl">Funding Readiness Scorecard</h2>
-                <p className="mt-4 max-w-3xl text-lg text-[color:var(--foreground)]/82">
-                  Run a 10-question self-check, see your readiness band, and download the matching worksheet for offline review.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-3 lg:items-end">
+              <div className="reveal reveal-4 mt-9 flex flex-wrap items-center gap-3">
                 <Button asChild size="lg">
-                  <Link href="/funding-readiness-scorecard">Open the scorecard</Link>
+                  <Link href="/funding-readiness-scorecard">
+                    Open the scorecard <ArrowRight className="h-4 w-4" />
+                  </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg">
-                  <a href="/Funding_Readiness_Scorecard_Worksheet.pdf" download>
-                    <Download className="mr-2 h-4 w-4" />
-                    Download worksheet PDF
+                <Button asChild size="lg" variant="outline">
+                  <a href="/NFPA_Capability_OnePager.pdf" download>
+                    <Download className="h-4 w-4" aria-hidden="true" /> Capability one-pager
                   </a>
                 </Button>
               </div>
             </div>
+
+            {/* Figure plate */}
+            <figure className="reveal reveal-5 lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full max-w-md">
+                <Image
+                  src="/images/site/drone-intersection-topdown-2026-03.jpg"
+                  alt="Top-down aerial capture of an intersection used for planning and safety analysis"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b120f]/78 via-transparent to-transparent" />
+                <figcaption className="plate-caption absolute inset-x-4 bottom-3.5 flex items-center justify-between">
+                  <span>Fig. R1 · Intersection, top-down</span>
+                  <span className="text-[color:var(--copper)]">FAA Part 107</span>
+                </figcaption>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="provenance">Northern California</span>
+                <span className="provenance">Aerial capture</span>
+              </div>
+            </figure>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Downloads ────────────────────────────────────────── */}
+      <Section spacing="lg">
+        <Container size="xl">
+          <div className="max-w-2xl">
+            <p className="index-label">Downloads</p>
+            <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+              Tools you can take with you.
+            </h2>
+            <p className="measure mt-5 text-[color:var(--muted)]">
+              Two things worth keeping on hand: a readiness self-check you can run in a few
+              minutes, and the current capability sheet.
+            </p>
           </div>
 
-          <h2 className="section-title mt-10 text-4xl md:text-5xl text-[color:var(--ink)]">Downloadable Resources</h2>
-          <div className="mt-7 grid grid-cols-1 md:grid-cols-3 gap-5">
-            {resources.map((resource) => (
-              <Card key={resource.title} hover>
-                <CardContent className="p-6">
-                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[color:var(--sand)] text-[color:var(--pine)]">
-                    <FileText className="h-5 w-5" />
+          {/* Featured — the scorecard */}
+          <article className="surface-card mt-10 overflow-hidden">
+            <div className="grid lg:grid-cols-[1.28fr_0.72fr]">
+              <div className="p-7 md:p-9">
+                <div className="flex items-center gap-3">
+                  <ClipboardCheck
+                    className="h-5 w-5 text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]"
+                    aria-hidden="true"
+                  />
+                  <span className="label text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
+                    Interactive tool
+                  </span>
+                </div>
+                <h3 className="display-3 mt-3 text-[color:var(--ink)]">
+                  Funding Readiness Scorecard
+                </h3>
+                <p className="measure mt-4 text-[color:var(--muted)]">
+                  Answer ten questions about your project, your data, and your match. You get a
+                  readiness band and a plain read on what to shore up before you write a word of
+                  narrative. The worksheet PDF mirrors the questions for offline review.
+                </p>
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <Button asChild>
+                    <Link href="/funding-readiness-scorecard">
+                      Open the scorecard <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <a
+                    href="/Funding_Readiness_Scorecard_Worksheet.pdf"
+                    download
+                    className="btn btn-outline btn-md"
+                  >
+                    <Download className="h-4 w-4" aria-hidden="true" /> Worksheet PDF
+                  </a>
+                </div>
+              </div>
+
+              <dl className="flex flex-col justify-center gap-3.5 border-t border-[color:var(--line)] bg-[color:var(--surface-2)]/50 p-7 md:p-9 lg:border-l lg:border-t-0">
+                {scorecardFacts.map((fact) => (
+                  <div
+                    key={fact.label}
+                    className="flex items-baseline justify-between gap-4 border-b border-[color:var(--line)] pb-3.5 last:border-0 last:pb-0"
+                  >
+                    <dt className="label">{fact.label}</dt>
+                    <dd className="data text-sm text-[color:var(--ink)]">{fact.value}</dd>
                   </div>
-                  <h3 className="mt-4 text-xl font-semibold text-[color:var(--ink)]">{resource.title}</h3>
-                  <p className="mt-2 text-sm text-[color:var(--foreground)]/75">{resource.description}</p>
-                  {resource.ready ? (
-                    <>
-                      <Button asChild variant="outline" className="mt-5 w-full">
-                        <a href={resource.file} download>
-                          <Download className="mr-2 h-4 w-4" />
-                          Download
-                        </a>
-                      </Button>
-                      {resource.title === 'Capability One-Pager' && (
-                        <p className="mt-3 text-xs leading-relaxed text-[color:var(--foreground)]/68">
-                          Includes explicit prior-role attribution for Green DOT Transportation Solutions experience.
-                        </p>
-                      )}
-                    </>
-                  ) : (
-                    <div className="mt-5 rounded-full border border-[color:var(--line)] px-4 py-2 text-center text-xs uppercase tracking-[0.15em] text-[color:var(--foreground)]/68">
-                      Coming soon
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                ))}
+              </dl>
+            </div>
+          </article>
+
+          {/* The capability one-pager */}
+          <article className="surface-card mt-5 p-7 md:p-8">
+            <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
+              <div>
+                <div className="flex items-center gap-3">
+                  <FileText
+                    className="h-5 w-5 text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]"
+                    aria-hidden="true"
+                  />
+                  <span className="label text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
+                    PDF · Capability sheet
+                  </span>
+                </div>
+                <h3 className="mt-3 font-display text-2xl font-semibold text-[color:var(--ink)]">
+                  Capability One-Pager
+                </h3>
+                <p className="measure mt-3 text-[color:var(--muted)]">
+                  A one-page service overview. It states plainly that the representative project
+                  experience it references was completed at Green DOT Transportation Solutions,
+                  as a Senior Transportation Planner and Project Manager over roughly four years,
+                  not as Nat Ford Planning.
+                </p>
+              </div>
+              <div className="flex md:justify-end">
+                <a
+                  href="/NFPA_Capability_OnePager.pdf"
+                  download
+                  className="btn btn-outline btn-md"
+                >
+                  <Download className="h-4 w-4" aria-hidden="true" /> Download PDF
+                </a>
+              </div>
+            </div>
+          </article>
         </Container>
       </Section>
 
-      <Section spacing="xl" className="bg-[color:var(--fog)]/65 border-y border-[color:var(--line)]">
-        <Container>
-          <div className="max-w-6xl mx-auto">
-            <div className="flex items-center gap-3 mb-4">
-              <Calendar className="h-7 w-7 text-[color:var(--pine)]" />
-              <h2 className="section-title text-4xl text-[color:var(--ink)]">Grant Funding Calendar</h2>
+      {/* ── Grant funding calendar ───────────────────────────── */}
+      <Section
+        spacing="lg"
+        className="border-y border-[color:var(--line)] bg-[color:var(--surface-2)]/50"
+      >
+        <Container size="lg">
+          <div className="mx-auto max-w-5xl">
+            <p className="index-label">Grant calendar</p>
+            <div className="mt-5 flex items-start gap-3">
+              <Calendar
+                className="mt-1.5 h-7 w-7 shrink-0 text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]"
+                aria-hidden="true"
+              />
+              <h2 className="display-2 text-[color:var(--ink)]">
+                Federal and California funding programs.
+              </h2>
             </div>
-            <p className="mb-6 max-w-4xl text-sm text-[color:var(--foreground)]/78">
-              Includes federal and California examples. We support nationwide funding strategy and can map this to your state,
-              tribal, county/county-equivalent, RTPA, transportation commission, or MPO context.
+            <p className="measure-wide mt-5 text-[color:var(--muted)]">
+              The programs I see most in rural and small-agency work. I work nationwide, so this
+              maps to your state, tribal, county or county-equivalent, RTPA, transportation
+              commission, or MPO context on request.
+            </p>
+            <p className="mt-3 max-w-2xl text-sm text-[color:var(--faint)]">
+              Dates are indicative. Confirm the current call or NOFO window with the
+              administering agency before you plan around it.
             </p>
 
-            <div className="relative max-w-md mb-6">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[color:var(--foreground)]/58" />
+            <div className="relative mt-8 max-w-md">
+              <label htmlFor="program-search" className="sr-only">
+                Search programs
+              </label>
+              <Search
+                className="pointer-events-none absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-[color:var(--muted)]"
+                aria-hidden="true"
+              />
               <Input
+                id="program-search"
                 type="text"
-                placeholder="Search programs..."
+                placeholder="Search programs, agencies, categories..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
               />
             </div>
 
-            <div className="space-y-4">
-              {filteredPrograms.map((program, index) => (
-                <Card key={index}>
-                  <CardHeader>
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
-                      <div>
-                        <CardTitle>{program.program}</CardTitle>
-                        <CardDescription className="mt-1">{program.agency}</CardDescription>
+            {filteredPrograms.length > 0 ? (
+              <ul className="mt-6 space-y-4">
+                {filteredPrograms.map((program) => (
+                  <li key={program.program}>
+                    <article className="surface-card p-6">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                        <div>
+                          <h3 className="font-display text-xl font-semibold text-[color:var(--ink)]">
+                            {program.program}
+                          </h3>
+                          <p className="data mt-1 text-xs uppercase tracking-wider text-[color:var(--muted)]">
+                            {program.agency}
+                          </p>
+                        </div>
+                        <span className="data inline-flex max-w-full items-center self-start rounded-md border border-[color:var(--line)] bg-[color:var(--surface)] px-2.5 py-1 text-xs text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
+                          {program.nextWindow}
+                        </span>
                       </div>
-                      <span className="inline-flex items-center rounded-full bg-[color:var(--sand)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.1em] text-[color:var(--ink)]">
-                        {program.nextWindow}
-                      </span>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
-                      <div>
-                        <p className="text-[color:var(--foreground)]/68 text-xs uppercase tracking-[0.12em]">Category</p>
-                        <p className="mt-1 text-[color:var(--foreground)]/82">{program.category}</p>
-                      </div>
-                      <div>
-                        <p className="text-[color:var(--foreground)]/68 text-xs uppercase tracking-[0.12em]">Cycle</p>
-                        <p className="mt-1 text-[color:var(--foreground)]/82">{program.cycle}</p>
-                      </div>
-                      <div>
-                        <p className="text-[color:var(--foreground)]/68 text-xs uppercase tracking-[0.12em]">Local match</p>
-                        <p className="mt-1 text-[color:var(--foreground)]/82">{program.localMatch}</p>
-                      </div>
-                    </div>
-                    <div className="mt-4 rounded-xl border border-[color:var(--line)] bg-[color:var(--background)] p-3 text-sm text-[color:var(--foreground)]/78">
-                      <span className="font-semibold text-[color:var(--ink)]">Notes:</span> {program.notes}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
 
-            {filteredPrograms.length === 0 && (
-              <Card>
-                <CardContent className="p-10 text-center text-[color:var(--foreground)]/65">No programs match your search.</CardContent>
-              </Card>
+                      <dl className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                        <div>
+                          <dt className="label">Category</dt>
+                          <dd className="mt-1 text-sm text-[color:var(--foreground)]/85">
+                            {program.category}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt className="label">Cycle</dt>
+                          <dd className="mt-1 text-sm text-[color:var(--foreground)]/85">
+                            {program.cycle}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt className="label">Local match</dt>
+                          <dd className="mt-1 text-sm text-[color:var(--foreground)]/85">
+                            {program.localMatch}
+                          </dd>
+                        </div>
+                      </dl>
+
+                      <p className="mt-4 border-t border-[color:var(--line)] pt-4 text-sm leading-6 text-[color:var(--muted)]">
+                        <span className="label mr-1.5 align-baseline">Notes</span>
+                        {program.notes}
+                      </p>
+                    </article>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="surface-card mt-6 p-10 text-center text-[color:var(--muted)]">
+                No programs match &ldquo;{searchTerm}&rdquo;.
+              </div>
             )}
           </div>
         </Container>
       </Section>
 
-      <Section spacing="lg">
-        <Container>
-          <div className="rounded-3xl border border-[color:var(--line)] bg-[color:var(--fog)]/78 px-6 py-10 text-center text-[color:var(--ink)] dark:bg-[#101c27] dark:text-white">
-            <h2 className="section-title text-4xl text-[color:var(--ink)] dark:text-white md:text-5xl">Need a grant strategy partner?</h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-[color:var(--foreground)]/82 dark:text-white/80">
-              We can help prioritize opportunities, shape narratives, and build a submission plan that your team can execute.
+      {/* ── Closing / grant strategy ─────────────────────────── */}
+      <section className="on-dark relative overflow-hidden bg-[#0b120f] text-white">
+        <ContourField className="opacity-60" />
+        <Container size="xl" className="relative py-16 md:py-24">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="index-label text-[color:var(--copper)]">Grant strategy</p>
+            <h2 className="display-2 mt-5 text-white">Turn this into a submission plan.</h2>
+            <p className="mt-5 text-white/70">
+              If you want a partner to prioritize the right programs, shape the narrative, and
+              build a plan your team can actually execute, that is the grant work I do.
             </p>
-            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-              <Button asChild variant="secondary" size="lg">
-                <Link href="/services/grants">Grant Services</Link>
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <Button asChild size="lg">
+                <Link href="/services/grants">
+                  Grant services <ArrowRight className="h-4 w-4" />
+                </Link>
               </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="border-[color:var(--line)] text-[color:var(--ink)] hover:border-[color:var(--pine)] hover:bg-[color:var(--background)] hover:text-[color:var(--pine)] dark:border-white/35 dark:text-white dark:hover:bg-white/10 dark:hover:text-white"
-              >
-                <Link href="/contact?intent=discovery">Schedule Consultation</Link>
+              <Button asChild size="lg" variant="outline">
+                <Link href="/contact?intent=discovery">Talk to Nat</Link>
               </Button>
             </div>
           </div>
         </Container>
-      </Section>
+      </section>
     </>
   )
 }

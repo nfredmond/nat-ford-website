@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { ArrowRight, ExternalLink, GitFork, Handshake, PackageOpen, ShieldCheck, Wrench } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, CircleDot, ExternalLink, GitFork, Github, ShieldCheck } from 'lucide-react'
 import { Container } from '@/components/layout/container'
 import { Section } from '@/components/layout/section'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import { SectionEndCTA } from '@/components/features/section-end-cta'
+import { ContourField } from '@/components/features/contour-field'
 import {
   implementationOffers,
   implementationPackages,
@@ -20,307 +20,336 @@ import {
 export const metadata: Metadata = {
   title: 'Products & Source Projects',
   description:
-    'Browse selected Nat Ford planning, geospatial, aerial, modeling, operations, and AI products with source status and support options.',
+    'The full catalog of Nat Ford planning, geospatial, aerial, modeling, operations, and AI builds, with source status, licenses, and support options.',
 }
 
-const stats = [
-  { label: 'What you can inspect', value: 'Source, demos, docs' },
-  { label: 'What we support', value: 'Deployment + custom forks' },
-  { label: 'First paid step', value: 'Fit audit or scoped sprint' },
+const principles = [
+  {
+    title: 'Inspect where public',
+    body: 'Public repositories let your team, and your AI tools, read the method and run the code before any call happens.',
+  },
+  {
+    title: 'Fork it and make it yours',
+    body: 'Fork the base and shape it to your county, RTPA, or firm. A real custom edition beats a generic plugin every time.',
+  },
+  {
+    title: 'Support when it goes to production',
+    body: 'Paid work starts when uptime, governance, training, security, and data migration have to be somebody’s job.',
+  },
 ]
 
 export default function ProductsPage() {
   return (
     <>
-      <Section spacing="xl" className="hero-mesh text-white">
-        <Container size="xl">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] lg:items-end">
-            <div className="max-w-4xl">
-              <span className="pill border-white/20 bg-white/10 text-white">Product and source catalog</span>
-              <h1 className="section-title mt-5 text-[2.75rem] leading-[0.96] text-white sm:text-5xl md:text-7xl">
-                Open tools your team can inspect. Support when the work gets serious.
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="worksurface relative overflow-hidden border-b border-[color:var(--line)]">
+        <ContourField animate className="opacity-90" />
+        <Container size="xl" className="relative py-16 md:py-24">
+          <div className="grid items-end gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+            <div>
+              <p className="index-label reveal reveal-1">Software catalog · source · support</p>
+              <h1 className="display-1 reveal reveal-2 mt-6 text-[color:var(--ink)]">
+                Open tools you can inspect. Support when the work gets serious.
               </h1>
-              <p className="mt-6 max-w-3xl text-lg leading-8 text-white/82">
-                Nat Ford publishes and packages useful building blocks for planning, GIS, drone data, modeling, AI workflows,
-                business operations, and planner training. Use the public source where it is published. Hire us when you
-                need deployment, customization, integration, onboarding, or a 24-hour response support lane.
+              <p className="lead reveal reveal-3 measure-wide mt-6 text-[color:var(--muted)]">
+                {openSourceProjects.length} builds across planning, GIS, aerial capture, modeling,
+                operations, and planner training. Open the source where it is public, read the
+                license, and fork what fits. Hire Nat Ford when you need deployment, a custom fork,
+                onboarding, or a support lane.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="reveal reveal-4 mt-9 flex flex-wrap items-center gap-3">
                 <Button asChild size="lg">
                   <Link href="/contact?topic=open-source-support&intent=discovery">
-                    Scope implementation support <ArrowRight className="ml-2 h-4 w-4" />
+                    Scope implementation support <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-white/35 text-white hover:border-white hover:text-white">
+                <Button asChild size="lg" variant="outline">
                   <Link href="/open-source">Read the open-source position</Link>
                 </Button>
               </div>
             </div>
 
-            <div className="grid gap-2 rounded-2xl border border-white/18 bg-white/[0.06] p-4 backdrop-blur-sm">
-              {stats.map((stat) => (
-                <div key={stat.label} className="border-b border-white/12 px-2 py-3 last:border-b-0">
-                  <p className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-white/62">{stat.label}</p>
-                  <p className="mt-1.5 font-display text-2xl leading-tight text-white">{stat.value}</p>
-                </div>
-              ))}
-            </div>
+            {/* Catalog index — a mono table of contents that deep-links each entry */}
+            <nav aria-label="Catalog index" className="reveal reveal-5 surface-card p-5 lg:justify-self-end lg:max-w-sm">
+              <div className="flex items-baseline justify-between">
+                <p className="label text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
+                  Catalog index
+                </p>
+                <span className="data text-xs text-[color:var(--muted)]">
+                  {String(openSourceProjects.length).padStart(2, '0')} projects
+                </span>
+              </div>
+              <ul className="mt-3 divide-y divide-[color:var(--line)]">
+                {openSourceProjects.map((project) => (
+                  <li key={project.slug}>
+                    <a
+                      href={`#${project.slug}`}
+                      className="group flex items-center justify-between gap-4 py-2.5"
+                    >
+                      <span className="text-sm font-medium text-[color:var(--ink)] transition-colors group-hover:text-[color:var(--pine)] dark:group-hover:text-[color:var(--pine-soft)]">
+                        {project.name}
+                      </span>
+                      <span className="data shrink-0 text-[0.7rem] uppercase tracking-wider text-[color:var(--muted)]">
+                        {readinessLabel(project.status)}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
         </Container>
-      </Section>
+      </section>
 
-      <Section spacing="lg" className="border-b border-[color:var(--line)] bg-[color:var(--fog)]/62">
-        <Container>
-          <div className="grid gap-5 md:grid-cols-3">
-            <Card className="p-6">
-              <PackageOpen className="h-8 w-8 text-[color:var(--pine)]" />
-              <h2 className="mt-4 text-2xl font-semibold text-[color:var(--ink)]">Inspectable where public</h2>
-              <p className="mt-3 text-sm leading-6 text-[color:var(--foreground)]/76">
-                Public repos let people and agents inspect the method, run the code, and adapt the tool without waiting on a sales call.
-                Release-track products are labeled clearly instead of pretending every artifact is already public source.
-              </p>
-            </Card>
-            <Card className="p-6">
-              <GitFork className="h-8 w-8 text-[color:var(--pine)]" />
-              <h2 className="mt-4 text-2xl font-semibold text-[color:var(--ink)]">Forkable by design</h2>
-              <p className="mt-3 text-sm leading-6 text-[color:var(--foreground)]/76">
-                We would rather see a useful custom fork than a brittle plugin system pretending every edge case is generic.
-              </p>
-            </Card>
-            <Card className="p-6">
-              <Wrench className="h-8 w-8 text-[color:var(--pine)]" />
-              <h2 className="mt-4 text-2xl font-semibold text-[color:var(--ink)]">Supported when serious</h2>
-              <p className="mt-3 text-sm leading-6 text-[color:var(--foreground)]/76">
-                Paid work starts when uptime, governance, training, security, data migration, and custom workflows matter.
-              </p>
-            </Card>
-          </div>
-        </Container>
-      </Section>
-
-      <Section spacing="xl">
+      {/* ── How source + support works ───────────────────────── */}
+      <Section spacing="md" className="border-b border-[color:var(--line)]">
         <Container size="xl">
-          <div className="mb-9 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <span className="pill">Selected catalog</span>
-              <h2 className="section-title mt-4 text-4xl text-[color:var(--ink)] md:text-5xl">
-                Products Nat Ford is building on.
-              </h2>
-            </div>
-            <p className="max-w-xl text-sm leading-6 text-[color:var(--foreground)]/72">
-              Repository pages are the source of truth when a public repo is available. Release-track and commercial-guide
-              entries are labeled separately so the catalog stays useful without overstating source availability.
+          <ol className="grid gap-px overflow-hidden rounded-2xl border border-[color:var(--line)] bg-[color:var(--line)] md:grid-cols-3">
+            {principles.map((principle, i) => (
+              <li key={principle.title} className="bg-[color:var(--surface)] p-6">
+                <span className="data text-sm text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h2 className="mt-3 font-display text-xl font-semibold text-[color:var(--ink)]">
+                  {principle.title}
+                </h2>
+                <p className="mt-2.5 text-sm leading-6 text-[color:var(--muted)]">{principle.body}</p>
+              </li>
+            ))}
+          </ol>
+        </Container>
+      </Section>
+
+      {/* ── The catalog register ─────────────────────────────── */}
+      <Section spacing="lg">
+        <Container size="xl">
+          <div className="max-w-2xl">
+            <p className="index-label">The catalog</p>
+            <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+              Everything Nat Ford is building on.
+            </h2>
+            <p className="measure mt-5 text-[color:var(--muted)]">
+              Where a repository is public, it is linked. Where a release is still being finished,
+              the status label says so.
             </p>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-2">
-            {openSourceProjects.map((project) => {
+          <ul className="mt-12 divide-y divide-[color:var(--line)] border-y border-[color:var(--line)]">
+            {openSourceProjects.map((project, i) => {
               const supportCta = supportCtaForProject(project)
+              const num = String(i + 1).padStart(2, '0')
 
               return (
-              <Card key={project.slug} id={project.slug} className="scroll-mt-28 p-0">
-                <CardContent className="p-6 md:p-7">
-                  <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                    <div>
-                      <div className="flex flex-wrap gap-x-3 gap-y-1 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/58">
-                        <span>{project.category}</span>
-                        <span>{readinessLabel(project.status)}</span>
-                        <span>{sourceAvailabilityLabel(project)}</span>
-                      </div>
-                      <h3 className="mt-2 text-2xl font-semibold text-[color:var(--ink)]">{project.name}</h3>
+                <li
+                  key={project.slug}
+                  id={project.slug}
+                  className="scroll-mt-28 grid gap-6 py-10 md:grid-cols-[2.75rem_1fr] md:gap-8"
+                >
+                  <div aria-hidden="true" className="hidden md:block">
+                    <span className="data text-lg text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
+                      {num}
+                    </span>
+                  </div>
+
+                  <div>
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <span className="label">{project.category}</span>
+                      <span aria-hidden="true" className="h-1 w-1 rounded-full bg-[color:var(--line-strong)]" />
+                      <span className="label">{readinessLabel(project.status)}</span>
                     </div>
-                    <div className="flex shrink-0 flex-wrap gap-2">
+
+                    <div className="mt-2.5 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                      <h3 className="display-3 text-[color:var(--ink)]">{project.name}</h3>
+                      {project.slug === 'openplan' ? (
+                        <Link
+                          href="/openplan"
+                          className="inline-flex items-center gap-1 text-sm font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]"
+                        >
+                          Explore OpenPlan <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                        </Link>
+                      ) : null}
+                    </div>
+
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <span className="provenance">{licenseLabel(project)}</span>
+                      <span className="provenance">{sourceAvailabilityLabel(project)}</span>
+                      <span className="provenance">
+                        {project.contributionPath ?? 'GitHub issues / forks'}
+                      </span>
+                    </div>
+
+                    <p className="measure-wide mt-5 text-[color:var(--muted)]">{project.summary}</p>
+                    <p className="measure-wide mt-3 text-sm leading-6 text-[color:var(--faint)]">
+                      {readinessNote(project.status)}
+                    </p>
+
+                    <div className="mt-6 grid gap-6 md:grid-cols-[1.05fr_0.95fr]">
+                      <div>
+                        <p className="label">Useful primitives</p>
+                        <ul className="mt-2.5 flex flex-wrap gap-2">
+                          {project.primitives.map((primitive) => (
+                            <li
+                              key={primitive}
+                              className="data rounded-md border border-[color:var(--line)] bg-[color:var(--surface)] px-2 py-1 text-xs text-[color:var(--muted)]"
+                            >
+                              {primitive}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <p className="label">Hire Nat Ford for</p>
+                        <p className="mt-2.5 text-sm leading-6 text-[color:var(--muted)]">
+                          {project.paidSupport}
+                        </p>
+                      </div>
+                    </div>
+
+                    <p className="mt-5 text-xs leading-5 text-[color:var(--faint)]">
+                      {project.licenseNote}
+                    </p>
+
+                    <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+                      <Button asChild size="sm">
+                        <Link href={supportCta.href}>
+                          {supportCta.label} <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </Button>
+
+                      {project.repoUrl ? (
+                        <>
+                          <a
+                            href={project.repoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]"
+                          >
+                            <Github className="h-4 w-4" aria-hidden="true" /> Source
+                          </a>
+                          <a
+                            href={`${project.repoUrl}/fork`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]"
+                          >
+                            <GitFork className="h-4 w-4" aria-hidden="true" /> Fork
+                          </a>
+                          <a
+                            href={`${project.repoUrl}/issues`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]"
+                          >
+                            <CircleDot className="h-4 w-4" aria-hidden="true" /> Issues
+                          </a>
+                        </>
+                      ) : (
+                        <Link
+                          href={`/contact?intent=discovery&topic=custom-software&product=${encodeURIComponent(project.slug)}`}
+                          className="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]"
+                        >
+                          Discuss implementation <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </Link>
+                      )}
+
                       {project.demoUrl ? (
                         <a
                           href={project.demoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center rounded-full border border-[color:var(--line)] px-3.5 py-2 text-sm font-semibold transition hover:border-[color:var(--pine)] hover:text-[color:var(--pine)]"
+                          className="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]"
                         >
-                          Demo <ExternalLink className="ml-2 h-4 w-4" />
+                          <ExternalLink className="h-4 w-4" aria-hidden="true" /> Live demo
                         </a>
                       ) : null}
-                      {project.repoUrl ? (
-                        <a
-                          href={project.repoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center rounded-full bg-[color:var(--pine)] px-3.5 py-2 text-sm font-semibold text-white transition hover:bg-[color:var(--pine-deep)]"
-                        >
-                          GitHub <ExternalLink className="ml-2 h-4 w-4" />
-                        </a>
-                      ) : (
-                        <Link
-                          href={`/contact?intent=discovery&topic=custom-software&product=${encodeURIComponent(project.slug)}`}
-                          className="inline-flex items-center justify-center rounded-full bg-[color:var(--pine)] px-3.5 py-2 text-sm font-semibold text-white transition hover:bg-[color:var(--pine-deep)]"
-                        >
-                          Discuss access <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      )}
                     </div>
                   </div>
-
-                  <p className="mt-4 text-[0.98rem] leading-7 text-[color:var(--foreground)]/78">{project.summary}</p>
-
-                  <div className="mt-5 grid gap-3 rounded-2xl border border-[color:var(--line)] bg-[color:var(--fog)]/42 p-4 text-sm md:grid-cols-3">
-                    <div>
-                      <p className="text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/55">Readiness</p>
-                      <p className="mt-1 font-semibold text-[color:var(--ink)]">{readinessLabel(project.status)}</p>
-                    </div>
-                    <div>
-                      <p className="text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/55">License</p>
-                      <p className="mt-1 font-semibold text-[color:var(--ink)]">{licenseLabel(project)}</p>
-                    </div>
-                    <div>
-                      <p className="text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/55">Contribution path</p>
-                      <p className="mt-1 font-semibold text-[color:var(--ink)]">{project.contributionPath ?? 'Use GitHub issues / forks'}</p>
-                    </div>
-                    <p className="md:col-span-3 text-[0.82rem] leading-5 text-[color:var(--foreground)]/70">{readinessNote(project.status)}</p>
-                  </div>
-
-                  <div className="mt-5 grid gap-4 md:grid-cols-2">
-                    <div>
-                      <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/58">
-                        Useful primitives
-                      </p>
-                      <ul className="mt-2 space-y-1.5 text-sm text-[color:var(--foreground)]/78">
-                        {project.primitives.map((primitive) => (
-                          <li key={primitive}>• {primitive}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/58">
-                        Hire Nat Ford for
-                      </p>
-                      <p className="mt-2 text-sm leading-6 text-[color:var(--foreground)]/78">{project.paidSupport}</p>
-                    </div>
-                  </div>
-
-                  <p className="mt-5 border-t border-[color:var(--line)] pt-4 text-xs leading-5 text-[color:var(--foreground)]/58">
-                    {project.licenseNote}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <Link
-                      href={supportCta.href}
-                      className="inline-flex items-center rounded-full bg-[color:var(--pine)] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-white hover:bg-[color:var(--pine-deep)]"
-                    >
-                      {supportCta.label} <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-                    </Link>
-                    {project.repoUrl ? (
-                      <>
-                        <a
-                          href={project.repoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center rounded-full border border-[color:var(--line)] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.1em] hover:border-[color:var(--pine)] hover:text-[color:var(--pine)]"
-                        >
-                          Inspect repo <ExternalLink className="ml-1.5 h-3.5 w-3.5" />
-                        </a>
-                        <a
-                          href={`${project.repoUrl}/fork`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center rounded-full border border-[color:var(--line)] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.1em] hover:border-[color:var(--pine)] hover:text-[color:var(--pine)]"
-                        >
-                          Fork it <GitFork className="ml-1.5 h-3.5 w-3.5" />
-                        </a>
-                        <a
-                          href={`${project.repoUrl}/issues`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center rounded-full border border-[color:var(--line)] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.1em] hover:border-[color:var(--pine)] hover:text-[color:var(--pine)]"
-                        >
-                          Issues / roadmap <ExternalLink className="ml-1.5 h-3.5 w-3.5" />
-                        </a>
-                      </>
-                    ) : (
-                      <Link
-                        href={`/contact?intent=discovery&topic=custom-software&product=${encodeURIComponent(project.slug)}`}
-                        className="inline-flex items-center rounded-full border border-[color:var(--line)] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.1em] hover:border-[color:var(--pine)] hover:text-[color:var(--pine)]"
-                      >
-                        Discuss implementation <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-                      </Link>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
+                </li>
               )
             })}
-          </div>
+          </ul>
         </Container>
       </Section>
 
-      <Section spacing="xl" className="border-y border-[color:var(--line)] bg-[color:var(--sand)]/38">
-        <Container>
-          <div className="mb-8 max-w-3xl">
-            <span className="pill">Paid implementation offers</span>
-            <h2 className="section-title mt-4 text-4xl text-[color:var(--ink)] md:text-5xl">
+      {/* ── Implementation — packages + offers ───────────────── */}
+      <Section spacing="lg" className="worksurface border-y border-[color:var(--line)]">
+        <Container size="xl">
+          <div className="max-w-2xl">
+            <p className="index-label">Working together</p>
+            <h2 className="display-2 mt-5 text-[color:var(--ink)]">
               Free software still needs operators.
             </h2>
-            <p className="mt-5 text-[color:var(--foreground)]/76">
-              Most teams do not fail because the code was unavailable. They fail because nobody owned deployment,
-              data quality, permissions, training, support, and the last-mile workflow. That is where we help. Engagements
-              typically range from a $3.5K fit audit to $18K+ managed deployments and custom forks.
+            <p className="measure mt-5 text-[color:var(--muted)]">
+              Most teams do not stall because the code was unavailable. They stall because nobody
+              owned deployment, data quality, permissions, training, and the last-mile workflow. That
+              is the paid work, and it starts wherever your team actually needs it.
             </p>
           </div>
 
-          <div className="mb-10 grid gap-4 lg:grid-cols-4">
-            {implementationPackages.map((pkg) => (
-              <Card key={pkg.name} className="p-5">
-                <p className="text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/58">Engagement package</p>
-                <h3 className="mt-3 text-xl font-semibold text-[color:var(--ink)]">{pkg.name}</h3>
-                <p className="mt-3 text-sm leading-6 text-[color:var(--foreground)]/76">{pkg.bestFor}</p>
-                <p className="mt-4 border-t border-[color:var(--line)] pt-3 text-sm font-semibold text-[color:var(--pine)]">{pkg.deliverable}</p>
-              </Card>
+          <ol className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {implementationPackages.map((pkg, i) => (
+              <li key={pkg.name} className="surface-card flex flex-col p-6">
+                <span className="data text-sm text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 className="mt-3 font-display text-xl font-semibold text-[color:var(--ink)]">
+                  {pkg.name}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">{pkg.bestFor}</p>
+                <p className="mt-4 border-t border-[color:var(--line)] pt-4 text-sm leading-6 text-[color:var(--foreground)]/85">
+                  {pkg.deliverable}
+                </p>
+              </li>
             ))}
-          </div>
+          </ol>
 
-          <div className="grid gap-5 md:grid-cols-2">
+          <ul className="mt-6 grid gap-px overflow-hidden rounded-2xl border border-[color:var(--line)] bg-[color:var(--line)] sm:grid-cols-2">
             {implementationOffers.map((offer) => (
-              <Card key={offer.name} className="p-6">
-                <div className="flex items-start gap-4">
-                  <Handshake className="mt-1 h-6 w-6 shrink-0 text-[color:var(--pine)]" />
-                  <div>
-                    <h3 className="text-2xl font-semibold text-[color:var(--ink)]">{offer.name}</h3>
-                    <p className="mt-3 text-[color:var(--foreground)]/76">{offer.summary}</p>
-                  </div>
-                </div>
-                <ul className="mt-5 grid gap-2 text-sm text-[color:var(--foreground)]/76 sm:grid-cols-2">
+              <li key={offer.name} className="bg-[color:var(--surface)] p-6">
+                <h3 className="font-display text-xl font-semibold text-[color:var(--ink)]">
+                  {offer.name}
+                </h3>
+                <p className="mt-2.5 text-sm leading-6 text-[color:var(--muted)]">{offer.summary}</p>
+                <ul className="mt-4 flex flex-wrap gap-2">
                   {offer.examples.map((example) => (
-                    <li key={example} className="border-t border-[color:var(--line)] pt-2">{example}</li>
+                    <li
+                      key={example}
+                      className="data rounded-md border border-[color:var(--line)] bg-[color:var(--surface-2)] px-2 py-1 text-xs text-[color:var(--muted)]"
+                    >
+                      {example}
+                    </li>
                   ))}
                 </ul>
-              </Card>
+              </li>
             ))}
-          </div>
+          </ul>
         </Container>
       </Section>
 
-      <Section spacing="lg" className="bg-[#0f1720] text-white">
-        <Container>
-          <div className="grid gap-8 lg:grid-cols-[1fr_0.55fr] lg:items-center">
+      {/* ── Confidentiality band ─────────────────────────────── */}
+      <section className="on-dark relative overflow-hidden border-b border-white/10 bg-[#0b120f] text-white">
+        <ContourField className="opacity-50" />
+        <Container size="xl" className="relative py-16 md:py-20">
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
-              <div className="flex items-center gap-3 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/58">
-                <ShieldCheck className="h-4 w-4 text-[color:var(--copper)]" />
-                Security and confidentiality boundary
-              </div>
-              <h2 className="section-title mt-4 text-4xl text-white md:text-5xl">
-                Open source is not an excuse to leak client work.
-              </h2>
-              <p className="mt-5 max-w-3xl text-white/76">
-                We publish reusable code, public methods, schemas, templates, and demo data. We do not publish client
-                confidential information, credentials, privileged internal operations, or sensitive deployment details.
+              <p className="index-label text-[color:var(--copper)]">
+                <ShieldCheck className="h-4 w-4" aria-hidden="true" /> Confidentiality
+              </p>
+              <h2 className="display-2 mt-5 text-white">Public code, private client work.</h2>
+              <p className="measure-wide mt-5 text-white/70">
+                I publish reusable code, methods, schemas, templates, and demo data. Client
+                confidential information, credentials, and internal operational details stay out of
+                the repositories and stay with you. Open source is about the method, not your data.
               </p>
             </div>
             <Button asChild size="lg" variant="secondary">
               <Link href="/contact?intent=discovery&topic=open-source-support">
-                Talk about a supported deployment <ArrowRight className="ml-2 h-4 w-4" />
+                Talk about a supported deployment <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
           </div>
         </Container>
-      </Section>
+      </section>
 
       <SectionEndCTA
         heading="Bring the open-source base. We will help make it operational."

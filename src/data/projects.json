@@ -1,31 +1,43 @@
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "Projects",
+  "name": "Planning experience",
   "itemListElement": [
     {
       "@type": "Project",
       "name": "Sierra County RTP",
-      "description": "Targets, funding path, dashboard views.",
+      "description": "Performance targets and a fiscally constrained investment roadmap for a high-elevation rural county.",
       "areaServed": "Sierra County, CA"
     },
     {
       "@type": "Project",
       "name": "Del Norte County ATP",
-      "description": "Coastal gaps to grant-ready projects with Safe Routes focus.",
+      "description": "Active-transportation network gaps turned into phaseable, grant-ready applications, with a Safe Routes focus.",
       "areaServed": "Del Norte County, CA"
     },
     {
       "@type": "Project",
-      "name": "Plumas Transit 5339",
-      "description": "Operations hub & EV charging grant narrative.",
+      "name": "Tehama County VMT & CIP",
+      "description": "VMT-reduction strategy connected to a realistic, prioritized capital-improvement program.",
+      "areaServed": "Tehama County, CA"
+    },
+    {
+      "@type": "Project",
+      "name": "Plumas Transit FTA 5339",
+      "description": "Grant narrative for an FTA 5339 transit facility, linking site feasibility, fleet transition, and public benefit.",
       "areaServed": "Plumas County, CA"
     },
     {
       "@type": "Project",
-      "name": "Tehama VMT/CIP",
-      "description": "VMT lever analysis integrated with a prioritized CIP.",
-      "areaServed": "Tehama County, CA"
+      "name": "Placer County MIAS",
+      "description": "Countywide multimodal screening with planning-level cost bands and project-packaging guidance.",
+      "areaServed": "Placer County, CA"
+    },
+    {
+      "@type": "Project",
+      "name": "El Dorado Next Gen Mobility",
+      "description": "Phased mobility-program options with a KPI framework and an implementation structure.",
+      "areaServed": "El Dorado County, CA"
     }
   ]
 }

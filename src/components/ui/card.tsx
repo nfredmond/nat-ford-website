@@ -1,6 +1,7 @@
 /**
  * Card Component
- * Adaptive card wrapper for marketing and content blocks
+ * A surface plate: one crisp hairline edge, no belt-and-suspenders shadow.
+ * Elevation appears only on hover, to signal the card is interactive.
  */
 
 import * as React from 'react'
@@ -15,8 +16,9 @@ export function Card({ className, children, hover = false, ...props }: CardProps
   return (
     <div
       className={cn(
-        'soft-card rounded-2xl overflow-hidden',
-        hover && 'transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-[color:var(--pine)]/40',
+        'surface-card overflow-hidden',
+        hover &&
+          'transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-[color:var(--pine)]/40 hover:shadow-[0_16px_40px_-24px_rgba(20,33,25,0.5)]',
         className
       )}
       {...props}
@@ -36,7 +38,7 @@ export function CardHeader({ className, children, ...props }: React.HTMLAttribut
 
 export function CardTitle({ className, children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
-    <h3 className={cn('text-xl font-semibold text-[color:var(--ink)]', className)} {...props}>
+    <h3 className={cn('font-display text-xl font-semibold text-[color:var(--ink)]', className)} {...props}>
       {children}
     </h3>
   )
@@ -44,7 +46,7 @@ export function CardTitle({ className, children, ...props }: React.HTMLAttribute
 
 export function CardDescription({ className, children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) {
   return (
-    <p className={cn('text-sm text-[color:var(--foreground)]/78 mt-2', className)} {...props}>
+    <p className={cn('mt-2 text-sm leading-6 text-[color:var(--muted)]', className)} {...props}>
       {children}
     </p>
   )
@@ -60,7 +62,7 @@ export function CardContent({ className, children, ...props }: React.HTMLAttribu
 
 export function CardFooter({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn('p-6 pt-0 flex items-center', className)} {...props}>
+    <div className={cn('flex items-center p-6 pt-0', className)} {...props}>
       {children}
     </div>
   )

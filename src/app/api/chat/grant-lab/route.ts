@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { getSupabaseAdminClient } from '@/lib/supabase/admin'
-import { buildScopeKey, fetchUsageSnapshot, findActiveAiBan, logUsageEvent } from '@/lib/ai-usage'
+import { buildScopeKey, fetchUsageSnapshot, logUsageEvent } from '@/lib/ai-usage'
 import { sanitizeForLog, sanitizeTextForLog } from '@/lib/security/redact-secrets'
+import { jsonError, getRequesterIp, estimateTokens, extractOutputText, enforceAiBan } from '@/lib/ai-guard'
 
 export const runtime = 'nodejs'
 
@@ -25,8 +26,6 @@ const MEMBER_MIN_INTERVAL_MS = 350
 const GUEST_DAILY_TOKEN_BUDGET = 45000
 const MEMBER_DAILY_TOKEN_BUDGET = 120000
 const OPENAI_TIMEOUT_MS = 45000
-const AI_BAN_CHECK_FAIL_OPEN = process.env.AI_BAN_CHECK_FAIL_OPEN === 'true'
-const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
 const SYSTEM_PROMPT = `You are a senior U.S. transportation + land use grant strategist.
 
@@ -86,60 +85,6 @@ const requestSchema = z.object({
     .min(1)
     .max(MAX_CONTEXT_MESSAGES),
 })
-
-function jsonError(message: string, status = 400, extras: Record<string, unknown> = {}) {
-  return NextResponse.json({ ok: false, message, ...extras }, { status })
-}
-
-function shouldFailOpenBanCheck() {
-  return !IS_PRODUCTION && AI_BAN_CHECK_FAIL_OPEN
-}
-
-function banCheckUnavailableResponse() {
-  return jsonError('Safety systems are temporarily unavailable. Please retry in a moment.', 503)
-}
-
-function getRequesterIp(req: NextRequest): string {
-  const forwarded = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-  const realIp = req.headers.get('x-real-ip')?.trim()
-  return forwarded || realIp || 'unknown-ip'
-}
-
-function estimateTokens(text: string): number {
-  return Math.ceil(text.length / 4)
-}
-
-function extractOutputText(payload: unknown): string {
-  if (!payload || typeof payload !== 'object') return ''
-
-  const maybeText = (payload as { output_text?: unknown }).output_text
-  if (typeof maybeText === 'string' && maybeText.trim().length > 0) {
-    return maybeText.trim()
-  }
-
-  const output = (payload as { output?: unknown }).output
-  if (!Array.isArray(output)) return ''
-
-  const parts: string[] = []
-  for (const item of output) {
-    if (!item || typeof item !== 'object') continue
-
-    const content = (item as { content?: unknown }).content
-    if (!Array.isArray(content)) continue
-
-    for (const block of content) {
-      if (!block || typeof block !== 'object') continue
-      const blockType = (block as { type?: unknown }).type
-      const text = (block as { text?: unknown }).text
-
-      if ((blockType === 'output_text' || blockType === 'text') && typeof text === 'string' && text.trim()) {
-        parts.push(text.trim())
-      }
-    }
-  }
-
-  return parts.join('\n\n').trim()
-}
 
 function formatGrantContext(context: z.infer<typeof grantContextSchema>): string {
   const lines = [
@@ -207,59 +152,16 @@ export async function POST(req: NextRequest) {
 
     let tokensUsed24h = 0
 
-    if (!admin) {
-      if (!shouldFailOpenBanCheck()) {
-        console.error('Grant abuse-control check unavailable', {
-          route: ROUTE_KEY,
-          reason: 'missing_admin_client',
-          failOpen: shouldFailOpenBanCheck(),
-        })
-        return banCheckUnavailableResponse()
-      }
-    } else {
-      try {
-        const ban = await findActiveAiBan(admin, {
-          route: ROUTE_KEY,
-          userId: user?.id,
-          visitorId: visitorId ?? null,
-          ip,
-        })
-
-        if (ban) {
-          try {
-            await logUsageEvent(admin, {
-              scopeKey,
-              route: ROUTE_KEY,
-              requesterKind,
-              userId: user?.id,
-              visitorId: visitorId ?? null,
-              ip,
-              status: 'blocked',
-              metadata: {
-                reason: ban.reason ?? 'blocked_by_admin',
-                route: ROUTE_KEY,
-                banId: ban.id,
-                key_source: keySource,
-              },
-            })
-          } catch (logError) {
-            console.error('Grant blocked-event log failed', sanitizeForLog(logError))
-          }
-
-          return jsonError('This AI tool is temporarily unavailable for this session.', 403)
-        }
-      } catch (banError) {
-        console.error('Grant abuse-control check failed', {
-          route: ROUTE_KEY,
-          failOpen: shouldFailOpenBanCheck(),
-          error: sanitizeForLog(banError),
-        })
-
-        if (!shouldFailOpenBanCheck()) {
-          return banCheckUnavailableResponse()
-        }
-      }
-    }
+    const banResponse = await enforceAiBan(admin, {
+      routeKey: ROUTE_KEY,
+      scopeKey,
+      requesterKind,
+      userId: user?.id,
+      visitorId: visitorId ?? null,
+      ip,
+      keySource,
+    })
+    if (banResponse) return banResponse
 
     if (admin) {
       try {

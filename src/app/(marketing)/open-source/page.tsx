@@ -1,10 +1,21 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { ArrowRight, Code2, ExternalLink, GitFork, Landmark, Lock, ShieldCheck, Wrench } from 'lucide-react'
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Code2,
+  GitFork,
+  Github,
+  Landmark,
+  Lock,
+  Wrench,
+} from 'lucide-react'
 import { Container } from '@/components/layout/container'
 import { Section } from '@/components/layout/section'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
+import { ContourField } from '@/components/features/contour-field'
 import {
   implementationOffers,
   implementationPackages,
@@ -13,323 +24,438 @@ import {
   openSourceProjects,
   readinessLabel,
   readinessNote,
+  sourceAvailabilityLabel,
   supportCtaForProject,
 } from '@/data/open-source-projects'
 
 export const metadata: Metadata = {
   title: 'Open Source',
   description:
-    'Nat Ford builds free and open-source planning, geospatial, aerial, modeling, and operations software — then helps teams deploy, customize, and support it.',
+    'Nat Ford builds free, open-source planning, geospatial, aerial, modeling, and operations software, then helps teams deploy, customize, and support it.',
 }
 
-const principles = [
+const modelPillars = [
   {
-    title: 'Open beats locked-in',
-    body: 'If public-interest software matters, people should be able to inspect it, fork it, run it, and improve it without waiting for a vendor roadmap.',
+    title: 'The code is public.',
+    body: 'OpenPlan, OpenGeo, ClawModeler, and the rest are real repositories under Apache-2.0 or AGPL. Inspect them, fork them, or self-host before we ever talk.',
     icon: GitFork,
   },
   {
-    title: 'Building blocks beat monoliths',
-    body: 'AI agents are increasingly good at gluing together proven pieces. The useful unit is often the component, schema, workflow, or package — not the giant closed app.',
-    icon: Code2,
-  },
-  {
-    title: 'Services fund stewardship',
-    body: 'The code can be free. The hard work is deployment, security, data cleanup, integrations, onboarding, support, and keeping a custom fork healthy over time.',
+    title: 'You pay to run it well.',
+    body: 'Deployment, hosting, a fork shaped to your county, roles and onboarding, and a support lane for deadline weeks. That is the paid work, and it is the part most teams actually need help with.',
     icon: Wrench,
   },
   {
-    title: 'Transparency is a civic feature',
-    body: 'For agencies, tribes, counties, and public-facing work, reusable source code can reduce duplicate spending and make methods easier to verify.',
+    title: 'Building blocks, not one giant app.',
+    body: 'The useful unit is usually a component, schema, or workflow that agents and people can recombine. Reusable primitives beat a closed monolith with every feature bolted on.',
+    icon: Code2,
+  },
+  {
+    title: 'Open source cuts duplicate public spend.',
+    body: 'When agencies, counties, and tribes can reuse and verify the same methods, the software stops being paid for over and over behind separate contracts.',
     icon: Landmark,
   },
 ]
 
-const manifesto = [
-  'Most organizations do not need another black-box subscription. They need software they can inspect, adapt, and keep using when their workflow gets weird.',
-  'The future is not one all-purpose app with every possible feature. The future is a strong spine of open tools, clear primitives, and local adaptations that agents and people can extend.',
-  'Fork count matters. Reuse matters. A tool that gets copied, modified, and deployed in strange places is doing its job.',
-  'Nat Ford will make money by being excellent stewards: setup, custom versions, hosting, support, training, integrations, and planning expertise — not by hiding useful code behind a tollbooth.',
-]
-
 const featuredOpenSourceProjects = openSourceProjects.filter(isFeaturedPublicRepo)
+const featuredLicenses = Array.from(
+  new Set(featuredOpenSourceProjects.map((p) => p.licenseSpdx))
+)
 
 export default function OpenSourcePage() {
   return (
     <>
-      <Section spacing="xl" className="hero-mesh text-white">
-        <Container size="xl">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.12fr)_minmax(320px,0.88fr)] lg:items-end">
-            <div className="max-w-4xl">
-              <span className="pill border-white/20 bg-white/10 text-white">Open-source by default</span>
-              <h1 className="section-title mt-5 text-[2.75rem] leading-[0.96] text-white sm:text-5xl md:text-7xl">
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="worksurface relative overflow-hidden border-b border-[color:var(--line)]">
+        <ContourField animate className="opacity-90" />
+        <Container size="xl" className="relative py-16 md:py-24 lg:py-28">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
+            <div>
+              <p className="index-label reveal reveal-1">Open source by default</p>
+              <h1 className="display-1 reveal reveal-2 mt-6 text-[color:var(--ink)]">
                 Free code. Serious implementation.
               </h1>
-              <p className="mt-6 max-w-3xl text-lg leading-8 text-white/82 md:text-xl">
-                Nat Ford builds open-source planning, geospatial, aerial, modeling, and operations software. The tools
-                are meant to be inspected, forked, customized, and run by agencies, companies, developers, and AI agents.
+              <p className="lead reveal reveal-3 measure-wide mt-6 text-[color:var(--muted)]">
+                Nat Ford builds open-source planning, geospatial, aerial, modeling, and operations
+                software. The tools are meant to be inspected, forked, and run by agencies,
+                companies, developers, and AI agents. The paid work is making them run in your shop.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button asChild size="lg" variant="secondary">
+
+              <div className="reveal reveal-4 mt-9 flex flex-wrap items-center gap-3">
+                <Button asChild size="lg">
                   <Link href="/contact?topic=open-source-support&intent=discovery">
-                    Get implementation support <ArrowRight className="ml-2 h-4 w-4" />
+                    Get implementation support <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-white/35 text-white hover:border-white hover:text-white">
+                <Button asChild size="lg" variant="outline">
                   <Link href="#projects">Browse featured projects</Link>
                 </Button>
               </div>
             </div>
 
-            <div className="rounded-[2rem] border border-white/16 bg-white/[0.07] p-6 shadow-2xl backdrop-blur-sm">
-              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/58">Commercial model</p>
-              <h2 className="mt-3 text-3xl font-semibold text-white">The code is free. The operating help is paid.</h2>
-              <ul className="mt-5 space-y-3 text-sm leading-6 text-white/78">
-                <li>• Custom forks and company-specific versions.</li>
-                <li>• Hosted administration, monitoring, release management, and support.</li>
-                <li>• Enterprise SSO, roles, access control, and staff training.</li>
-                <li>• Planning, GIS, data, AI, and software implementation for real workflows.</li>
+            {/* Model plate — states the open-core model plainly */}
+            <div className="reveal reveal-5 surface-card p-6 md:p-7 lg:justify-self-end lg:max-w-md">
+              <p className="label">The model</p>
+              <p className="mt-3 font-display text-2xl font-semibold leading-tight text-[color:var(--ink)]">
+                The code is free. Running it well is the paid work.
+              </p>
+              <ul className="mt-5 space-y-2.5">
+                {implementationOffers.map((offer) => (
+                  <li
+                    key={offer.name}
+                    className="flex items-start gap-2.5 text-sm leading-6 text-[color:var(--muted)]"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--copper)]"
+                    />
+                    {offer.name}
+                  </li>
+                ))}
               </ul>
+              <div className="mt-6 flex flex-wrap gap-2 border-t border-[color:var(--line)] pt-5">
+                {featuredLicenses.map((license) => (
+                  <span key={license} className="provenance">
+                    {license}
+                  </span>
+                ))}
+                <a
+                  href="https://github.com/nfredmond"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="provenance"
+                >
+                  <Github className="h-3.5 w-3.5" aria-hidden="true" />
+                  github.com/nfredmond
+                </a>
+              </div>
             </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── How the model works ──────────────────────────────── */}
+      <Section spacing="lg">
+        <Container size="xl">
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <p className="index-label">How the model works</p>
+              <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+                Open the reusable pieces. Charge for the hard parts.
+              </h2>
+              <p className="measure mt-5 text-[color:var(--muted)]">
+                Public-interest software should be something you can read, adapt, and keep running
+                when your workflow gets weird. So the software is open. The revenue comes from
+                making it work in production, and from the planning judgment no repository hands you.
+              </p>
+            </div>
+
+            <dl className="divide-y divide-[color:var(--line)] border-t border-[color:var(--line)]">
+              {modelPillars.map((pillar) => {
+                const Icon = pillar.icon
+                return (
+                  <div
+                    key={pillar.title}
+                    className="grid gap-3 py-7 sm:grid-cols-[2.25rem_1fr] sm:gap-6"
+                  >
+                    <div
+                      aria-hidden="true"
+                      className="hidden h-9 w-9 items-center justify-center rounded-lg border border-[color:var(--line)] bg-[color:var(--surface)] text-[color:var(--pine)] dark:text-[color:var(--pine-soft)] sm:flex"
+                    >
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <dt className="font-display text-2xl font-semibold text-[color:var(--ink)]">
+                        {pillar.title}
+                      </dt>
+                      <dd className="measure mt-2.5 text-[color:var(--muted)]">{pillar.body}</dd>
+                    </div>
+                  </div>
+                )
+              })}
+            </dl>
           </div>
         </Container>
       </Section>
 
-      <Section spacing="lg" className="border-b border-[color:var(--line)] bg-[color:var(--fog)]/60">
-        <Container>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {principles.map((principle) => {
-              const Icon = principle.icon
+      {/* ── Featured public repositories ─────────────────────── */}
+      <Section
+        id="projects"
+        spacing="lg"
+        className="border-y border-[color:var(--line)] bg-[color:var(--surface-2)]/50"
+      >
+        <Container size="xl">
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="index-label">Featured public repositories</p>
+              <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+                Building blocks worth forking.
+              </h2>
+            </div>
+            <p className="max-w-md text-sm leading-6 text-[color:var(--muted)]">
+              Active public repos are shown here. The full catalog, including release-track and
+              commercial-guide entries, lives on the project directory.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-5 lg:grid-cols-2">
+            {featuredOpenSourceProjects.map((project) => {
+              const supportCta = supportCtaForProject(project)
               return (
-                <Card key={principle.title} className="p-6">
-                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[color:var(--pine)] text-white">
-                    <Icon className="h-5 w-5" />
+                <Card key={project.slug} id={project.slug} className="scroll-mt-28">
+                  <div className="flex h-full flex-col p-6 md:p-7">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <div className="flex flex-wrap gap-x-3 gap-y-1">
+                          <span className="label">{project.category}</span>
+                          <span className="label text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
+                            {readinessLabel(project.status)}
+                          </span>
+                        </div>
+                        <h3 className="mt-3 font-display text-2xl font-semibold text-[color:var(--ink)]">
+                          {project.name}
+                        </h3>
+                      </div>
+                      <a
+                        href={project.repoUrl!}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-outline btn-sm shrink-0"
+                      >
+                        <Github className="h-4 w-4" aria-hidden="true" /> Source
+                      </a>
+                    </div>
+
+                    <p className="mt-4 text-[0.98rem] leading-7 text-[color:var(--muted)]">
+                      {project.summary}
+                    </p>
+
+                    <div className="mt-5 grid gap-4 rounded-xl border border-[color:var(--line)] bg-[color:var(--surface-2)]/60 p-4 sm:grid-cols-2">
+                      <div>
+                        <p className="label">License</p>
+                        <p className="data mt-1 text-sm font-medium text-[color:var(--ink)]">
+                          {licenseLabel(project)}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="label">Source</p>
+                        <p className="data mt-1 text-sm font-medium text-[color:var(--ink)]">
+                          {sourceAvailabilityLabel(project)}
+                        </p>
+                      </div>
+                      <p className="text-[0.82rem] leading-5 text-[color:var(--muted)] sm:col-span-2">
+                        {readinessNote(project.status)}
+                      </p>
+                    </div>
+
+                    <div className="mt-5 grid gap-5 sm:grid-cols-2">
+                      <div>
+                        <p className="label">Open primitives</p>
+                        <ul className="mt-2.5 space-y-1.5 text-sm leading-6 text-[color:var(--muted)]">
+                          {project.primitives.map((primitive) => (
+                            <li key={primitive} className="flex gap-2">
+                              <span aria-hidden="true" className="text-[color:var(--copper)]">
+                                ·
+                              </span>
+                              {primitive}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <p className="label">Paid support</p>
+                        <p className="mt-2.5 text-sm leading-6 text-[color:var(--muted)]">
+                          {project.paidSupport}
+                        </p>
+                      </div>
+                    </div>
+
+                    <p className="mt-5 border-t border-[color:var(--line)] pt-4 text-xs leading-5 text-[color:var(--faint)]">
+                      {project.licenseNote}
+                    </p>
+
+                    <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">
+                      <Link
+                        href={supportCta.href}
+                        className="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]"
+                      >
+                        {supportCta.label} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </Link>
+                      <a
+                        href={`${project.repoUrl!}/issues`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--muted)] hover:text-[color:var(--pine)] dark:hover:text-[color:var(--pine-soft)]"
+                      >
+                        Issues &amp; roadmap
+                        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                      </a>
+                    </div>
                   </div>
-                  <h2 className="mt-5 text-xl font-semibold text-[color:var(--ink)]">{principle.title}</h2>
-                  <p className="mt-3 text-sm leading-6 text-[color:var(--foreground)]/76">{principle.body}</p>
                 </Card>
               )
             })}
           </div>
-        </Container>
-      </Section>
 
-      <Section spacing="xl">
-        <Container>
-          <div className="grid gap-10 lg:grid-cols-[0.42fr_0.58fr] lg:items-start">
-            <div>
-              <span className="pill">What we believe</span>
-              <h2 className="section-title mt-4 text-4xl text-[color:var(--ink)] md:text-5xl">
-                Strong opinions, plainly stated.
-              </h2>
-              <p className="mt-5 text-[color:var(--foreground)]/76">
-                This is the working doctrine behind the website rebuild and the product roadmap.
-              </p>
-            </div>
-            <div className="divide-y divide-[color:var(--line)] rounded-[2rem] border border-[color:var(--line)] bg-white/70 dark:bg-white/[0.03]">
-              {manifesto.map((item, index) => (
-                <div key={item} className="grid gap-4 p-6 md:grid-cols-[3.5rem_1fr] md:p-7">
-                  <div className="font-display text-3xl text-[color:var(--copper)]">{String(index + 1).padStart(2, '0')}</div>
-                  <p className="text-lg leading-8 text-[color:var(--foreground)]/82">{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      <Section id="projects" spacing="xl" className="border-y border-[color:var(--line)] bg-[color:var(--sand)]/38">
-        <Container size="xl">
-          <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <span className="pill">Featured public projects</span>
-              <h2 className="section-title mt-4 text-4xl text-[color:var(--ink)] md:text-5xl">
-                Building blocks worth forking.
-              </h2>
-            </div>
-            <p className="max-w-xl text-sm leading-6 text-[color:var(--foreground)]/72">
-              Featured active public repos are shown here. The selected product catalog lives on the project directory,
-              with release-track and commercial-guide entries labeled separately.
-            </p>
-          </div>
-
-          <div className="grid gap-5 lg:grid-cols-2">
-            {featuredOpenSourceProjects.map((project) => {
-              const supportCta = supportCtaForProject(project)
-
-              return (
-              <Card key={project.slug} id={project.slug} className="scroll-mt-28 p-0">
-                <CardContent className="p-6 md:p-7">
-                  <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                    <div>
-                      <div className="flex flex-wrap gap-x-3 gap-y-1 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/58">
-                        <span>{project.category}</span>
-                        <span>{readinessLabel(project.status)}</span>
-                      </div>
-                      <h3 className="mt-2 text-2xl font-semibold text-[color:var(--ink)]">{project.name}</h3>
-                    </div>
-                    <a
-                      href={project.repoUrl!}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex shrink-0 items-center justify-center rounded-full border border-[color:var(--line)] px-3.5 py-2 text-sm font-semibold text-[color:var(--foreground)] transition hover:border-[color:var(--pine)] hover:text-[color:var(--pine)]"
-                    >
-                      GitHub <ExternalLink className="ml-2 h-4 w-4" />
-                    </a>
-                  </div>
-
-                  <p className="mt-4 text-[0.98rem] leading-7 text-[color:var(--foreground)]/78">{project.summary}</p>
-
-                  <div className="mt-5 grid gap-3 rounded-2xl border border-[color:var(--line)] bg-[color:var(--fog)]/42 p-4 text-sm md:grid-cols-3">
-                    <div>
-                      <p className="text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/55">Readiness</p>
-                      <p className="mt-1 font-semibold text-[color:var(--ink)]">{readinessLabel(project.status)}</p>
-                    </div>
-                    <div>
-                      <p className="text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/55">License</p>
-                      <p className="mt-1 font-semibold text-[color:var(--ink)]">{licenseLabel(project)}</p>
-                    </div>
-                    <div>
-                      <p className="text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/55">Contribution path</p>
-                      <p className="mt-1 font-semibold text-[color:var(--ink)]">Issues / forks / pull requests</p>
-                    </div>
-                    <p className="md:col-span-3 text-[0.82rem] leading-5 text-[color:var(--foreground)]/70">{readinessNote(project.status)}</p>
-                  </div>
-
-                  <div className="mt-5 grid gap-4 md:grid-cols-2">
-                    <div>
-                      <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/58">
-                        Open primitives
-                      </p>
-                      <ul className="mt-2 space-y-1.5 text-sm text-[color:var(--foreground)]/78">
-                        {project.primitives.map((primitive) => (
-                          <li key={primitive}>• {primitive}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--foreground)]/58">
-                        Paid support
-                      </p>
-                      <p className="mt-2 text-sm leading-6 text-[color:var(--foreground)]/78">{project.paidSupport}</p>
-                    </div>
-                  </div>
-
-                  <p className="mt-5 border-t border-[color:var(--line)] pt-4 text-xs leading-5 text-[color:var(--foreground)]/58">
-                    {project.licenseNote}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <Link
-                      href={supportCta.href}
-                      className="inline-flex items-center rounded-full bg-[color:var(--pine)] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-white hover:bg-[color:var(--pine-deep)]"
-                    >
-                      {supportCta.label} <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-                    </Link>
-                    <a
-                      href={project.repoUrl!}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center rounded-full border border-[color:var(--line)] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.1em] hover:border-[color:var(--pine)] hover:text-[color:var(--pine)]"
-                    >
-                      Inspect repo <ExternalLink className="ml-1.5 h-3.5 w-3.5" />
-                    </a>
-                    <a
-                      href={`${project.repoUrl!}/issues`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center rounded-full border border-[color:var(--line)] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.1em] hover:border-[color:var(--pine)] hover:text-[color:var(--pine)]"
-                    >
-                      Issues / roadmap <ExternalLink className="ml-1.5 h-3.5 w-3.5" />
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
-              )
-            })}
-          </div>
-          <div className="mt-8 flex justify-center">
+          <div className="mt-8">
             <Button asChild variant="outline">
               <Link href="/products">
-                View full project directory <ArrowRight className="ml-2 h-4 w-4" />
+                View full project directory <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
           </div>
         </Container>
       </Section>
 
-      <Section spacing="xl">
-        <Container>
-          <div className="mb-8 max-w-3xl">
-            <span className="pill">How Nat Ford gets paid</span>
-            <h2 className="section-title mt-4 text-4xl text-[color:var(--ink)] md:text-5xl">
-              We sell outcomes around the open tools.
+      {/* ── What the paid work looks like ────────────────────── */}
+      <Section spacing="lg">
+        <Container size="xl">
+          <div className="max-w-2xl">
+            <p className="index-label">Working together</p>
+            <h2 className="display-2 mt-5 text-[color:var(--ink)]">
+              What you pay for, and how to start.
             </h2>
-            <p className="mt-5 text-[color:var(--foreground)]/76">
-              Open source is not charity theater. It is a better adoption strategy and a better trust model. The paid
-              work is the part most organizations actually need help with. Engagements typically range from a $3.5K fit
-              audit to $18K+ managed deployments and custom forks.
+            <p className="measure mt-5 text-[color:var(--muted)]">
+              Adopting open source should not force a giant procurement step. Here is the shape of
+              the paid work, and the smallest responsible way into each of them.
             </p>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2">
+          <div className="mt-10 grid gap-5 md:grid-cols-2">
             {implementationOffers.map((offer) => (
-              <Card key={offer.name} className="p-6">
-                <h3 className="text-2xl font-semibold text-[color:var(--ink)]">{offer.name}</h3>
-                <p className="mt-3 text-[color:var(--foreground)]/76">{offer.summary}</p>
-                <ul className="mt-5 grid gap-2 text-sm text-[color:var(--foreground)]/76 sm:grid-cols-2">
+              <Card key={offer.name} className="p-6 md:p-7">
+                <h3 className="font-display text-2xl font-semibold text-[color:var(--ink)]">
+                  {offer.name}
+                </h3>
+                <p className="mt-3 text-[color:var(--muted)]">{offer.summary}</p>
+                <ul className="mt-5 grid gap-px overflow-hidden rounded-lg border border-[color:var(--line)] bg-[color:var(--line)] sm:grid-cols-2">
                   {offer.examples.map((example) => (
-                    <li key={example} className="border-t border-[color:var(--line)] pt-2">{example}</li>
+                    <li
+                      key={example}
+                      className="bg-[color:var(--surface)] px-3.5 py-2.5 text-sm leading-5 text-[color:var(--muted)]"
+                    >
+                      {example}
+                    </li>
                   ))}
                 </ul>
               </Card>
             ))}
           </div>
 
-          <div className="mt-10 rounded-[2rem] border border-[color:var(--line)] bg-[color:var(--fog)]/45 p-6 md:p-8">
-            <div className="max-w-3xl">
-              <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/58">How to engage</p>
-              <h3 className="mt-3 text-3xl font-semibold text-[color:var(--ink)]">Choose the smallest responsible support lane.</h3>
-              <p className="mt-3 text-[color:var(--foreground)]/76">
-                Open-source work should not force a giant procurement step. Start with the support shape that matches the risk.
+          {/* Support lanes ladder */}
+          <div className="surface-inset mt-8 p-6 md:p-9">
+            <div className="max-w-2xl">
+              <p className="label">How to engage</p>
+              <h3 className="mt-3 font-display text-3xl font-semibold text-[color:var(--ink)]">
+                Choose the smallest responsible support lane.
+              </h3>
+              <p className="mt-3 text-[color:var(--muted)]">
+                Most teams start with a fit audit, because the honest first answer is sometimes
+                &ldquo;don&rsquo;t build this.&rdquo; From there the work escalates only as far as it
+                needs to.
               </p>
             </div>
-            <div className="mt-6 grid gap-4 lg:grid-cols-4">
-              {implementationPackages.map((pkg) => (
-                <div key={pkg.name} className="rounded-2xl border border-[color:var(--line)] bg-white/70 p-5 dark:bg-white/[0.03]">
-                  <h4 className="text-lg font-semibold text-[color:var(--ink)]">{pkg.name}</h4>
-                  <p className="mt-3 text-sm leading-6 text-[color:var(--foreground)]/74">{pkg.deliverable}</p>
-                  <ul className="mt-4 space-y-1.5 text-xs leading-5 text-[color:var(--foreground)]/66">
+
+            <ol className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+              {implementationPackages.map((pkg, i) => (
+                <li key={pkg.name} className="surface-card flex flex-col p-5">
+                  <span className="data text-sm text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h4 className="mt-3 font-display text-lg font-semibold text-[color:var(--ink)]">
+                    {pkg.name}
+                  </h4>
+                  <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">
+                    {pkg.deliverable}
+                  </p>
+                  <ul className="mt-4 space-y-1.5 border-t border-[color:var(--line)] pt-4 text-xs leading-5 text-[color:var(--faint)]">
                     {pkg.includes.slice(0, 3).map((item) => (
-                      <li key={item}>• {item}</li>
+                      <li key={item} className="flex gap-2">
+                        <span aria-hidden="true" className="text-[color:var(--copper)]">
+                          ·
+                        </span>
+                        {item}
+                      </li>
                     ))}
                   </ul>
-                </div>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
         </Container>
       </Section>
 
-      <Section spacing="lg" className="bg-[#0f1720] text-white">
-        <Container>
-          <div className="grid gap-8 lg:grid-cols-[1fr_0.55fr] lg:items-center">
+      {/* ── Open does not mean careless ──────────────────────── */}
+      <section className="on-dark relative overflow-hidden border-y border-white/10 bg-[#0b120f] text-white">
+        <ContourField className="opacity-60" />
+        <Container size="xl" className="relative py-16 md:py-24">
+          <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-16">
             <div>
-              <div className="flex items-center gap-3 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/58">
-                <ShieldCheck className="h-4 w-4 text-[color:var(--copper)]" />
-                Open does not mean careless
-              </div>
-              <h2 className="section-title mt-4 text-4xl text-white md:text-5xl">We publish the reusable parts. We protect the sensitive parts.</h2>
-              <p className="mt-5 max-w-3xl text-white/76">
-                Client data, credentials, confidential deliverables, and security-sensitive deployment details stay protected.
-                Reusable code, schemas, templates, demo data, public methods, and documentation belong in the open whenever practical.
+              <p className="index-label text-[color:var(--copper)]">Open, not careless</p>
+              <h2 className="display-2 mt-5 text-white">
+                We publish the reusable parts. We protect the sensitive parts.
+              </h2>
+              <p className="mt-5 max-w-2xl text-white/70">
+                Client data, credentials, confidential deliverables, and security-sensitive
+                deployment details stay protected. Reusable code, schemas, templates, demo data,
+                public methods, and documentation belong in the open whenever it is practical.
               </p>
             </div>
-            <div className="rounded-[1.75rem] border border-white/16 bg-white/[0.06] p-6">
-              <Lock className="h-8 w-8 text-[color:var(--copper)]" />
-              <p className="mt-4 text-lg font-semibold">Trust comes from both transparency and discretion.</p>
-              <p className="mt-3 text-sm leading-6 text-white/68">
-                The operating rule is simple: open the building blocks; never leak people’s actual stuff.
+            <div className="rounded-2xl border border-white/12 bg-white/[0.06] p-6 md:p-7">
+              <Lock className="h-7 w-7 text-[color:var(--copper)]" aria-hidden="true" />
+              <p className="mt-4 font-display text-xl font-semibold text-white">
+                Trust comes from both transparency and discretion.
               </p>
+              <p className="mt-3 text-sm leading-6 text-white/65">
+                The operating rule is simple: open the building blocks, and never leak
+                people&rsquo;s actual work.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Closing ──────────────────────────────────────────── */}
+      <Section spacing="lg">
+        <Container size="xl">
+          <div className="surface-card overflow-hidden">
+            <div className="grid md:grid-cols-[0.72fr_1.28fr]">
+              <div className="relative min-h-72 border-b border-[color:var(--line)] md:border-b-0 md:border-r">
+                <Image
+                  src="/images/site/drone-intersection-topdown-2026-03.jpg"
+                  alt="Top-down aerial capture of a rural intersection in Northern California"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 30vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex flex-col justify-center p-7 md:p-10">
+                <p className="index-label">Bring a repo, or a problem</p>
+                <h2 className="display-3 mt-4 text-[color:var(--ink)]">
+                  Tell me what you want running.
+                </h2>
+                <p className="measure mt-4 text-[color:var(--muted)]">
+                  Self-host it yourself, or have me deploy, fork, and support it. Either way the code
+                  stays yours to inspect. Start with a scoping conversation and we will pick the
+                  smallest lane that solves your workflow.
+                </p>
+                <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+                  <Button asChild size="lg">
+                    <Link href="/contact?intent=discovery&topic=open-source-support">
+                      Get implementation support <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button asChild size="lg" variant="outline">
+                    <Link href="/products">Browse the full catalog</Link>
+                  </Button>
+                  <a
+                    href="mailto:nathaniel@natfordplanning.com"
+                    className="font-mono text-sm text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]"
+                  >
+                    nathaniel@natfordplanning.com
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </Container>

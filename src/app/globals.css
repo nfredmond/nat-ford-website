@@ -8,372 +8,512 @@
   /* Keep core utility colors available after reset */
   --color-white: #ffffff;
   --color-black: #000000;
+  --color-transparent: transparent;
+  --color-current: currentColor;
 }
 
+/* ------------------------------------------------------------------ *
+ * Design tokens — "The Planning Worksurface"
+ * Forest-green ink on warm topographic paper; copper as the one sharp
+ * accent; IBM Plex Mono as the data/provenance layer. Forest-night dark.
+ * Every value is AA-checked for its intended role.
+ * ------------------------------------------------------------------ */
 :root {
-  --background: #f7f8f4;
-  --foreground: #14212b;
+  /* Surfaces */
+  --paper: #f3f1e9;        /* base page — warm topographic paper */
+  --background: #f3f1e9;   /* alias, kept for existing pages */
+  --surface: #fbfaf4;      /* raised plate / card */
+  --surface-2: #ebe7d9;    /* inset / sunken */
+  --fog: #e4e9e7;          /* cool cartographic panel */
+  --slate: #dbe2df;        /* cool surface accent */
+  --sand: #e7dcc3;         /* warm surface accent */
 
-  /* Nat Ford core palette */
-  --ink: #14212b;
-  --pine: #1f4e2e;
-  --pine-deep: #12301f;
-  --copper: #be8e2f;
-  --sand: #efe4cf;
-  --fog: #edf1f4;
-  --line: #c7d2dc;
+  /* Ink + text */
+  --ink: #182220;          /* deep spruce ink — primary text */
+  --foreground: #182220;
+  --muted: #4c574f;        /* secondary text — AA on paper */
+  --faint: #6d766c;        /* tertiary / captions — AA-large only */
 
-  --font-display: "Cormorant Garamond", serif;
+  /* Brand */
+  --pine: #1e5031;         /* primary green */
+  --pine-deep: #143621;    /* deeper green (hover / pressed) */
+  --pine-soft: #2c6a44;    /* lifted green */
+  --copper: #b07a22;       /* decorative accent (large / non-text) */
+  --copper-ink: #8a5a15;   /* AA-safe copper text on light */
+
+  /* Lines */
+  --line: #d8d2c2;         /* warm hairline */
+  --line-strong: #c3bba4;
+
+  /* On-color text + interaction (mode-aware for AA) */
+  --on-pine: #ffffff;
+  --on-copper: #20160a;
+  --pine-hover: #17402a;
+
+  /* Fonts */
+  --font-display: "Cormorant Garamond", Georgia, serif;
   --font-body: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 }
 
 .dark {
-  --background: #0a1118;
-  --foreground: #e7edf2;
-  --ink: #e7edf2;
-  --pine: #56a271;
-  --pine-deep: #a8d9b8;
-  --copper: #d9b264;
-  --sand: #1a232d;
-  --fog: #0f1720;
-  --line: #30404d;
+  --paper: #0b120f;
+  --background: #0b120f;
+  --surface: #121c17;
+  --surface-2: #0e1712;
+  --fog: #101914;
+  --slate: #14201a;
+  --sand: #1d2a22;
+
+  --ink: #e8ece2;
+  --foreground: #e8ece2;
+  --muted: #9daca1;
+  --faint: #7d8a80;
+
+  --pine: #5ca274;
+  --pine-deep: #c7e6d2;    /* light green — for text/marks on dark green */
+  --pine-soft: #7cbb92;
+  --copper: #d6ae5c;
+  --copper-ink: #e2c079;
+
+  --line: #26332b;
+  --line-strong: #35473c;
+
+  --on-pine: #08130c;
+  --on-copper: #20160a;
+  --pine-hover: #4f9468;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
   --color-primary: var(--pine);
   --color-secondary: var(--copper);
-  --color-accent: #3f7fb8;
-  --color-muted: var(--fog);
+  --color-line: var(--line);
 
   --font-sans: var(--font-body);
   --font-body: var(--font-body);
   --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+}
+
+/* ------------------------------------------------------------------ *
+ * Base
+ * ------------------------------------------------------------------ */
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background:
-    radial-gradient(1200px 600px at 80% -20%, rgba(190, 142, 47, 0.12), transparent 60%),
-    radial-gradient(900px 500px at -10% 0%, rgba(31, 78, 46, 0.08), transparent 55%),
-    var(--background);
+  min-height: 100dvh;
+  background-color: var(--paper);
   color: var(--foreground);
   font-family: var(--font-body);
-  line-height: 1.58;
-  letter-spacing: 0.002em;
+  font-size: 1.0625rem;      /* 17px floor */
+  line-height: 1.62;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
+::selection {
+  background: color-mix(in srgb, var(--pine) 22%, transparent);
+  color: var(--ink);
+}
+.dark ::selection {
+  background: color-mix(in srgb, var(--pine) 40%, transparent);
+  color: #fff;
+}
+
+/* Restrained, on-theme scrollbar (Firefox + WebKit) */
+* {
+  scrollbar-color: color-mix(in srgb, var(--line-strong) 80%, transparent) transparent;
+}
+
+/* ------------------------------------------------------------------ *
+ * Typography scale — large jumps, real weight contrast
+ * ------------------------------------------------------------------ */
 .font-display {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.018em;
+}
+.font-body { font-family: var(--font-body); }
+.font-mono { font-family: var(--font-mono); }
+
+.display-1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.75rem, 6.4vw, 5.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.022em;
+}
+.display-2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 4.2vw, 3.35rem);
+  line-height: 1.03;
+  letter-spacing: -0.018em;
+}
+.display-3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+}
+/* Kept for existing pages; harmonized with the new scale */
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.05;
 }
 
-.font-body {
-  font-family: var(--font-body);
+.lead {
+  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--foreground) 88%, transparent);
 }
 
-.nf-glass {
-  backdrop-filter: blur(14px);
-  background: color-mix(in srgb, var(--background) 72%, white 28%);
+/* Constrain reading measure to ~68ch */
+.measure { max-width: 64ch; }
+.measure-wide { max-width: 74ch; }
+
+/* The monospace data / provenance layer */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.data {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
 }
 
-.dark .nf-glass {
-  background: color-mix(in srgb, #0a1118 74%, #152230 26%);
-}
+/* ------------------------------------------------------------------ *
+ * Structural devices
+ * ------------------------------------------------------------------ */
 
-.nf-topography::before {
+/* Section index label — a mono marker with a real hairline, no pill chrome */
+.index-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--copper-ink);
+}
+.index-label::before {
   content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(20, 33, 43, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(20, 33, 43, 0.04) 1px, transparent 1px),
-    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.22), transparent 22%),
-    radial-gradient(circle at 82% 10%, rgba(255, 255, 255, 0.16), transparent 20%);
-  background-size: 42px 42px, 42px 42px, auto, auto;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.65), transparent 92%);
-  opacity: 0.5;
-  pointer-events: none;
-  z-index: -1;
+  width: 1.6rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.65;
+}
+.dark .index-label { color: var(--copper); }
+
+/* Provenance tag — the site's signature. A small mono chip that names the
+   real source behind a claim (repo, license, PDF, dataset). */
+.provenance {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.18rem 0.5rem;
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+}
+a.provenance {
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+a.provenance:hover {
+  color: var(--pine);
+  border-color: color-mix(in srgb, var(--pine) 45%, var(--line));
+}
+.dark a.provenance:hover { color: var(--pine-soft); }
+
+/* Card / plate surfaces — one crisp edge, no belt-and-suspenders shadow */
+.surface-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.surface-inset {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+/* Kept aliases for existing pages */
+.soft-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.signal-tile {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
 }
 
-.dark .nf-topography::before {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.12), transparent 22%),
-    radial-gradient(circle at 82% 10%, rgba(255, 255, 255, 0.08), transparent 20%);
+/* Figure plate — a framed image with a mono figure caption, like a report plate */
+.plate {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface-2);
+}
+.plate-caption {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: #e9ece2;
 }
 
+/* Hairline divider */
+.rule {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+}
+
+/* Contour worksurface backdrop for feature sections */
+.worksurface {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(120% 90% at 85% -10%, color-mix(in srgb, var(--copper) 8%, transparent), transparent 55%),
+    radial-gradient(100% 80% at 0% 0%, color-mix(in srgb, var(--pine) 7%, transparent), transparent 52%),
+    var(--paper);
+}
+
+/* Pill — kept for existing pages, re-cut to the mono label system */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--copper-ink);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: 0.3rem 0.6rem;
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+}
+.dark .pill { color: var(--copper); }
+
+/* Brand plaque behind the monogram */
 .nf-brand-plaque {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 1.1rem;
-  border: 1px solid color-mix(in srgb, var(--line) 72%, transparent 28%);
-  background: color-mix(in srgb, var(--background) 82%, white 18%);
-  padding: 0.6rem;
-  box-shadow: 0 16px 40px rgba(20, 33, 43, 0.08);
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 0.5rem;
 }
-
 .dark .nf-brand-plaque {
-  background: color-mix(in srgb, #13202b 84%, #1c2c39 16%);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+  background: color-mix(in srgb, var(--surface) 88%, #0a0f0c);
 }
 
-.nf-kicker {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.85rem;
-  align-items: center;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--foreground) 74%, transparent 26%);
+/* Sticky site header — blur is justified here (genuine sticky layering) */
+.site-header {
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+@supports not (backdrop-filter: blur(12px)) {
+  .site-header { background: var(--paper); }
 }
 
-.nf-kicker span:not(:last-child)::after {
-  content: "";
-  display: inline-block;
-  width: 1.8rem;
-  height: 1px;
-  margin-left: 0.85rem;
-  vertical-align: middle;
-  background: color-mix(in srgb, var(--copper) 55%, var(--line) 45%);
+/* ------------------------------------------------------------------ *
+ * Legacy homepage utilities — retained so any not-yet-rebuilt page that
+ * still references them stays coherent. Float animation intentionally
+ * removed (anti-slop). Glass reduced to a solid layered surface.
+ * ------------------------------------------------------------------ */
+.nf-glass {
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  backdrop-filter: saturate(140%) blur(12px);
 }
+.hero-mesh-light { position: relative; overflow: hidden; }
 
-.nf-proof-strip {
-  border-top: 1px solid color-mix(in srgb, var(--line) 72%, transparent 28%);
-  padding-top: 0.9rem;
-  font-size: 0.88rem;
-  line-height: 1.5;
-  color: color-mix(in srgb, var(--foreground) 82%, transparent 18%);
-}
-
-.nf-ops-board {
-  border: 1px solid color-mix(in srgb, var(--line) 75%, transparent 25%);
-  border-radius: 2rem;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.65)),
-    color-mix(in srgb, var(--background) 90%, white 10%);
-  padding: 1.5rem;
-  box-shadow: 0 28px 70px rgba(20, 33, 43, 0.12);
-}
-
-.dark .nf-ops-board {
-  background:
-    linear-gradient(180deg, rgba(18, 28, 37, 0.96), rgba(16, 24, 32, 0.94)),
-    #111a23;
-  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.34);
-}
-
-.nf-ops-row {
-  display: grid;
-  grid-template-columns: minmax(0, 9rem) minmax(0, 1fr);
-  gap: 1rem;
-  align-items: start;
-  border-top: 1px solid color-mix(in srgb, var(--line) 68%, transparent 32%);
-  padding-top: 0.95rem;
-}
-
-.nf-ops-label {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--foreground) 70%, transparent 30%);
-}
-
-.nf-ops-value {
-  font-size: 0.97rem;
-  line-height: 1.55;
-  color: color-mix(in srgb, var(--foreground) 88%, transparent 12%);
-}
-
-@media (max-width: 640px) {
-  .hero-mesh,
-  .hero-mesh-light {
-    overflow-wrap: anywhere;
-  }
-
-  .nf-kicker span:not(:last-child)::after {
-    display: none;
-  }
-
-  .nf-ops-row {
-    grid-template-columns: 1fr;
-    gap: 0.35rem;
-  }
-}
-
-.hero-mesh,
-.hero-mesh-light {
+/* Forest-night hero used by interior pages (kept working under the new system) */
+.hero-mesh {
   position: relative;
   overflow: hidden;
-}
-
-.hero-mesh::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
+  color: #fff;
   background:
-    radial-gradient(650px 320px at 15% 10%, rgba(31, 78, 46, 0.2), transparent 65%),
-    radial-gradient(700px 420px at 85% 0%, rgba(190, 142, 47, 0.22), transparent 58%),
-    linear-gradient(110deg, rgba(20, 33, 43, 0.95), rgba(18, 48, 31, 0.94));
-  z-index: -2;
+    radial-gradient(900px 500px at 86% -12%, color-mix(in srgb, var(--copper) 24%, transparent), transparent 60%),
+    radial-gradient(820px 480px at -5% 0%, color-mix(in srgb, #23623c 60%, transparent), transparent 56%),
+    linear-gradient(158deg, #0f1c14, #0b120f 62%);
 }
-
-.hero-mesh::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 36px 36px;
-  mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
-  opacity: 0.38;
-  z-index: -1;
+/* Pills + index labels read as light on the dark hero and dark bands */
+.hero-mesh .pill,
+.on-dark .pill {
+  color: #fff;
+  border-color: color-mix(in srgb, #fff 30%, transparent);
+  background: color-mix(in srgb, #fff 10%, transparent);
 }
-
-.hero-mesh-light::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  background:
-    radial-gradient(880px 420px at 12% 5%, rgba(72, 126, 94, 0.22), transparent 68%),
-    radial-gradient(760px 420px at 88% 0%, rgba(190, 142, 47, 0.25), transparent 60%),
-    linear-gradient(120deg, #edf3f7, #f6f4ee 52%, #eaf1f8);
-  z-index: -2;
+.hero-mesh .index-label,
+.on-dark .index-label { color: var(--copper); }
+.hero-mesh .section-title { color: #fff; }
+.nf-kicker {
+  display: flex; flex-wrap: wrap; gap: 0.85rem; align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.13em;
+  text-transform: uppercase; color: var(--muted);
 }
-
-.hero-mesh-light::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(rgba(20, 33, 43, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(20, 33, 43, 0.06) 1px, transparent 1px);
-  background-size: 36px 36px;
-  mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
-  opacity: 0.34;
-  z-index: -1;
+.nf-proof-strip {
+  border-top: 1px solid var(--line); padding-top: 0.9rem;
+  font-size: 0.9rem; line-height: 1.5; color: var(--muted);
 }
-
-.dark .hero-mesh-light::before {
-  background:
-    radial-gradient(650px 320px at 15% 10%, rgba(31, 78, 46, 0.2), transparent 65%),
-    radial-gradient(700px 420px at 85% 0%, rgba(190, 142, 47, 0.22), transparent 58%),
-    linear-gradient(110deg, rgba(20, 33, 43, 0.95), rgba(18, 48, 31, 0.94));
+.nf-ops-board {
+  border: 1px solid var(--line); border-radius: 16px;
+  background: var(--surface); padding: 1.5rem;
 }
+.float-slow { animation: none; }
 
-.dark .hero-mesh-light::after {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  opacity: 0.38;
-}
-
-.soft-card {
-  border: 1px solid color-mix(in srgb, var(--line) 75%, transparent 25%);
-  background: color-mix(in srgb, var(--background) 88%, white 12%);
-  box-shadow: 0 12px 40px rgba(20, 33, 43, 0.06);
-}
-
-.dark .soft-card {
-  background: color-mix(in srgb, #111a24 88%, #1c2a38 12%);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.32);
-}
-
-.signal-tile {
-  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent 30%);
-  background: color-mix(in srgb, var(--background) 86%, white 14%);
-}
-
-.dark .signal-tile {
-  background: #15202a;
-}
-
-.pill {
+/* ------------------------------------------------------------------ *
+ * Buttons — contrast handled per theme via on-color tokens
+ * ------------------------------------------------------------------ */
+.btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-weight: 600;
   border-radius: 9999px;
-  border: 1px solid color-mix(in srgb, var(--copper) 40%, var(--line) 60%);
-  background: color-mix(in srgb, var(--sand) 76%, white 24%);
-  padding: 0.35rem 0.7rem;
-  font-size: 0.76rem;
-  letter-spacing: 0.075em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--ink) 80%, #000 20%);
-  font-weight: 700;
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.btn:disabled { opacity: 0.5; pointer-events: none; }
+
+.btn-sm { height: 2.25rem; padding-inline: 0.9rem; font-size: 0.875rem; }
+.btn-md { height: 2.6rem; padding-inline: 1.15rem; font-size: 0.9375rem; }
+.btn-lg { height: 3.05rem; padding-inline: 1.5rem; font-size: 1.0625rem; }
+
+.btn-primary { background: var(--pine); color: var(--on-pine); }
+.btn-primary:hover { background: var(--pine-hover); }
+
+.btn-secondary { background: var(--copper); color: var(--on-copper); }
+.btn-secondary:hover { filter: brightness(1.06); }
+
+.btn-outline {
+  border-color: var(--line-strong);
+  color: var(--ink);
+  background: transparent;
+}
+.btn-outline:hover {
+  border-color: color-mix(in srgb, var(--pine) 55%, var(--line-strong));
+  color: var(--pine);
+  background: color-mix(in srgb, var(--pine) 6%, transparent);
+}
+.dark .btn-outline:hover { color: var(--pine-soft); }
+
+.btn-ghost { color: var(--ink); background: transparent; }
+.btn-ghost:hover { background: var(--surface-2); }
+
+/* On the dark ink footer/proof bands, buttons invert against the surface */
+.on-dark .btn-outline {
+  border-color: color-mix(in srgb, #fff 26%, transparent);
+  color: #fff;
+}
+.on-dark .btn-outline:hover {
+  border-color: var(--copper);
+  color: var(--copper);
+  background: color-mix(in srgb, #fff 6%, transparent);
+}
+.on-dark .btn-ghost { color: #fff; }
+.on-dark .btn-ghost:hover { background: color-mix(in srgb, #fff 8%, transparent); }
+
+/* ------------------------------------------------------------------ *
+ * Motion — one orchestrated reveal, transform/opacity only, motion-safe
+ * ------------------------------------------------------------------ */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes draw {
+  from { stroke-dashoffset: var(--draw-len, 1200); }
+  to   { stroke-dashoffset: 0; }
 }
 
-.dark .pill {
-  background: #1a2632;
-  border-color: #324454;
-  color: #d6dee6;
-}
-
-.hero-mesh .pill {
-  border-color: rgba(255, 255, 255, 0.44);
-  background: rgba(255, 255, 255, 0.14);
-  color: #ffffff;
-}
-
-.hero-mesh .pill:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.section-title {
-  font-family: var(--font-display);
-  letter-spacing: -0.018em;
-  line-height: 1.06;
-}
-
-@keyframes drift {
-  0%,
-  100% {
-    transform: translateY(0px);
+.reveal { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    animation: reveal-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
-  50% {
-    transform: translateY(-7px);
+  .reveal-1 { animation-delay: 0.05s; }
+  .reveal-2 { animation-delay: 0.14s; }
+  .reveal-3 { animation-delay: 0.23s; }
+  .reveal-4 { animation-delay: 0.32s; }
+  .reveal-5 { animation-delay: 0.41s; }
+  .reveal-6 { animation-delay: 0.5s; }
+
+  .contour-draw path {
+    stroke-dasharray: var(--draw-len, 1200);
+    animation: draw 2.4s ease-out forwards;
   }
+  .contour-draw path:nth-child(2) { animation-delay: 0.15s; }
+  .contour-draw path:nth-child(3) { animation-delay: 0.3s; }
+  .contour-draw path:nth-child(4) { animation-delay: 0.45s; }
+  .contour-draw path:nth-child(5) { animation-delay: 0.6s; }
+  .contour-draw path:nth-child(6) { animation-delay: 0.75s; }
 }
 
-.float-slow {
-  animation: drift 6s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
+/* ------------------------------------------------------------------ *
+ * Accessibility floor
+ * ------------------------------------------------------------------ */
 :focus-visible {
   outline: 2px solid var(--pine);
   outline-offset: 2px;
+  border-radius: 3px;
 }
-
-.dark :focus-visible {
-  outline-color: #75c790;
-}
+.dark :focus-visible { outline-color: var(--pine-soft); }
 
 .skip-link {
   position: absolute;
-  top: -40px;
-  left: 0;
-  background: var(--pine);
-  color: white;
-  padding: 8px 16px;
-  text-decoration: none;
+  top: -48px;
+  left: 12px;
   z-index: 100;
+  background: var(--pine);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: top 0.15s ease;
 }
+.skip-link:focus { top: 12px; }
 
-.skip-link:focus {
-  top: 0;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

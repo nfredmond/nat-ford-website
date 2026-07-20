@@ -254,14 +254,15 @@ async function getRemoteAgentDashboardSnapshot() {
 }
 
 type AdminPageProps = {
-  searchParams?: {
+  searchParams?: Promise<{
     tab?: string
     status?: string
     message?: string
-  }
+  }>
 }
 
 export default async function AdminPage({ searchParams }: AdminPageProps) {
+  const params = (await searchParams) ?? {}
   const supabase = await createClient()
   const {
     data: { user },
@@ -337,7 +338,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     )
   }
 
-  const currentTab = resolveTab(searchParams?.tab)
+  const currentTab = resolveTab(params.tab)
   const admin = getSupabaseAdminClient()
 
   let accessCount = 0
@@ -477,21 +478,21 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             </CardContent>
           </Card>
 
-          {searchParams?.status === 'ok' && (
+          {params.status === 'ok' && (
             <p className="rounded-xl border border-emerald-300/60 bg-emerald-50 px-3 py-2 text-sm text-emerald-800">
               Action completed successfully.
             </p>
           )}
 
-          {searchParams?.status === 'error' && (
+          {params.status === 'error' && (
             <p className="rounded-xl border border-red-300/60 bg-red-50 px-3 py-2 text-sm text-red-800">
               Action failed. Review the details below and retry if appropriate.
             </p>
           )}
 
-          {searchParams?.message && (
+          {params.message && (
             <p className="rounded-xl border border-[color:var(--line)] bg-[color:var(--fog)]/40 px-3 py-2 text-sm text-[color:var(--foreground)]/82">
-              {searchParams.message}
+              {params.message}
             </p>
           )}
 
