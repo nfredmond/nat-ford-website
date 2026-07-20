@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 }
 
 const facts = [
-  { label: 'Education', value: 'Master’s in urban planning' },
+  { label: 'Education', value: 'Master of Urban Planning, San José State' },
   { label: 'Base', value: 'Sierra foothills, near Grass Valley, CA' },
   { label: 'Reach', value: 'Remote-first across the U.S.; field work when it helps' },
   { label: 'Certification', value: 'FAA Part 107 remote pilot' },
