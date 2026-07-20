@@ -87,7 +87,7 @@ const ROUTING_OPTIONS = [
   { value: 'openplan-general', label: 'OpenPlan: General' },
 ] as const
 
-const OWNER_PRESETS = ['Nathaniel', 'Bartholomew', 'Elena'] as const
+const OWNER_PRESETS = ['Nathaniel'] as const
 
 const SAVED_VIEWS: SavedViewDefinition[] = [
   {

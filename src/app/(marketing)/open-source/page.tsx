@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 const modelPillars = [
   {
     title: 'The code is public.',
-    body: 'OpenPlan, OpenGeo, ClawModeler, and the rest are real repositories under Apache-2.0 or AGPL. Inspect them, fork them, or self-host before we ever talk.',
+    body: 'The public projects — OpenPlan, OpenGeo, ClawModeler, and more — are real repositories under Apache-2.0 or AGPL. Inspect them, fork them, or self-host before we ever talk.',
     icon: GitFork,
   },
   {

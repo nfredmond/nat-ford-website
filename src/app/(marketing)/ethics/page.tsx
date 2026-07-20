@@ -228,15 +228,15 @@ export default function EthicsPage() {
             <figure className="lg:justify-self-end">
               <div className="plate aspect-[5/4] w-full max-w-lg">
                 <Image
-                  src="/images/site/workshop-maps.jpg"
-                  alt="Printed corridor maps spread across a table during a community planning workshop"
+                  src="/images/site/drone-town-overview-2026-03.jpg"
+                  alt="Aerial overview of a small Northern California town and its street grid"
                   fill
                   sizes="(max-width: 1024px) 100vw, 42vw"
                   className="object-cover"
                 />
                 <figcaption className="plate-caption absolute inset-x-4 bottom-3.5 flex items-center justify-between">
-                  <span>Fig. 02 · Community workshop</span>
-                  <span className="text-[color:var(--copper)]">Public process</span>
+                  <span>Fig. 02 · Small town, aerial capture</span>
+                  <span className="text-[color:var(--copper)]">FAA Part 107</span>
                 </figcaption>
               </div>
             </figure>

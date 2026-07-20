@@ -119,8 +119,8 @@ export default function AboutPage() {
                 I&rsquo;m a master&rsquo;s-trained transportation and urban planner based in the Sierra
                 foothills of Northern California. My work spans the state&rsquo;s planning range:
                 regional and active transportation plans across rural counties, and the denser urban
-                questions I first took on as a planner at the San Francisco County Transportation
-                Authority.
+                questions I first took on as a planning intern at the San Francisco County
+                Transportation Authority.
               </p>
               <p className="reveal reveal-3 measure-wide mt-4 text-[color:var(--muted)]">
                 I also build the software that work runs on, and I keep it open. The goal is plain:

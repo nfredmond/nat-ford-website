@@ -97,9 +97,10 @@ export default function HomePage() {
               </h1>
               <p className="lead reveal reveal-3 measure-wide mt-6 text-[color:var(--muted)]">
                 Nat Ford Planning &amp; Analysis builds free, open-source tools for transportation
-                planning, mapping, and modeling, then helps agencies actually run them, from rural
-                Northern California counties to city transportation departments. The code is public.
-                Every number carries its source. A real planner answers the email.
+                planning, mapping, and modeling, then helps agencies actually run them. The
+                experience behind them runs from rural Northern California counties to city
+                transportation departments. The code is public. Every number carries its source. A
+                real planner answers the email.
               </p>
 
               <div className="reveal reveal-4 mt-9 flex flex-wrap items-center gap-3">
@@ -314,8 +315,8 @@ export default function HomePage() {
                 on one spine, with the map as the worksurface and provenance on every number.
               </p>
               <p className="mt-4 text-sm leading-6 text-white/55">
-                Honest about its limits: the modeling is screening-grade, not a calibrated forecast,
-                and it is built to support qualified planning review, never to replace it.
+                The modeling is screening-grade, not a calibrated forecast, and it is built to
+                support qualified planning review, never to replace it.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button asChild size="lg">
