@@ -94,8 +94,8 @@ export function ContactPageShell({
                 <div className="flex items-start gap-3">
                   <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]" aria-hidden="true" />
                   <dd>
-                    <a href="tel:+15302648801" className="font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]">
-                      (530) 264-8801
+                    <a href="tel:+15304929775" className="font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]">
+                      (530) 492-9775
                     </a>
                     <p className="mt-0.5 font-mono text-xs text-[color:var(--faint)]">Google Voice intake line</p>
                   </dd>

@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { ArrowRight, Copy, Download, Loader2, Save, Sparkles } from 'lucide-react'
 import { Container } from '@/components/layout/container'
 import { Section } from '@/components/layout/section'
+import { ContourField } from '@/components/features/contour-field'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -412,30 +413,37 @@ export default function GrantLabPage() {
 
   return (
     <>
-      <Section spacing="lg" className="hero-mesh text-white">
-        <Container>
-          <div className="max-w-4xl">
-            <div className="max-w-3xl rounded-2xl border border-white/20 bg-black/20 p-5 shadow-[0_10px_30px_rgba(0,0,0,0.28)] backdrop-blur-[1px] sm:p-6">
-              <span className="pill">Grant AI Lab</span>
-              <h1 className="section-title mt-5 text-5xl leading-[0.96] !text-white [text-shadow:0_2px_10px_rgba(0,0,0,0.55)] md:text-6xl">AI Grant Narrative Lab</h1>
-              <p className="mt-5 max-w-3xl text-lg text-white [text-shadow:0_1px_6px_rgba(0,0,0,0.45)]">
-                Choose a grant program, enter your criteria, generate a narrative draft, then refine it by chat. Built for U.S. small towns, tribes, counties, RTPAs, transportation commissions, and state agencies that need practical, fundable language.
-              </p>
-              <p className="mt-3 max-w-3xl text-sm text-white/95 [text-shadow:0_1px_6px_rgba(0,0,0,0.45)]">
-                Want this running inside your organization? This workflow can be deployed through OpenPlan, adapted as an open-source custom fork, or built into a client-specific delivery system.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-3 text-sm">
-                <Link href="/openplan" className="inline-flex items-center rounded-full border border-white/45 bg-white/14 px-4 py-2 font-semibold text-white hover:bg-white/22">
-                  See OpenPlan inclusion <ArrowRight className="ml-1.5 h-4 w-4" />
-                </Link>
-                <Link href="/contact?intent=discovery&topic=custom-software&inquiry=custom-grant-ai" className="inline-flex items-center rounded-full border border-white/40 bg-black/10 px-4 py-2 font-semibold text-white/95 hover:bg-white/12">
-                  Request custom build
-                </Link>
-              </div>
+      <section className="on-dark relative overflow-hidden border-b border-white/10 bg-[#0b120f] text-white">
+        <ContourField className="opacity-55" />
+        <Container size="xl" className="relative py-14 md:py-20">
+          <div className="max-w-3xl">
+            <p className="index-label text-[color:var(--copper)]">AI Grant Narrative Lab</p>
+            <h1 className="display-2 mt-5 text-white">
+              Draft a fundable grant narrative, then refine it by chat.
+            </h1>
+            <p className="lead measure-wide mt-5 text-white/78">
+              Pick a program, enter your project criteria, and generate a first draft grounded in
+              real scoring priorities. Built for the agencies that write these on a deadline: small
+              towns, tribes, counties, RTPAs, transportation commissions, and state agencies.
+            </p>
+            <p className="measure mt-4 text-sm leading-6 text-white/60">
+              Want it running inside your organization? This workflow deploys through OpenPlan, as an
+              open-source custom fork, or as a client-specific delivery system.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link href="/openplan" className="btn btn-primary btn-md">
+                See OpenPlan inclusion <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/contact?intent=discovery&topic=custom-software&inquiry=custom-grant-ai"
+                className="btn btn-outline btn-md"
+              >
+                Request a custom build
+              </Link>
             </div>
           </div>
         </Container>
-      </Section>
+      </section>
 
       <Section spacing="xl">
         <Container>
@@ -510,13 +518,13 @@ export default function GrantLabPage() {
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.05fr_0.95fr]">
             <Card className="p-0">
               <CardContent className="p-6">
-                <h2 className="text-2xl font-semibold text-[color:var(--ink)]">Project + Program Inputs</h2>
+                <h2 className="font-display text-2xl font-semibold text-[color:var(--ink)]">Project + Program Inputs</h2>
                 <p className="mt-2 text-sm text-[color:var(--foreground)]/78">
                   Complete as much as you have. The assistant will flag assumptions where details are missing.
                 </p>
 
                 <form className="mt-5 space-y-4" onSubmit={onGenerateDraft}>
-                  <p className="text-xs uppercase tracking-[0.12em] text-[color:var(--foreground)]/72">Step 1 of 3 — Program + Applicant Context</p>
+                  <p className="label">Step 1 of 3 — Program + applicant context</p>
                   <div>
                     <label className="mb-1.5 block text-sm font-medium text-[color:var(--ink)]">Grant program *</label>
                     <select
@@ -569,7 +577,7 @@ export default function GrantLabPage() {
                     </div>
                   ) : null}
 
-                  <p className="pt-1 text-xs uppercase tracking-[0.12em] text-[color:var(--foreground)]/72">Step 2 of 3 — Need, Scope, and Readiness</p>
+                  <p className="label pt-1">Step 2 of 3 — Need, scope, and readiness</p>
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                     <label className="text-sm text-[color:var(--foreground)]/80">
                       Tone
@@ -674,7 +682,7 @@ export default function GrantLabPage() {
                     </div>
                   </details>
 
-                  <p className="pt-1 text-xs uppercase tracking-[0.12em] text-[color:var(--foreground)]/72">Step 3 of 3 — Generate and Refine</p>
+                  <p className="label pt-1">Step 3 of 3 — Generate and refine</p>
                   {missingRequirements.length > 0 && (
                     <p className="text-xs text-[color:var(--foreground)]/70">
                       To generate a draft, add: {missingRequirements.join(' and ')}.
@@ -703,7 +711,7 @@ export default function GrantLabPage() {
             <Card className="p-0">
               <CardContent className="p-6">
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <h2 className="text-2xl font-semibold text-[color:var(--ink)]">Narrative Chat Editor</h2>
+                  <h2 className="font-display text-2xl font-semibold text-[color:var(--ink)]">Narrative Chat Editor</h2>
                   <div className="flex flex-wrap items-center gap-2">
                     <Button type="button" variant="outline" onClick={() => void copyLatestDraft()} disabled={messages.length < 2 || isWorking}>
                       <Copy className="mr-1.5 h-3.5 w-3.5" /> Copy latest draft
@@ -744,7 +752,7 @@ export default function GrantLabPage() {
                       className={`whitespace-pre-wrap rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                         message.role === 'assistant'
                           ? 'bg-[color:var(--fog)] text-[color:var(--foreground)]'
-                          : 'ml-3 bg-[color:var(--pine)] text-white'
+                          : 'ml-3 bg-[color:var(--pine)] text-[color:var(--on-pine)]'
                       }`}
                     >
                       {message.content}
@@ -803,7 +811,7 @@ export default function GrantLabPage() {
           </div>
 
           <div className="mt-8 rounded-2xl border border-[color:var(--line)] bg-[color:var(--fog)]/70 p-5">
-            <h3 className="text-lg font-semibold text-[color:var(--ink)]">What this lab is best for</h3>
+            <h3 className="font-display text-xl font-semibold text-[color:var(--ink)]">What this lab is best for</h3>
             <ul className="mt-3 space-y-1.5 text-sm text-[color:var(--foreground)]/80">
               <li>• Rapid first-draft generation customized to a specific grant program</li>
               <li>• Iterative revisions based on scoring criteria, equity/safety framing, and readiness realities</li>

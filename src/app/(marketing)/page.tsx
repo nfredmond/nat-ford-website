@@ -39,7 +39,7 @@ const pillars = [
   },
   {
     title: 'The planning is done by a planner.',
-    body: 'RTPs, ATPs, VMT screening, grant narratives, and board-ready maps, from someone who has delivered them across rural Northern California.',
+    body: 'RTPs, ATPs, VMT screening, grant narratives, and board-ready maps, from a master’s-trained planner whose Northern California experience runs from rural county corridors to dense city networks.',
     link: { label: 'See the planning work', href: '/projects' },
   },
 ]
@@ -97,9 +97,9 @@ export default function HomePage() {
               </h1>
               <p className="lead reveal reveal-3 measure-wide mt-6 text-[color:var(--muted)]">
                 Nat Ford Planning &amp; Analysis builds free, open-source tools for transportation
-                planning, mapping, and modeling, then helps small and rural agencies actually run
-                them. The code is public. Every number carries its source. A real planner answers
-                the email.
+                planning, mapping, and modeling, then helps agencies actually run them, from rural
+                Northern California counties to city transportation departments. The code is public.
+                Every number carries its source. A real planner answers the email.
               </p>
 
               <div className="reveal reveal-4 mt-9 flex flex-wrap items-center gap-3">
