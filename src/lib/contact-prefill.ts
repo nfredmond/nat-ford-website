@@ -182,21 +182,24 @@ export function buildContactPrefill({
   const customSoftwareIntent = requestTopic === 'custom-software'
   const serviceLabel = serviceLabelByTopic[requestTopic] || ''
 
-  const defaultInquiryType = fundingReadinessIntent
-    ? 'Grant strategy'
-    : requestTopic === 'grant-strategy'
-      ? 'Grant strategy'
-      : ['gis-mapping', 'aerial-mapping'].includes(requestTopic)
-        ? 'GIS / mapping'
-        : requestTopic === 'planning-support'
-          ? 'Planning support'
-          : requestTopic === 'portal-support'
-            ? 'General inquiry'
-            : customSoftwareIntent || requestTopic === 'ai-documentation'
-            ? 'Custom software development'
-            : openSourceSupportIntent
-              ? 'Open-source software support'
-              : checkoutInquiryByProduct[checkoutProduct] || (openPlanProductContext ? 'OpenPlan product' : '')
+  // Priority-ordered selection of the default inquiry type. Read top-to-bottom;
+  // the first matching rule wins (equivalent to the previous nested ternary).
+  let defaultInquiryType: string
+  if (fundingReadinessIntent || requestTopic === 'grant-strategy') {
+    defaultInquiryType = 'Grant strategy'
+  } else if (['gis-mapping', 'aerial-mapping'].includes(requestTopic)) {
+    defaultInquiryType = 'GIS / mapping'
+  } else if (requestTopic === 'planning-support') {
+    defaultInquiryType = 'Planning support'
+  } else if (requestTopic === 'portal-support') {
+    defaultInquiryType = 'General inquiry'
+  } else if (customSoftwareIntent || requestTopic === 'ai-documentation') {
+    defaultInquiryType = 'Custom software development'
+  } else if (openSourceSupportIntent) {
+    defaultInquiryType = 'Open-source software support'
+  } else {
+    defaultInquiryType = checkoutInquiryByProduct[checkoutProduct] || (openPlanProductContext ? 'OpenPlan product' : '')
+  }
 
   const defaultTimeline = checkoutIntent
     ? timelines[0]
