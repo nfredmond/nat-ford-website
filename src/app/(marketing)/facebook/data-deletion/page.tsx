@@ -1,40 +1,53 @@
 type DataDeletionStatusPageProps = {
-  searchParams?: {
+  searchParams: Promise<{
     code?: string
-  }
+  }>
 }
 
 export const metadata = {
   title: 'Facebook Data Deletion Request Status',
 }
 
-export default function DataDeletionStatusPage({ searchParams }: DataDeletionStatusPageProps) {
-  const code = searchParams?.code || 'pending'
+export default async function DataDeletionStatusPage({ searchParams }: DataDeletionStatusPageProps) {
+  const params = await searchParams
+  const code = params.code || 'pending'
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-16">
-      <div className="rounded-2xl border border-[color:var(--line)] bg-[color:var(--background)] p-8 shadow-sm">
-        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[color:var(--pine)]">Nat Ford</p>
-        <h1 className="mt-2 text-3xl font-semibold text-[color:var(--ink)]">Facebook Data Deletion Request</h1>
-        <p className="mt-4 text-sm text-[color:var(--foreground)]/80">
-          Your request has been received and logged. We process deletion requests promptly in accordance with Meta Platform Terms and applicable privacy requirements.
+    <div className="mx-auto max-w-3xl px-6 py-16">
+      <div className="surface-card p-8">
+        <p className="index-label">Nat Ford Planning &amp; Analysis</p>
+        <h1 className="mt-3 font-display text-3xl font-semibold text-[color:var(--ink)]">
+          Facebook Data Deletion Request
+        </h1>
+        <p className="mt-4 text-sm text-[color:var(--muted)]">
+          Your request has been received and logged. I process deletion requests promptly in
+          accordance with Meta Platform Terms and applicable privacy requirements.
         </p>
 
-        <div className="mt-6 rounded-xl border border-[color:var(--line)] bg-[color:var(--sand)]/25 p-4">
-          <p className="text-xs uppercase tracking-[0.08em] text-[color:var(--foreground)]/65">Confirmation code</p>
-          <p className="mt-1 break-all text-base font-semibold text-[color:var(--ink)]">{code}</p>
+        <div className="surface-inset mt-6 p-4">
+          <p className="label">Confirmation code</p>
+          <p className="data mt-1 break-all text-base font-semibold text-[color:var(--ink)]">{code}</p>
         </div>
 
-        <div className="mt-6 space-y-2 text-sm text-[color:var(--foreground)]/78">
-          <p>Status: <span className="font-medium text-[color:var(--ink)]">Received</span></p>
+        <div className="mt-6 space-y-2 text-sm text-[color:var(--muted)]">
           <p>
-            If we determine no Facebook user data is stored for your account context, the request is treated as completed with no further action required.
+            Status: <span className="font-medium text-[color:var(--ink)]">Received</span>
           </p>
           <p>
-            Questions: <a className="font-medium text-[color:var(--pine)]" href="mailto:bartholomew@natfordplanning.com">bartholomew@natfordplanning.com</a>
+            If no Facebook user data is stored for your account context, the request is treated as
+            completed with no further action required.
+          </p>
+          <p>
+            Questions:{' '}
+            <a
+              className="font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]"
+              href="mailto:nathaniel@natfordplanning.com"
+            >
+              nathaniel@natfordplanning.com
+            </a>
           </p>
         </div>
       </div>
-    </main>
+    </div>
   )
 }

@@ -119,8 +119,8 @@ export default function AboutPage() {
                 I&rsquo;m a master&rsquo;s-trained transportation and urban planner based in the Sierra
                 foothills of Northern California. My work spans the state&rsquo;s planning range:
                 regional and active transportation plans across rural counties, and the denser urban
-                questions I first took on as a planner at the San Francisco County Transportation
-                Authority.
+                questions I first took on as a planning intern at the San Francisco County
+                Transportation Authority.
               </p>
               <p className="reveal reveal-3 measure-wide mt-4 text-[color:var(--muted)]">
                 I also build the software that work runs on, and I keep it open. The goal is plain:
@@ -159,8 +159,8 @@ export default function AboutPage() {
             </div>
 
             {/* Figure plate — the headshot as a report plate */}
-            <figure className="reveal reveal-5 lg:justify-self-end">
-              <div className="plate aspect-[4/5] w-full max-w-sm">
+            <figure className="reveal reveal-5 w-full max-w-sm lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full">
                 <Image
                   src="/images/headshot.png"
                   alt="Portrait of Nathaniel Ford Redmond, founder of Nat Ford Planning & Analysis"

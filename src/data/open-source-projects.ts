@@ -93,7 +93,7 @@ export const openSourceProjects: OpenSourceProject[] = [
     licenseSpdx: 'Apache-2.0',
     // demoUrl omitted — the hosted demo is paused (returns HTTP 402).
     // Re-add 'https://openplan-natford.vercel.app' once the deployment is live again.
-    licenseNote: 'Source code is licensed under Apache-2.0 unless the repository marks a specific file or asset otherwise; see LICENSE-NOTICE for exclusions.',
+    licenseNote: 'Source code is licensed under Apache-2.0 unless the repository marks a specific file or asset otherwise; the repository’s LICENSE file is authoritative.',
     paidSupport:
       'Managed deployment, custom county/RTPA/agency editions, hosting/admin, role design, staff onboarding, GIS/data setup, agency-specific RTP/ATP/grant templates, support, and planning services.',
     primitives: ['Planning workspace', 'shared project spine', 'funding and program records', 'GIS/data context', 'grant/report workflows', 'evidence packets', 'AI-assisted drafting with review gates'],
@@ -121,7 +121,7 @@ export const openSourceProjects: OpenSourceProject[] = [
       'Open aerial data processing and planning-intelligence platform using an ODM-composed architecture for drone workflows.',
     repoUrl: 'https://github.com/nfredmond/aerial-intel-platform',
     licenseSpdx: 'Apache-2.0',
-    licenseNote: 'Source code is licensed under Apache-2.0 unless the repository marks a specific file or asset otherwise; see LICENSE-NOTICE for exclusions.',
+    licenseNote: 'Source code is licensed under Apache-2.0 unless the repository marks a specific file or asset otherwise; the repository’s LICENSE file is authoritative.',
     paidSupport:
       'Drone program setup, mission processing workflows, hosted operations, QA packets, map deliverables, and staff onboarding.',
     primitives: ['Mission intake', 'ODM processing hooks', 'dataset extraction', 'QA workflow', 'planning-ready outputs'],
@@ -135,7 +135,7 @@ export const openSourceProjects: OpenSourceProject[] = [
       'AI-orchestrated, local-first transportation scenario modeling for small and rural agencies. Python engine plus Tauri desktop UI.',
     repoUrl: 'https://github.com/nfredmond/clawmodeler',
     licenseSpdx: 'Apache-2.0',
-    licenseNote: 'Source code is licensed under Apache-2.0 unless the repository marks a specific file or asset otherwise; see LICENSE-NOTICE for exclusions.',
+    licenseNote: 'Source code is licensed under Apache-2.0 unless the repository marks a specific file or asset otherwise; the repository’s LICENSE file is authoritative.',
     paidSupport:
       'Model setup, local data preparation, scenario calibration, rural agency training, support, and custom modeling extensions.',
     primitives: ['Scenario modeling engine', 'desktop interface', 'local-first workflows', 'transportation analytics'],
@@ -150,7 +150,7 @@ export const openSourceProjects: OpenSourceProject[] = [
     repoUrl: 'https://github.com/nfredmond/ads_chatbot',
     licenseSpdx: 'Apache-2.0',
     demoUrl: 'https://ads-chatbot.vercel.app',
-    licenseNote: 'Source code is licensed under Apache-2.0 unless the repository marks a specific file or asset otherwise; see LICENSE-NOTICE for exclusions.',
+    licenseNote: 'Source code is licensed under Apache-2.0 unless the repository marks a specific file or asset otherwise; the repository’s LICENSE file is authoritative.',
     paidSupport:
       'Custom analytics dashboards, campaign operations automation, CRM/reporting integrations, and support for non-planning companies.',
     primitives: ['Channel sync patterns', 'reporting automation', 'AI-assisted operations review', 'cross-platform workflow glue'],

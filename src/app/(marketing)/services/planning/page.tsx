@@ -123,11 +123,11 @@ export default function PlanningServicePage() {
             </div>
 
             {/* Figure plate */}
-            <figure className="reveal reveal-5 lg:justify-self-end">
-              <div className="plate aspect-[4/5] w-full max-w-md">
+            <figure className="reveal reveal-5 w-full max-w-md lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full">
                 <Image
-                  src="/images/site/mainstreet-aerial.jpg"
-                  alt="Aerial view of a small-town main street and its surrounding street network"
+                  src="/images/site/drone-mainstreet-parking-2026-03.jpg"
+                  alt="Aerial view of a small-town main street, its parking, and the surrounding street network"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 40vw"
@@ -141,7 +141,7 @@ export default function PlanningServicePage() {
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
                 <span className="provenance">Northern California base</span>
-                <span className="provenance">Delivered nationwide</span>
+                <span className="provenance">FAA Part 107</span>
               </div>
             </figure>
           </div>
@@ -163,22 +163,22 @@ export default function PlanningServicePage() {
               </p>
             </div>
 
-            <dl className="divide-y divide-[color:var(--line)] border-t border-[color:var(--line)]">
+            <ul className="divide-y divide-[color:var(--line)] border-t border-[color:var(--line)]">
               {benefits.map((benefit) => (
-                <div key={benefit.title} className="grid gap-3 py-7 sm:grid-cols-[1.5rem_1fr] sm:gap-6">
+                <li key={benefit.title} className="grid gap-3 py-7 sm:grid-cols-[1.5rem_1fr] sm:gap-6">
                   <div
                     aria-hidden="true"
                     className="hidden h-1.5 w-1.5 translate-y-2.5 rounded-full bg-[color:var(--copper)] sm:block"
                   />
                   <div>
-                    <dt className="font-display text-2xl font-semibold text-[color:var(--ink)]">
+                    <h3 className="font-display text-2xl font-semibold text-[color:var(--ink)]">
                       {benefit.title}
-                    </dt>
-                    <dd className="measure mt-2.5 text-[color:var(--muted)]">{benefit.body}</dd>
+                    </h3>
+                    <p className="measure mt-2.5 text-[color:var(--muted)]">{benefit.body}</p>
                   </div>
-                </div>
+                </li>
               ))}
-            </dl>
+            </ul>
           </div>
         </Container>
       </Section>
@@ -258,11 +258,11 @@ export default function PlanningServicePage() {
       <Section spacing="lg" className="border-y border-[color:var(--line)] bg-[color:var(--surface-2)]/50">
         <Container size="xl">
           <div className="max-w-2xl">
-            <p className="index-label">Selected work</p>
+            <p className="index-label">Prior planning work</p>
             <h2 className="display-2 mt-5 text-[color:var(--ink)]">How it has gone in practice.</h2>
             <p className="measure mt-5 text-[color:var(--muted)]">
-              A few planning projects from my Northern California work, the kind of engagement this
-              service is built to deliver.
+              A few Northern California projects I delivered on staff at Green DOT Transportation
+              Solutions, my prior employer — the kind of engagement this service is built to deliver.
             </p>
           </div>
 

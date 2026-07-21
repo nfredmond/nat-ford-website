@@ -2,7 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { getSupabaseAdminClient } from '@/lib/supabase/admin'
-import { buildScopeKey, fetchUsageSnapshot, logUsageEvent } from '@/lib/ai-usage'
+import {
+  buildScopeKey,
+  enforceFallbackRateLimit,
+  fetchIpUsageSnapshot,
+  fetchUsageSnapshot,
+  logUsageEvent,
+  type FallbackRateState,
+} from '@/lib/ai-usage'
 import { getCensusContextForPrompt } from '@/lib/census'
 import { sanitizeForLog, sanitizeTextForLog } from '@/lib/security/redact-secrets'
 import { jsonError, getRequesterIp, estimateTokens, extractOutputText, enforceAiBan } from '@/lib/ai-guard'
@@ -21,9 +28,15 @@ const MAX_OUTPUT_TOKENS = 1800
 const GUEST_GRACE_MS = 10 * 60 * 1000
 const GUEST_MAX_REQUESTS_PER_HOUR = 60
 const GUEST_MIN_INTERVAL_MS = 1200
+// Guests can mint a fresh visitorId (and with it a fresh scope) at will, so
+// the IP-level cap is what actually bounds anonymous platform-key spend.
+// Above the per-visitor cap to tolerate shared networks (offices, libraries).
+const GUEST_IP_MAX_REQUESTS_PER_HOUR = 90
 
 const MEMBER_MAX_REQUESTS_PER_HOUR = 180
 const MEMBER_MIN_INTERVAL_MS = 400
+
+const OPENAI_TIMEOUT_MS = 45_000
 
 const SYSTEM_PROMPT = `You are a senior U.S. urban and transportation planner with deep expertise in implementation for small towns, tribes, counties, RTPAs, transportation commissions, and state transportation agencies.
 
@@ -74,13 +87,7 @@ const requestSchema = z.object({
     .max(MAX_CONTEXT_MESSAGES),
 })
 
-type VisitorState = {
-  firstSeenAt: number
-  lastRequestAt: number
-  requests: number[]
-}
-
-type PlannerStateStore = Map<string, VisitorState>
+type PlannerStateStore = Map<string, FallbackRateState>
 
 declare global {
   var __plannerChatState: PlannerStateStore | undefined
@@ -88,34 +95,9 @@ declare global {
 
 function getStateStore(): PlannerStateStore {
   if (!globalThis.__plannerChatState) {
-    globalThis.__plannerChatState = new Map<string, VisitorState>()
+    globalThis.__plannerChatState = new Map<string, FallbackRateState>()
   }
   return globalThis.__plannerChatState
-}
-
-function normalizeRateWindow(state: VisitorState, now: number, windowMs = 60 * 60 * 1000) {
-  state.requests = state.requests.filter((timestamp) => now - timestamp <= windowMs)
-}
-
-function enforceFallbackRateLimit(
-  state: VisitorState,
-  now: number,
-  maxPerHour: number,
-  minIntervalMs: number
-): string | null {
-  normalizeRateWindow(state, now)
-
-  if (state.lastRequestAt && now - state.lastRequestAt < minIntervalMs) {
-    return 'You are sending messages too quickly. Please wait a moment.'
-  }
-
-  if (state.requests.length >= maxPerHour) {
-    return 'You have hit the hourly message limit. Please try again shortly.'
-  }
-
-  state.lastRequestAt = now
-  state.requests.push(now)
-  return null
 }
 
 function buildPreferenceInstruction(preferences?: z.infer<typeof preferenceSchema>): string {
@@ -202,7 +184,7 @@ export async function POST(req: NextRequest) {
           firstSeenAt: now,
           lastRequestAt: 0,
           requests: [],
-        } satisfies VisitorState)
+        } satisfies FallbackRateState)
       stateStore.set(scopeKey, state)
       guestExpiresAt = state.firstSeenAt + GUEST_GRACE_MS
 
@@ -240,7 +222,27 @@ export async function POST(req: NextRequest) {
 
     if (admin) {
       try {
-        const snapshot = await fetchUsageSnapshot(admin, scopeKey, ROUTE_KEY, now)
+        const [snapshot, ipSnapshot] = await Promise.all([
+          fetchUsageSnapshot(admin, scopeKey, ROUTE_KEY, now),
+          !user ? fetchIpUsageSnapshot(admin, ip, ROUTE_KEY, now) : Promise.resolve(null),
+        ])
+
+        if (ipSnapshot && ipSnapshot.requestsLastHour >= GUEST_IP_MAX_REQUESTS_PER_HOUR) {
+          await logUsageEvent(admin, {
+            scopeKey,
+            route: ROUTE_KEY,
+            requesterKind,
+            userId,
+            visitorId: visitorId ?? null,
+            ip,
+            status: 'rate_limited',
+            metadata: { reason: 'ip_hourly_limit', key_source: keySource },
+          })
+          return jsonError(
+            'Guest usage from this network has hit its hourly limit. Create a free account to continue.',
+            429
+          )
+        }
 
         if (snapshot.lastRequestAtMs && now - snapshot.lastRequestAtMs < minIntervalMs) {
           await logUsageEvent(admin, {
@@ -271,6 +273,22 @@ export async function POST(req: NextRequest) {
         }
       } catch (usageError) {
         console.error('Planner usage snapshot failed; falling back to in-memory limits', sanitizeForLog(usageError))
+        // Fail toward the in-memory limiter rather than proceeding with no
+        // limit at all — this path previously called OpenAI unmetered.
+        const stateStore = getStateStore()
+        const state =
+          stateStore.get(scopeKey) ||
+          ({
+            firstSeenAt: now,
+            lastRequestAt: 0,
+            requests: [],
+          } satisfies FallbackRateState)
+        stateStore.set(scopeKey, state)
+
+        const fallbackRateError = enforceFallbackRateLimit(state, now, maxPerHour, minIntervalMs)
+        if (fallbackRateError) {
+          return jsonError(fallbackRateError, 429)
+        }
         admin = null
       }
     }
@@ -290,12 +308,18 @@ export async function POST(req: NextRequest) {
         .join('\n\n')}`
     )
 
-    const openAiResponse = await fetch('https://api.openai.com/v1/responses', {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort('openai_timeout'), OPENAI_TIMEOUT_MS)
+
+    let openAiResponse: Response
+    try {
+      openAiResponse = await fetch('https://api.openai.com/v1/responses', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
+      signal: controller.signal,
       body: JSON.stringify({
         model: CHAT_MODEL,
         max_output_tokens: MAX_OUTPUT_TOKENS,
@@ -322,7 +346,19 @@ export async function POST(req: NextRequest) {
           })),
         ],
       }),
-    })
+      })
+    } catch (fetchError) {
+      const isTimeout = controller.signal.aborted
+      console.error('Planner chat upstream fetch failed', sanitizeForLog({ isTimeout, error: fetchError }))
+      return jsonError(
+        isTimeout
+          ? 'The planning copilot timed out. Please retry in a moment.'
+          : 'We couldn\'t reach the AI service. Please retry in a moment.',
+        isTimeout ? 504 : 502
+      )
+    } finally {
+      clearTimeout(timeout)
+    }
 
     if (!openAiResponse.ok) {
       const details = await openAiResponse.text()

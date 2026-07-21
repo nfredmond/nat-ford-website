@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { LEAD_INBOX_COOKIE, isLeadInboxAuthorized } from '@/lib/security/lead-inbox-auth'
+import { csvCell } from '@/lib/security/csv'
 
 export const runtime = 'nodejs'
 
@@ -30,12 +31,6 @@ type LeadRow = {
     triage_priority?: string | null
     triage_reason?: string | null
   } | null
-}
-
-function csvCell(input: unknown) {
-  const value = String(input ?? '')
-  const escaped = value.replace(/"/g, '""')
-  return `"${escaped}"`
 }
 
 const VALID_STATUS = new Set(['all', 'new', 'reviewing', 'qualified', 'closed'])

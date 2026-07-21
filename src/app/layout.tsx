@@ -22,9 +22,13 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.natfordplanning.com"),
   title: {
-    default: "Nat Ford Planning & Analysis | Open-Source Planning, GIS, AI & Custom Software",
+    default: "Nat Ford Planning & Analysis | Open-Source Planning & GIS",
     template: "%s | Nat Ford Planning & Analysis",
+  },
+  alternates: {
+    canonical: "./",
   },
   description: "Free and open-source planning, GIS, aerial, AI, and operations software with paid implementation, custom forks, hosting, onboarding, support, and transportation planning services.",
   keywords: [
@@ -46,20 +50,15 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Nathaniel Ford Redmond" }],
   creator: "Nat Ford Planning & Analysis",
+  // og:title/og:description are intentionally unset so each page's own
+  // title and description flow through to its social card.
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.natfordplanning.com",
     siteName: "Nat Ford Planning & Analysis",
-    title: "Nat Ford Planning & Analysis",
-    description:
-      "Free and open-source planning, GIS, aerial, AI, and operations software with paid implementation, custom forks, hosting, onboarding, support, and transportation planning services.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nat Ford Planning & Analysis",
-    description:
-      "Free and open-source planning, GIS, aerial, AI, and operations software with paid implementation, custom forks, hosting, onboarding, support, and transportation planning services.",
   },
   robots: {
     index: true,

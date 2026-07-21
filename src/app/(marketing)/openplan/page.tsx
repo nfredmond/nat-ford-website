@@ -167,8 +167,8 @@ export default function OpenPlanPage() {
             </div>
 
             {/* Figure plate */}
-            <figure className="reveal reveal-5 lg:justify-self-end">
-              <div className="plate aspect-[4/5] w-full max-w-md">
+            <figure className="reveal reveal-5 w-full max-w-md lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full">
                 <Image
                   src="/images/site/drone-town-overview-2026-03.jpg"
                   alt="Aerial overview of a small Northern California town and its street grid"
@@ -215,18 +215,23 @@ export default function OpenPlanPage() {
                 <dd className="data mt-2 text-lg text-[color:var(--ink)]">{item.value}</dd>
               </div>
             ))}
-            <a
-              href={`${openplan.repoUrl}/issues`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col justify-center gap-2 bg-[color:var(--surface)] p-5 transition-colors hover:bg-[color:var(--surface-2)]"
-            >
-              <span className="label">Roadmap</span>
-              <span className="inline-flex items-center gap-1.5 font-medium text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]">
-                Issues &amp; open work
-                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-              </span>
-            </a>
+            <div className="group bg-[color:var(--surface)] transition-colors hover:bg-[color:var(--surface-2)]">
+              <dt className="sr-only">Roadmap</dt>
+              <dd>
+                <a
+                  href={`${openplan.repoUrl}/issues`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-full flex-col justify-center gap-2 p-5"
+                >
+                  <span className="label">Roadmap</span>
+                  <span className="inline-flex items-center gap-1.5 font-medium text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]">
+                    Issues &amp; open work
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                </a>
+              </dd>
+            </div>
           </dl>
           <p className="relative mt-4 text-sm text-[color:var(--muted)]">{readinessNote(openplan.status)}</p>
         </Container>
