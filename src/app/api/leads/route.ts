@@ -73,6 +73,26 @@ export async function POST(req: NextRequest) {
       return badRequest('Please add more detail so we can route your request correctly.')
     }
 
+    // Upper bounds — without these, multi-megabyte values insert verbatim.
+    const maxLengths: Array<[string, number]> = [
+      [firstName, 80],
+      [lastName, 80],
+      [email, 254],
+      [organization, 160],
+      [inquiryType, 60],
+      [timeline, 60],
+      [description, 5000],
+      [budgetRange, 60],
+      [projectGeography, 160],
+      [desiredStartDate, 40],
+      [sourcePath, 300],
+      [tier, 60],
+    ]
+
+    if (maxLengths.some(([value, max]) => value.length > max)) {
+      return badRequest('One of the fields is too long. Please shorten it and resubmit.', 413)
+    }
+
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
