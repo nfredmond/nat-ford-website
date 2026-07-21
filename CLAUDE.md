@@ -62,7 +62,7 @@ Colors are CSS variables (`--background`, `--foreground`, `--pine`, `--pine-deep
 
 ### Static content
 
-Structured site data lives in `src/data/` as JSON/TS (`projects.json`, `services.json`, `organization.json`, `funding-calendar.csv`, `funding-readiness-scorecard.ts`, `admin-project-status.json`). Edit these rather than hardcoding copy in components when the content is shared across pages or used in JSON-LD. `organization.json` is the schema.org Organization payload — its `logo` URL must point to a real public asset.
+Structured site data lives in `src/data/` as JSON/TS (`projects.json`, `services.json`, `organization.json`, `funding-readiness-scorecard.ts`, `admin-project-status.json`). Edit these rather than hardcoding copy in components when the content is shared across pages or used in JSON-LD. `organization.json` is the schema.org Organization payload — its `logo` URL must point to a real public asset.
 
 ### Brand assets
 

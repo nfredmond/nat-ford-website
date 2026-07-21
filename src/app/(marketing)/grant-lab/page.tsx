@@ -401,14 +401,14 @@ export default function GrantLabPage() {
     setSaveLabel('Copied latest draft')
   }
 
-  async function copyExecutiveSummary() {
+  async function copyOpeningExcerpt() {
     const latestAssistant = [...messages].reverse().find((message) => message.role === 'assistant')
     if (!latestAssistant?.content || typeof navigator === 'undefined') return
 
-    const summarySource = latestAssistant.content.slice(0, 1400)
-    const summary = summarySource.length > 420 ? `${summarySource.slice(0, 420)}…` : summarySource
-    await navigator.clipboard.writeText(summary)
-    setSaveLabel('Copied executive summary')
+    const excerptSource = latestAssistant.content.slice(0, 1400)
+    const excerpt = excerptSource.length > 420 ? `${excerptSource.slice(0, 420)}…` : excerptSource
+    await navigator.clipboard.writeText(excerpt)
+    setSaveLabel('Copied opening excerpt')
   }
 
   return (
@@ -716,8 +716,8 @@ export default function GrantLabPage() {
                     <Button type="button" variant="outline" onClick={() => void copyLatestDraft()} disabled={messages.length < 2 || isWorking}>
                       <Copy className="mr-1.5 h-3.5 w-3.5" /> Copy latest draft
                     </Button>
-                    <Button type="button" variant="outline" onClick={() => void copyExecutiveSummary()} disabled={messages.length < 2 || isWorking}>
-                      Copy executive summary
+                    <Button type="button" variant="outline" onClick={() => void copyOpeningExcerpt()} disabled={messages.length < 2 || isWorking}>
+                      Copy opening excerpt
                     </Button>
                     {typeof remainingBudget === 'number' && typeof budgetCap === 'number' ? (
                       <span className="text-xs text-[color:var(--foreground)]/65">
