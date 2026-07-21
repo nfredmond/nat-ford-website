@@ -492,7 +492,12 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      <PlannerChatbot />
+      {/* ── Planning copilot ─────────────────────────────────── */}
+      <Section spacing="lg" className="border-t border-[color:var(--line)] bg-[color:var(--surface-2)]/50">
+        <Container size="xl">
+          <PlannerChatbot />
+        </Container>
+      </Section>
     </>
   )
 }

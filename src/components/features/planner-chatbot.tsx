@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
-import { Bot, Copy, Loader2, RotateCcw, Send, ShieldCheck, Sparkles } from 'lucide-react'
+import { Copy, Loader2, RotateCcw, Send, ShieldCheck } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 type ChatRole = 'user' | 'assistant'
@@ -249,23 +249,15 @@ export function PlannerChatbot() {
   }
 
   return (
-    <div className="soft-card rounded-3xl p-6 md:p-8">
-      <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.18em] text-[color:var(--foreground)]/72">
-        <Sparkles className="h-3.5 w-3.5" />
-        AI Planning Copilot
-      </div>
+    <div className="surface-card p-6 md:p-8">
+      <p className="index-label">AI planning copilot</p>
 
-      <div className="mt-3 flex items-start gap-3">
-        <div className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[color:var(--pine)] text-white">
-          <Bot className="h-5 w-5" />
-        </div>
-        <div>
-          <h3 className="section-title text-3xl text-[color:var(--ink)]">Ask the U.S. Urban & Transportation Planning AI</h3>
-          <p className="mt-2 text-[color:var(--foreground)]/78">
-            A fast first pass for planners: concrete steps, explicit tradeoffs, and funding-aware
-            suggestions. Screening-grade, not a substitute for qualified planning review.
-          </p>
-        </div>
+      <div className="mt-4">
+        <h2 className="display-3 text-[color:var(--ink)]">Ask a planning question.</h2>
+        <p className="measure-wide mt-2 text-[color:var(--muted)]">
+          A fast first pass for planners: concrete steps, explicit tradeoffs, and funding-aware
+          suggestions. Screening-grade, not a substitute for qualified planning review.
+        </p>
       </div>
 
       <div className="mt-5 rounded-2xl border border-[color:var(--line)] bg-[color:var(--background)]/80 p-4">
@@ -302,10 +294,20 @@ export function PlannerChatbot() {
           </label>
         </div>
 
-        <div className="mb-3 rounded-xl border border-[color:var(--line)] bg-[color:var(--fog)]/55 p-3">
-          <div className="flex flex-wrap items-start justify-between gap-2">
+        <details className="mb-3 rounded-xl border border-[color:var(--line)] bg-[color:var(--fog)]/55 p-3">
+          <summary className="flex cursor-pointer items-center justify-between gap-3 text-sm font-medium text-[color:var(--ink)]">
+            Use your own OpenAI API key
+            {userOpenAiKey.trim() ? (
+              <span className="data text-xs text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
+                personal key active
+              </span>
+            ) : (
+              <span className="data text-xs text-[color:var(--muted)]">optional</span>
+            )}
+          </summary>
+          <div className="mt-3 flex flex-wrap items-start justify-between gap-2">
             <label className="block flex-1 text-xs text-[color:var(--foreground)]/78">
-              Use my OpenAI API key (session-only by default)
+              API key (session-only by default)
               <input
                 type="password"
                 value={userOpenAiKey}
@@ -343,7 +345,7 @@ export function PlannerChatbot() {
                 : 'Using your session-only key for this tab session.'
               : 'Leave blank to use the platform key.'}
           </p>
-        </div>
+        </details>
 
         <div className="mb-3 flex flex-wrap gap-2">
           {STARTER_PROMPTS.map((prompt) => (
