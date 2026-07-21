@@ -37,6 +37,11 @@ export function ContactIntakeForm({
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
   const [turnstileToken, setTurnstileToken] = React.useState('')
+  const successHeadingRef = React.useRef<HTMLHeadingElement>(null)
+
+  React.useEffect(() => {
+    if (submitted) successHeadingRef.current?.focus()
+  }, [submitted])
 
   const {
     requestIntent,
@@ -187,14 +192,20 @@ export function ContactIntakeForm({
           </div>
         </div>
 
-        <Textarea
-          label="What should we help you solve?"
-          name="description"
-          defaultValue={defaultDescription}
-          placeholder="What decision, workflow, deployment, or deadline are you trying to move forward?"
-          rows={5}
-          required
-        />
+        <div>
+          <Textarea
+            label="What should we help you solve?"
+            name="description"
+            defaultValue={defaultDescription}
+            placeholder="What decision, workflow, deployment, or deadline are you trying to move forward?"
+            rows={5}
+            minLength={20}
+            required
+          />
+          <p className="mt-1.5 text-xs text-[color:var(--foreground)]/68">
+            A sentence or two (at least 20 characters) helps route this to the right first step.
+          </p>
+        </div>
 
         <details className="rounded-2xl border border-[color:var(--line)] bg-[color:var(--fog)]/40 p-4">
           <summary className="cursor-pointer text-sm font-semibold text-[color:var(--ink)]">
@@ -250,7 +261,14 @@ export function ContactIntakeForm({
           </>
         )}
 
-        {error && <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</div>}
+        {error && (
+          <div
+            role="alert"
+            className="rounded-lg border border-[color:var(--danger-line)] bg-[color:var(--danger-surface)] px-3 py-2 text-sm text-[color:var(--danger)]"
+          >
+            {error}
+          </div>
+        )}
 
         <Button type="submit" size="lg" disabled={isSubmitting || (Boolean(turnstileSiteKey) && !turnstileToken)}>
           <Send className="mr-2 h-4 w-4" />
@@ -262,13 +280,13 @@ export function ContactIntakeForm({
       </form>
     </>
   ) : (
-    <div className="py-6 text-center">
+    <div className="py-6 text-center" role="status">
       <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[color:var(--pine)] text-white">
-        <Send className="h-6 w-6" />
+        <Send className="h-6 w-6" aria-hidden="true" />
       </div>
-      <h3 className="text-2xl font-semibold text-[color:var(--ink)]">
+      <h2 ref={successHeadingRef} tabIndex={-1} className="text-2xl font-semibold text-[color:var(--ink)]">
         {successTitle}
-      </h3>
+      </h2>
       <p className="mt-3 text-[color:var(--foreground)]/75">{successMessage}</p>
       <Button variant="outline" className="mt-6" onClick={() => setSubmitted(false)}>
         Submit Another Inquiry

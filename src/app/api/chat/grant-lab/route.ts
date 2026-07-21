@@ -2,7 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
 import { getSupabaseAdminClient } from '@/lib/supabase/admin'
-import { buildScopeKey, fetchUsageSnapshot, logUsageEvent } from '@/lib/ai-usage'
+import {
+  buildScopeKey,
+  enforceFallbackRateLimit,
+  fetchIpUsageSnapshot,
+  fetchUsageSnapshot,
+  logUsageEvent,
+  type FallbackRateState,
+} from '@/lib/ai-usage'
 import { sanitizeForLog, sanitizeTextForLog } from '@/lib/security/redact-secrets'
 import { jsonError, getRequesterIp, estimateTokens, extractOutputText, enforceAiBan } from '@/lib/ai-guard'
 
@@ -25,7 +32,25 @@ const MEMBER_MIN_INTERVAL_MS = 350
 
 const GUEST_DAILY_TOKEN_BUDGET = 45000
 const MEMBER_DAILY_TOKEN_BUDGET = 120000
+// Guests can mint a fresh visitorId (and with it a fresh scope + budget) at
+// will, so the IP-level caps are what actually bound anonymous platform-key
+// spend. Set above the per-visitor limits to tolerate shared networks.
+const GUEST_IP_MAX_REQUESTS_PER_HOUR = 70
+const GUEST_IP_DAILY_TOKEN_BUDGET = 90000
 const OPENAI_TIMEOUT_MS = 45000
+
+type GrantLabStateStore = Map<string, FallbackRateState>
+
+declare global {
+  var __grantLabChatState: GrantLabStateStore | undefined
+}
+
+function getStateStore(): GrantLabStateStore {
+  if (!globalThis.__grantLabChatState) {
+    globalThis.__grantLabChatState = new Map<string, FallbackRateState>()
+  }
+  return globalThis.__grantLabChatState
+}
 
 const SYSTEM_PROMPT = `You are a senior U.S. transportation + land use grant strategist.
 
@@ -126,9 +151,16 @@ export async function POST(req: NextRequest) {
       return jsonError('Please send at least one user message.', 400)
     }
 
+    // In revision mode the model is asked to "preserve strong material and
+    // apply requested edits" — it needs the draft it is revising.
+    const latestDraft =
+      mode === 'chat'
+        ? [...messages].reverse().find((message) => message.role === 'assistant')?.content ?? null
+        : null
+
     const contextText = formatGrantContext(context)
     const messageText = userMessages.map((message) => `[user] ${message.content}`).join('\n\n')
-    const totalChars = contextText.length + messageText.length
+    const totalChars = contextText.length + messageText.length + (latestDraft?.length ?? 0)
 
     if (totalChars > MAX_TOTAL_INPUT_CHARS) {
       return jsonError('This thread is too long. Start a fresh thread or shorten the context.', 413)
@@ -165,8 +197,32 @@ export async function POST(req: NextRequest) {
 
     if (admin) {
       try {
-        const snapshot = await fetchUsageSnapshot(admin, scopeKey, ROUTE_KEY, now)
+        const [snapshot, ipSnapshot] = await Promise.all([
+          fetchUsageSnapshot(admin, scopeKey, ROUTE_KEY, now),
+          !user ? fetchIpUsageSnapshot(admin, ip, ROUTE_KEY, now) : Promise.resolve(null),
+        ])
         tokensUsed24h = snapshot.tokensUsed24h
+
+        if (
+          ipSnapshot &&
+          (ipSnapshot.requestsLastHour >= GUEST_IP_MAX_REQUESTS_PER_HOUR ||
+            ipSnapshot.tokensUsed24h >= GUEST_IP_DAILY_TOKEN_BUDGET)
+        ) {
+          await logUsageEvent(admin, {
+            scopeKey,
+            route: ROUTE_KEY,
+            requesterKind,
+            userId: user?.id,
+            visitorId: visitorId ?? null,
+            ip,
+            status: 'rate_limited',
+            metadata: { reason: 'ip_limit', key_source: keySource },
+          })
+          return jsonError(
+            'Guest usage from this network has hit its limit for now. Create a free account to continue.',
+            429
+          )
+        }
 
         if (snapshot.lastRequestAtMs && now - snapshot.lastRequestAtMs < minIntervalMs) {
           await logUsageEvent(admin, {
@@ -196,7 +252,24 @@ export async function POST(req: NextRequest) {
           return jsonError('You have reached the hourly limit for this tool. Please retry shortly.', 429)
         }
       } catch (usageError) {
-        console.error('Grant usage snapshot failed; continuing without persistent limits', sanitizeForLog(usageError))
+        console.error('Grant usage snapshot failed; falling back to in-memory limits', sanitizeForLog(usageError))
+        // Fail toward the in-memory limiter rather than proceeding with a
+        // fresh budget and no rate limit — this path previously called
+        // OpenAI unmetered.
+        const stateStore = getStateStore()
+        const state =
+          stateStore.get(scopeKey) ||
+          ({
+            firstSeenAt: now,
+            lastRequestAt: 0,
+            requests: [],
+          } satisfies FallbackRateState)
+        stateStore.set(scopeKey, state)
+
+        const fallbackRateError = enforceFallbackRateLimit(state, now, maxPerHour, minIntervalMs)
+        if (fallbackRateError) {
+          return jsonError(fallbackRateError, 429)
+        }
         admin = null
       }
     }
@@ -250,6 +323,14 @@ export async function POST(req: NextRequest) {
               role: 'system',
               content: `Grant context:\n${contextText}`,
             },
+            ...(latestDraft
+              ? [
+                  {
+                    role: 'system' as const,
+                    content: `Current draft under revision:\n${latestDraft}`,
+                  },
+                ]
+              : []),
             ...userMessages.map((message) => ({
               role: 'user',
               content: message.content,

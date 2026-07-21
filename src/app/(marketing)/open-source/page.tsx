@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 const modelPillars = [
   {
     title: 'The code is public.',
-    body: 'OpenPlan, OpenGeo, ClawModeler, and the rest are real repositories under Apache-2.0 or AGPL. Inspect them, fork them, or self-host before we ever talk.',
+    body: 'The public projects — OpenPlan, OpenGeo, ClawModeler, and more — are real repositories under Apache-2.0 or AGPL. Inspect them, fork them, or self-host before we ever talk.',
     icon: GitFork,
   },
   {
@@ -270,7 +270,7 @@ export default function OpenSourcePage() {
                       </div>
                     </div>
 
-                    <p className="mt-5 border-t border-[color:var(--line)] pt-4 text-xs leading-5 text-[color:var(--faint)]">
+                    <p className="mt-5 border-t border-[color:var(--line)] pt-4 text-xs leading-5 text-[color:var(--muted)]">
                       {project.licenseNote}
                     </p>
 
@@ -368,7 +368,7 @@ export default function OpenSourcePage() {
                   <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">
                     {pkg.deliverable}
                   </p>
-                  <ul className="mt-4 space-y-1.5 border-t border-[color:var(--line)] pt-4 text-xs leading-5 text-[color:var(--faint)]">
+                  <ul className="mt-4 space-y-1.5 border-t border-[color:var(--line)] pt-4 text-xs leading-5 text-[color:var(--muted)]">
                     {pkg.includes.slice(0, 3).map((item) => (
                       <li key={item} className="flex gap-2">
                         <span aria-hidden="true" className="text-[color:var(--copper)]">

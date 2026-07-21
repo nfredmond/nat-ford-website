@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { ContourField } from '@/components/features/contour-field'
 
 export const metadata: Metadata = {
-  title: 'Our Process',
+  title: 'Process',
   description:
     'Capture, compute, communicate: how every corridor, plan, and grant moves from field data to a decision a board can act on.',
 }
@@ -47,7 +47,7 @@ const steps = [
     items: [
       'Maps, narratives, and visuals built for mixed audiences, not just engineers',
       'Funding and implementation framing tied to the real constraints on the ground',
-      'A clean handoff package so the next step can start without you',
+      'A clean handoff package so the next step can start without me',
     ],
   },
 ]
@@ -86,8 +86,8 @@ export default function ProcessPage() {
             </div>
 
             {/* Figure plate */}
-            <figure className="reveal reveal-5 lg:justify-self-end">
-              <div className="plate aspect-[4/5] w-full max-w-md">
+            <figure className="reveal reveal-5 w-full max-w-md lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full">
                 <Image
                   src="/images/site/drone-mainstreet-parking-2026-03.jpg"
                   alt="Aerial oblique of a small-town main street showing curb activity and on-street parking"

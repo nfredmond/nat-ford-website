@@ -1,7 +1,7 @@
-import { createHmac, timingSafeEqual } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdminClient } from '@/lib/supabase/admin'
 import { resolveCommerceCheckoutProductTierReference } from '@/lib/commerce/offers'
+import { verifyStripeSignature } from '@/lib/commerce/stripe-signature'
 
 export const runtime = 'nodejs'
 
@@ -23,38 +23,6 @@ function getWebhookSecrets(): string[] {
     process.env.OPENPLAN_STRIPE_WEBHOOK_SECRET,
   ]
   return secrets.filter((s) => s && s.trim().length > 0) as string[]
-}
-
-function parseStripeSignature(signatureHeader: string) {
-  const fields = signatureHeader.split(',').map((part) => part.trim())
-  const timestampField = fields.find((field) => field.startsWith('t='))
-  const v1Field = fields.find((field) => field.startsWith('v1='))
-
-  if (!timestampField || !v1Field) {
-    return null
-  }
-
-  const timestamp = timestampField.slice(2)
-  const signature = v1Field.slice(3)
-  if (!timestamp || !signature) {
-    return null
-  }
-
-  return { timestamp, signature }
-}
-
-function verifyStripeSignature(rawBody: string, signatureHeader: string, secret: string) {
-  const parsed = parseStripeSignature(signatureHeader)
-  if (!parsed) return false
-
-  const signedPayload = `${parsed.timestamp}.${rawBody}`
-  const expected = createHmac('sha256', secret).update(signedPayload, 'utf8').digest('hex')
-
-  try {
-    return timingSafeEqual(Buffer.from(expected, 'utf8'), Buffer.from(parsed.signature, 'utf8'))
-  } catch {
-    return false
-  }
 }
 
 function statusForEventType(eventType: string): string {
@@ -169,6 +137,19 @@ async function queueOnboardingEvent(params: {
   metadata: Record<string, unknown>
 }) {
   const { admin, stripeEventId, customerEmail, productId, tierId, eventType, metadata } = params
+  const adminDbForCheck = getUntypedAdminDbClient(admin)
+
+  // Stripe redelivers events; only send the welcome email the first time this
+  // event id is seen with a successful send on record.
+  const { data: existingEvent } = await adminDbForCheck
+    .from('customer_onboarding_events')
+    .select('stripe_event_id, status')
+    .eq('stripe_event_id', stripeEventId)
+    .maybeSingle()
+
+  if (existingEvent && existingEvent.status === 'sent') {
+    return
+  }
 
   const sendResult = await maybeSendWelcomeEmail({
     to: customerEmail,
@@ -225,14 +206,24 @@ async function syncEntitlementToUserMetadata(params: {
   const { admin, email, productId, tierId, accessStatus } = params
 
   try {
-    const listed = await admin.auth.admin.listUsers({ page: 1, perPage: 1000 })
-    if (listed?.error) {
-      throw listed.error
-    }
+    // Page through the auth users until the purchaser is found; a single
+    // page-1 call silently misses anyone past the first 1000 accounts.
+    type ListedUser = { id: string; email?: string | null; app_metadata?: Record<string, unknown> }
+    let target: ListedUser | undefined
+    const perPage = 1000
+    const maxPages = 20
 
-    const target = (listed?.data?.users ?? []).find(
-      (user: { email?: string | null }) => user.email?.toLowerCase() === email
-    )
+    for (let page = 1; page <= maxPages && !target; page++) {
+      const listed = await admin.auth.admin.listUsers({ page, perPage })
+      if (listed?.error) {
+        throw listed.error
+      }
+
+      const users = (listed?.data?.users ?? []) as ListedUser[]
+      target = users.find((user) => user.email?.toLowerCase() === email)
+
+      if (users.length < perPage) break
+    }
 
     if (!target?.id) {
       return
@@ -384,6 +375,9 @@ export async function POST(request: NextRequest) {
         tierId,
         error: accessError.message,
       })
+      // Non-200 makes Stripe retry the event; swallowing this left paying
+      // customers with a ledger row but no access grant.
+      return NextResponse.json({ error: 'Access upsert failed' }, { status: 500 })
     } else {
       await syncEntitlementToUserMetadata({
         admin,
