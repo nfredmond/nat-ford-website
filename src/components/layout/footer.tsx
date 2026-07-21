@@ -97,7 +97,7 @@ export function Footer() {
 
             {Object.entries(footerLinks).map(([heading, links]) => (
               <div key={heading}>
-                <h2 className="label text-white/55">{heading}</h2>
+                <h2 className="label">{heading}</h2>
                 <ul className="mt-4 space-y-2.5">
                   {links.map((link) => (
                     <li key={link.name}>
