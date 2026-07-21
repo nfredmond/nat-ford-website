@@ -163,22 +163,22 @@ export default function PlanningServicePage() {
               </p>
             </div>
 
-            <dl className="divide-y divide-[color:var(--line)] border-t border-[color:var(--line)]">
+            <ul className="divide-y divide-[color:var(--line)] border-t border-[color:var(--line)]">
               {benefits.map((benefit) => (
-                <div key={benefit.title} className="grid gap-3 py-7 sm:grid-cols-[1.5rem_1fr] sm:gap-6">
+                <li key={benefit.title} className="grid gap-3 py-7 sm:grid-cols-[1.5rem_1fr] sm:gap-6">
                   <div
                     aria-hidden="true"
                     className="hidden h-1.5 w-1.5 translate-y-2.5 rounded-full bg-[color:var(--copper)] sm:block"
                   />
                   <div>
-                    <dt className="font-display text-2xl font-semibold text-[color:var(--ink)]">
+                    <h3 className="font-display text-2xl font-semibold text-[color:var(--ink)]">
                       {benefit.title}
-                    </dt>
-                    <dd className="measure mt-2.5 text-[color:var(--muted)]">{benefit.body}</dd>
+                    </h3>
+                    <p className="measure mt-2.5 text-[color:var(--muted)]">{benefit.body}</p>
                   </div>
-                </div>
+                </li>
               ))}
-            </dl>
+            </ul>
           </div>
         </Container>
       </Section>

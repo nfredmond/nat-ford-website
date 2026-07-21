@@ -333,7 +333,7 @@ export function PlannerChatbot() {
             />
             Remember on this device (writes key to local storage)
           </label>
-          <p className="mt-2 text-[11px] text-amber-700 dark:text-amber-400">
+          <p className="mt-2 text-[11px] text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
             Your API key is sensitive. Only enable remember mode on trusted, private devices.
           </p>
           <p className="mt-1 text-[11px] text-[color:var(--foreground)]/65">
@@ -360,8 +360,11 @@ export function PlannerChatbot() {
         </div>
 
         {!requiresSignup && guestRemainingMs > 0 && guestRemainingMs <= 2 * 60 * 1000 && (
-          <div className="mb-3 rounded-xl border border-amber-300/70 bg-amber-50 px-3 py-2 text-xs text-amber-900">
-            You have about 2 minutes left in guest mode—save or create a free account to continue without interruption.
+          <div
+            role="status"
+            className="mb-3 rounded-xl border border-[color:var(--copper)]/45 bg-[color:var(--sand)]/45 px-3 py-2 text-xs text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]"
+          >
+            You have about 2 minutes left in guest mode. Save or create a free account to continue without interruption.
           </div>
         )}
 
@@ -379,7 +382,7 @@ export function PlannerChatbot() {
           ))}
         </div>
 
-        <div className="max-h-[320px] space-y-3 overflow-y-auto pr-1">
+        <div role="log" aria-live="polite" aria-label="Chat conversation" className="max-h-[320px] space-y-3 overflow-y-auto pr-1">
           {messages.map((message, index) => (
             <div
               key={`${message.role}-${index}`}
@@ -430,6 +433,7 @@ export function PlannerChatbot() {
               }
             }}
             rows={3}
+            aria-label="Message the planning copilot"
             placeholder="Example: Give me a practical ATP strategy for a small U.S. county corridor with school safety issues and constrained match capacity."
             className="flex-1 resize-none rounded-xl border border-[color:var(--line)] bg-[color:var(--background)] px-3 py-2 text-sm text-[color:var(--foreground)] focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
           />
@@ -473,7 +477,11 @@ export function PlannerChatbot() {
           </div>
         </div>
 
-        {error && <p className="mt-3 text-sm text-red-600 dark:text-red-400">{error}</p>}
+        {error && (
+          <p role="alert" className="mt-3 text-sm text-[color:var(--danger)]">
+            {error}
+          </p>
+        )}
 
         {requiresSignup && (
           <div className="mt-4 rounded-2xl border border-[color:var(--line)] bg-[color:var(--fog)] p-4">

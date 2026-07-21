@@ -78,37 +78,37 @@ export function ContactPageShell({
           <div className="grid gap-5 lg:grid-cols-3">
             <div className="surface-card p-6">
               <h2 className="label">Reach Nat directly</h2>
-              <dl className="mt-4 space-y-3.5 text-sm">
-                <div className="flex items-start gap-3">
+              <ul className="mt-4 space-y-3.5 text-sm">
+                <li className="flex items-start gap-3">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]" aria-hidden="true" />
-                  <dd className="text-[color:var(--muted)]">Sierra foothills · near Grass Valley, California</dd>
-                </div>
-                <div className="flex items-start gap-3">
+                  <span className="sr-only">Location:</span>
+                  <span className="text-[color:var(--muted)]">Sierra foothills · near Grass Valley, California</span>
+                </li>
+                <li className="flex items-start gap-3">
                   <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]" aria-hidden="true" />
-                  <dd>
-                    <a href="mailto:nathaniel@natfordplanning.com" className="font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]">
-                      nathaniel@natfordplanning.com
-                    </a>
-                  </dd>
-                </div>
-                <div className="flex items-start gap-3">
+                  <span className="sr-only">Email:</span>
+                  <a href="mailto:nathaniel@natfordplanning.com" className="font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]">
+                    nathaniel@natfordplanning.com
+                  </a>
+                </li>
+                <li className="flex items-start gap-3">
                   <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]" aria-hidden="true" />
-                  <dd>
+                  <span className="sr-only">Phone:</span>
+                  <span>
                     <a href="tel:+15304929775" className="font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]">
                       (530) 492-9775
                     </a>
-                    <p className="mt-0.5 font-mono text-xs text-[color:var(--faint)]">Google Voice intake line</p>
-                  </dd>
-                </div>
-                <div className="flex items-start gap-3">
+                    <span className="mt-0.5 block font-mono text-xs text-[color:var(--muted)]">Google Voice intake line</span>
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
                   <Linkedin className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--pine)] dark:text-[color:var(--pine-soft)]" aria-hidden="true" />
-                  <dd>
-                    <a href="https://www.linkedin.com/in/nfredmond" target="_blank" rel="noopener noreferrer" className="font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]">
-                      linkedin.com/in/nfredmond
-                    </a>
-                  </dd>
-                </div>
-              </dl>
+                  <span className="sr-only">LinkedIn:</span>
+                  <a href="https://www.linkedin.com/in/nfredmond" target="_blank" rel="noopener noreferrer" className="font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]">
+                    linkedin.com/in/nfredmond
+                  </a>
+                </li>
+              </ul>
             </div>
 
             <div className="surface-card p-6">
