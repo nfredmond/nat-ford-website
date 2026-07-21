@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { ContourField } from '@/components/features/contour-field'
 
 export const metadata: Metadata = {
-  title: 'Our Process',
+  title: 'Process',
   description:
     'Capture, compute, communicate: how every corridor, plan, and grant moves from field data to a decision a board can act on.',
 }
@@ -47,7 +47,7 @@ const steps = [
     items: [
       'Maps, narratives, and visuals built for mixed audiences, not just engineers',
       'Funding and implementation framing tied to the real constraints on the ground',
-      'A clean handoff package so the next step can start without you',
+      'A clean handoff package so the next step can start without me',
     ],
   },
 ]

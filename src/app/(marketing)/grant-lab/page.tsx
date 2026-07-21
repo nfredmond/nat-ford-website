@@ -422,8 +422,8 @@ export default function GrantLabPage() {
               Draft a fundable grant narrative, then refine it by chat.
             </h1>
             <p className="lead measure-wide mt-5 text-white/78">
-              Pick a program, enter your project criteria, and generate a first draft grounded in
-              real scoring priorities. Built for the agencies that write these on a deadline: small
+              Pick a program, enter your project criteria, and generate a first draft shaped by the
+              priorities you provide. Built for the agencies that write these on a deadline: small
               towns, tribes, counties, RTPAs, transportation commissions, and state agencies.
             </p>
             <p className="measure mt-4 text-sm leading-6 text-white/60">
@@ -796,11 +796,11 @@ export default function GrantLabPage() {
                   <Link href="/signup?redirect=/grant-lab" className="font-semibold text-[color:var(--pine)]">
                     free account
                   </Link>
-                  . Want unlimited access and production rollout? It’s included in{' '}
+                  . Want this workflow running inside your organization? It can be deployed through{' '}
                   <Link href="/openplan" className="font-semibold text-[color:var(--pine)]">
                     OpenPlan managed support
-                  </Link>
-                  , and available as a{' '}
+                  </Link>{' '}
+                  (screening-grade, in active build), or as a{' '}
                   <Link href="/contact?intent=discovery&topic=custom-software&inquiry=custom-grant-ai" className="font-semibold text-[color:var(--pine)]">
                     custom-built client solution
                   </Link>

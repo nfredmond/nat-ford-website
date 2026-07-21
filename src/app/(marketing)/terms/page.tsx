@@ -16,7 +16,7 @@ const sections: { heading: string; body: ReactNode }[] = [
   },
   {
     heading: 'AI Use and Human Review',
-    body: 'AI may be used to accelerate drafting, data cleaning, formatting, and interpretation support. Final analysis, conclusions, and recommendations are reviewed and approved by qualified staff.',
+    body: 'AI may be used to accelerate drafting, data cleaning, formatting, and interpretation support. Final analysis, conclusions, and recommendations are reviewed and approved by Nathaniel Ford Redmond, the planner responsible for the work.',
   },
   {
     heading: 'Fees, Scope Changes, and Payment',

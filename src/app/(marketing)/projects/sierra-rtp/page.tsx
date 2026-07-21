@@ -61,7 +61,7 @@ export default function SierraRTPCaseStudy() {
 
           <div className="grid items-start gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
             <div>
-              <p className="index-label">Case study · Regional Transportation Plan</p>
+              <p className="index-label">Prior employment · Regional Transportation Plan</p>
               <h1 className="display-1 mt-6 text-[color:var(--ink)]">
                 Sierra County RTP: targets and a funding path that hold up.
               </h1>

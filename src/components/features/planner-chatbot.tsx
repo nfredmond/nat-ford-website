@@ -262,7 +262,8 @@ export function PlannerChatbot() {
         <div>
           <h3 className="section-title text-3xl text-[color:var(--ink)]">Ask the U.S. Urban & Transportation Planning AI</h3>
           <p className="mt-2 text-[color:var(--foreground)]/78">
-            Built for planners who need decision-grade guidance fast: concrete steps, explicit tradeoffs, and funding-aware recommendations.
+            A fast first pass for planners: concrete steps, explicit tradeoffs, and funding-aware
+            suggestions. Screening-grade, not a substitute for qualified planning review.
           </p>
         </div>
       </div>

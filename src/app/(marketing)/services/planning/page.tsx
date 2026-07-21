@@ -126,8 +126,8 @@ export default function PlanningServicePage() {
             <figure className="reveal reveal-5 lg:justify-self-end">
               <div className="plate aspect-[4/5] w-full max-w-md">
                 <Image
-                  src="/images/site/mainstreet-aerial.jpg"
-                  alt="Aerial view of a small-town main street and its surrounding street network"
+                  src="/images/site/drone-mainstreet-parking-2026-03.jpg"
+                  alt="Aerial view of a small-town main street, its parking, and the surrounding street network"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 40vw"
@@ -141,7 +141,7 @@ export default function PlanningServicePage() {
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
                 <span className="provenance">Northern California base</span>
-                <span className="provenance">Delivered nationwide</span>
+                <span className="provenance">FAA Part 107</span>
               </div>
             </figure>
           </div>
@@ -258,11 +258,11 @@ export default function PlanningServicePage() {
       <Section spacing="lg" className="border-y border-[color:var(--line)] bg-[color:var(--surface-2)]/50">
         <Container size="xl">
           <div className="max-w-2xl">
-            <p className="index-label">Selected work</p>
+            <p className="index-label">Prior planning work</p>
             <h2 className="display-2 mt-5 text-[color:var(--ink)]">How it has gone in practice.</h2>
             <p className="measure mt-5 text-[color:var(--muted)]">
-              A few planning projects from my Northern California work, the kind of engagement this
-              service is built to deliver.
+              A few Northern California projects I delivered on staff at Green DOT Transportation
+              Solutions, my prior employer — the kind of engagement this service is built to deliver.
             </p>
           </div>
 
