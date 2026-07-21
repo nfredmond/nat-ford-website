@@ -123,8 +123,8 @@ export default function ResourcesPage() {
             </div>
 
             {/* Figure plate */}
-            <figure className="reveal reveal-5 lg:justify-self-end">
-              <div className="plate aspect-[4/5] w-full max-w-md">
+            <figure className="reveal reveal-5 w-full max-w-md lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full">
                 <Image
                   src="/images/site/drone-intersection-topdown-2026-03.jpg"
                   alt="Top-down aerial capture of an intersection used for planning and safety analysis"
