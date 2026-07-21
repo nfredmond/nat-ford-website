@@ -106,11 +106,11 @@ export default function ProjectsPage() {
             </div>
 
             {/* Figure plate */}
-            <figure className="reveal reveal-5 lg:justify-self-end">
-              <div className="plate aspect-[4/5] w-full max-w-md">
+            <figure className="reveal reveal-5 w-full max-w-md lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full">
                 <Image
-                  src="/images/site/workshop-maps.jpg"
-                  alt="Printed corridor and network maps spread across a planning-workshop table"
+                  src="/images/site/drone-corridor-valley-2026-03.jpg"
+                  alt="Aerial view of a rural highway corridor threading through a Northern California valley"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 40vw"
@@ -118,8 +118,8 @@ export default function ProjectsPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0b120f]/78 via-transparent to-transparent" />
                 <figcaption className="plate-caption absolute inset-x-4 bottom-3.5 flex items-center justify-between">
-                  <span>Fig. 01 · Corridor &amp; network maps</span>
-                  <span className="text-[color:var(--copper)]">2024&ndash;2025</span>
+                  <span>Fig. 01 · Rural corridor, aerial capture</span>
+                  <span className="text-[color:var(--copper)]">Representative</span>
                 </figcaption>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">

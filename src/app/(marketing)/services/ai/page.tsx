@@ -106,11 +106,11 @@ export default function AIServicePage() {
             </div>
 
             {/* Figure plate */}
-            <figure className="reveal reveal-5 lg:justify-self-end">
-              <div className="plate aspect-[4/5] w-full max-w-md">
+            <figure className="reveal reveal-5 w-full max-w-md lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full">
                 <Image
-                  src="/images/site/workshop-maps.jpg"
-                  alt="Printed plan sets and maps spread across a table during a working planning session"
+                  src="/images/site/drone-intersection-topdown-2026-03.jpg"
+                  alt="Top-down aerial view of a small-town intersection and its crosswalks"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 40vw"
@@ -118,8 +118,8 @@ export default function AIServicePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0b120f]/78 via-transparent to-transparent" />
                 <figcaption className="plate-caption absolute inset-x-4 bottom-3.5 flex items-center justify-between">
-                  <span>Fig. 05 · Plan review, working session</span>
-                  <span className="text-[color:var(--copper)]">Source-traced</span>
+                  <span>Fig. 01 · Intersection, aerial capture</span>
+                  <span className="text-[color:var(--copper)]">FAA Part 107</span>
                 </figcaption>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">

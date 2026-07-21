@@ -4,37 +4,94 @@
   "name": "Services",
   "itemListElement": [
     {
-      "@type": "Service",
-      "name": "Open-Source Software Support",
-      "areaServed": "United States",
-      "serviceType": "Managed deployments, custom forks, hosting, onboarding, support, and open-source stewardship"
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@type": "Service",
+        "name": "Transportation planning",
+        "serviceType": "Regional and active transportation plans, VMT screening, corridor strategy, board materials",
+        "areaServed": "United States",
+        "provider": {
+          "@type": "Organization",
+          "name": "Nat Ford Planning & Analysis",
+          "url": "https://www.natfordplanning.com"
+        }
+      }
     },
     {
-      "@type": "Service",
-      "name": "Custom Software Development",
-      "areaServed": "United States",
-      "serviceType": "Dashboards, portals, workflow automation, AI implementation, GIS/data systems, and internal tools"
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@type": "Service",
+        "name": "GIS & spatial analysis",
+        "serviceType": "PostGIS models, suitability and accessibility analysis, web maps, data pipelines",
+        "areaServed": "United States",
+        "provider": {
+          "@type": "Organization",
+          "name": "Nat Ford Planning & Analysis",
+          "url": "https://www.natfordplanning.com"
+        }
+      }
     },
     {
-      "@type": "Service",
-      "name": "Urban & Transportation Planning",
-      "areaServed": "United States",
-      "serviceType": "RTP/ATP, corridor strategies, speed management, safety analysis"
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@type": "Service",
+        "name": "Aerial mapping",
+        "serviceType": "FAA Part 107 drone capture, orthomosaics, DSM/DTM terrain models, photogrammetry",
+        "areaServed": "United States",
+        "provider": {
+          "@type": "Organization",
+          "name": "Nat Ford Planning & Analysis",
+          "url": "https://www.natfordplanning.com"
+        }
+      }
     },
     {
-      "@type": "Service",
-      "name": "GIS & Spatial Analytics",
-      "serviceType": "PostGIS models, suitability/accessibility, custom web maps & dashboards"
+      "@type": "ListItem",
+      "position": 4,
+      "item": {
+        "@type": "Service",
+        "name": "Grants & funding",
+        "serviceType": "ATP, HSIP, CRP, CMAQ, and FTA grant strategy, narratives, and funding readiness reviews",
+        "areaServed": "United States",
+        "provider": {
+          "@type": "Organization",
+          "name": "Nat Ford Planning & Analysis",
+          "url": "https://www.natfordplanning.com"
+        }
+      }
     },
     {
-      "@type": "Service",
-      "name": "Aerial Mapping & Photogrammetry",
-      "serviceType": "Orthomosaics, DSM/DTM, point clouds/meshes, before/after visuals"
+      "@type": "ListItem",
+      "position": 5,
+      "item": {
+        "@type": "Service",
+        "name": "Open-source & custom software",
+        "serviceType": "Managed deployments, custom forks, hosting, onboarding, and support for open-source planning software",
+        "areaServed": "United States",
+        "provider": {
+          "@type": "Organization",
+          "name": "Nat Ford Planning & Analysis",
+          "url": "https://www.natfordplanning.com"
+        }
+      }
     },
     {
-      "@type": "Service",
-      "name": "Funding & Grants",
-      "serviceType": "ATP, HSIP, CRP, CMAQ, FTA 5339/5311/5310"
+      "@type": "ListItem",
+      "position": 6,
+      "item": {
+        "@type": "Service",
+        "name": "AI-enabled documentation",
+        "serviceType": "Auditable AI-assisted documentation, dashboards, and workflow tools for planning processes",
+        "areaServed": "United States",
+        "provider": {
+          "@type": "Organization",
+          "name": "Nat Ford Planning & Analysis",
+          "url": "https://www.natfordplanning.com"
+        }
+      }
     }
   ]
 }

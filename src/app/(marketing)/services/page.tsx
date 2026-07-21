@@ -159,8 +159,8 @@ export default function ServicesPage() {
             </div>
 
             {/* Figure plate */}
-            <figure className="reveal reveal-5 lg:justify-self-end">
-              <div className="plate aspect-[4/5] w-full max-w-md">
+            <figure className="reveal reveal-5 w-full max-w-md lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full">
                 <Image
                   src="/images/site/drone-mainstreet-parking-2026-03.jpg"
                   alt="Aerial view of a small-town main street showing the parking and curb layout used in a corridor study"

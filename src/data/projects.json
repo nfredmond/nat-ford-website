@@ -1,43 +1,68 @@
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "Planning experience",
+  "name": "Planning experience (prior employment)",
+  "description": "Planning projects Nathaniel Ford Redmond delivered on staff at Green DOT Transportation Solutions (2021–2025), his prior employer. Listed as professional experience, not client engagements of Nat Ford Planning & Analysis.",
   "itemListElement": [
     {
-      "@type": "Project",
-      "name": "Sierra County RTP",
-      "description": "Performance targets and a fiscally constrained investment roadmap for a high-elevation rural county.",
-      "areaServed": "Sierra County, CA"
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@type": "CreativeWork",
+        "name": "Sierra County RTP",
+        "description": "Performance targets and a fiscally constrained investment roadmap for a high-elevation rural county.",
+        "spatialCoverage": "Sierra County, CA"
+      }
     },
     {
-      "@type": "Project",
-      "name": "Del Norte County ATP",
-      "description": "Active-transportation network gaps turned into phaseable, grant-ready applications, with a Safe Routes focus.",
-      "areaServed": "Del Norte County, CA"
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@type": "CreativeWork",
+        "name": "Del Norte County ATP",
+        "description": "Active-transportation network gaps turned into phaseable, grant-ready applications, with a Safe Routes focus.",
+        "spatialCoverage": "Del Norte County, CA"
+      }
     },
     {
-      "@type": "Project",
-      "name": "Tehama County VMT & CIP",
-      "description": "VMT-reduction strategy connected to a realistic, prioritized capital-improvement program.",
-      "areaServed": "Tehama County, CA"
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@type": "CreativeWork",
+        "name": "Tehama County VMT & CIP",
+        "description": "VMT-reduction strategy connected to a realistic, prioritized capital-improvement program.",
+        "spatialCoverage": "Tehama County, CA"
+      }
     },
     {
-      "@type": "Project",
-      "name": "Plumas Transit FTA 5339",
-      "description": "Grant narrative for an FTA 5339 transit facility, linking site feasibility, fleet transition, and public benefit.",
-      "areaServed": "Plumas County, CA"
+      "@type": "ListItem",
+      "position": 4,
+      "item": {
+        "@type": "CreativeWork",
+        "name": "Plumas Transit FTA 5339",
+        "description": "Grant narrative for an FTA 5339 transit facility, linking site feasibility, fleet transition, and public benefit.",
+        "spatialCoverage": "Plumas County, CA"
+      }
     },
     {
-      "@type": "Project",
-      "name": "Placer County MIAS",
-      "description": "Countywide multimodal screening with planning-level cost bands and project-packaging guidance.",
-      "areaServed": "Placer County, CA"
+      "@type": "ListItem",
+      "position": 5,
+      "item": {
+        "@type": "CreativeWork",
+        "name": "Placer County MIAS",
+        "description": "Countywide multimodal screening with planning-level cost bands and project-packaging guidance.",
+        "spatialCoverage": "Placer County, CA"
+      }
     },
     {
-      "@type": "Project",
-      "name": "El Dorado Next Gen Mobility",
-      "description": "Phased mobility-program options with a KPI framework and an implementation structure.",
-      "areaServed": "El Dorado County, CA"
+      "@type": "ListItem",
+      "position": 6,
+      "item": {
+        "@type": "CreativeWork",
+        "name": "El Dorado Next Gen Mobility",
+        "description": "Phased mobility-program options with a KPI framework and an implementation structure.",
+        "spatialCoverage": "El Dorado County, CA"
+      }
     }
   ]
 }

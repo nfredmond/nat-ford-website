@@ -97,9 +97,10 @@ export default function HomePage() {
               </h1>
               <p className="lead reveal reveal-3 measure-wide mt-6 text-[color:var(--muted)]">
                 Nat Ford Planning &amp; Analysis builds free, open-source tools for transportation
-                planning, mapping, and modeling, then helps agencies actually run them, from rural
-                Northern California counties to city transportation departments. The code is public.
-                Every number carries its source. A real planner answers the email.
+                planning, mapping, and modeling, then helps agencies actually run them. The
+                experience behind them runs from rural Northern California counties to city
+                transportation departments. The code is public. Every number carries its source. A
+                real planner answers the email.
               </p>
 
               <div className="reveal reveal-4 mt-9 flex flex-wrap items-center gap-3">
@@ -122,8 +123,8 @@ export default function HomePage() {
             </div>
 
             {/* Figure plate */}
-            <figure className="reveal reveal-5 lg:justify-self-end">
-              <div className="plate aspect-[4/5] w-full max-w-md">
+            <figure className="reveal reveal-5 w-full max-w-md lg:justify-self-end">
+              <div className="plate aspect-[4/5] w-full">
                 <Image
                   src="/images/site/drone-corridor-valley-2026-03.jpg"
                   alt="Aerial view of a rural highway corridor threading through a Northern California valley"
@@ -171,15 +172,15 @@ export default function HomePage() {
               </p>
             </div>
 
-            <dl className="divide-y divide-[color:var(--line)] border-t border-[color:var(--line)]">
+            <ul className="divide-y divide-[color:var(--line)] border-t border-[color:var(--line)]">
               {pillars.map((pillar) => (
-                <div key={pillar.title} className="grid gap-3 py-7 sm:grid-cols-[1.5rem_1fr] sm:gap-6">
+                <li key={pillar.title} className="grid gap-3 py-7 sm:grid-cols-[1.5rem_1fr] sm:gap-6">
                   <div aria-hidden="true" className="hidden h-1.5 w-1.5 translate-y-2.5 rounded-full bg-[color:var(--copper)] sm:block" />
                   <div>
-                    <dt className="font-display text-2xl font-semibold text-[color:var(--ink)]">
+                    <h3 className="font-display text-2xl font-semibold text-[color:var(--ink)]">
                       {pillar.title}
-                    </dt>
-                    <dd className="measure mt-2.5 text-[color:var(--muted)]">{pillar.body}</dd>
+                    </h3>
+                    <p className="measure mt-2.5 text-[color:var(--muted)]">{pillar.body}</p>
                     <div className="mt-4">
                       {pillar.link.external ? (
                         <a
@@ -202,9 +203,9 @@ export default function HomePage() {
                       )}
                     </div>
                   </div>
-                </div>
+                </li>
               ))}
-            </dl>
+            </ul>
           </div>
         </Container>
       </Section>
@@ -314,8 +315,8 @@ export default function HomePage() {
                 on one spine, with the map as the worksurface and provenance on every number.
               </p>
               <p className="mt-4 text-sm leading-6 text-white/55">
-                Honest about its limits: the modeling is screening-grade, not a calibrated forecast,
-                and it is built to support qualified planning review, never to replace it.
+                The modeling is screening-grade, not a calibrated forecast, and it is built to
+                support qualified planning review, never to replace it.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button asChild size="lg">
