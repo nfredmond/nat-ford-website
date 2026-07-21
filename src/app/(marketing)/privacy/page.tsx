@@ -11,20 +11,28 @@ export const metadata: Metadata = {
 
 const sections: { heading: string; body: ReactNode }[] = [
   {
-    heading: 'What We Collect',
-    body: 'We collect contact and project information needed to provide requested services, operate products, and communicate about project delivery.',
+    heading: 'What I collect',
+    body: 'When you send the contact form: your name, email, organization, and what you write about your project, plus your IP address and browser identifier for spam control. If you create an account: your email and sign-in records. If you buy something: the purchase record (product, tier, your email) — card numbers go to Stripe and never touch this site. Nothing else is collected. There are no advertising or analytics trackers on this site.',
   },
   {
-    heading: 'How We Use Data',
-    body: 'Data is used only for service delivery, product operation, support, and related business administration. We do not sell client data.',
+    heading: 'Services that process data on my behalf',
+    body: 'This site runs on a small set of processors: Supabase stores the database and handles accounts; Stripe handles payments; Cloudflare Turnstile screens the contact form for bots; Vercel hosts the site and keeps standard server logs; Resend sends the purchase-confirmation email. If you type a location into the Grant Lab map preview, that text goes to Mapbox to draw the map. Each processor receives only what its job requires.',
   },
   {
-    heading: 'AI and Data Handling',
-    body: 'AI-assisted workflows may process project content for drafting and analysis support. Final conclusions are human-reviewed. Client data is not reused across clients without explicit permission.',
+    heading: 'The AI tools',
+    body: 'What you type into the planning copilot or the Grant Narrative Lab is sent to OpenAI to generate the response. I log usage events — timestamps, estimated token counts, IP address, and a per-browser visitor id — to enforce rate limits and stop abuse; I do not use your prompts to train anything. If you supply your own OpenAI API key, it stays in your browser (session-only unless you opt to remember it on your device) and is sent with your requests; it is never stored on my server.',
   },
   {
-    heading: 'Retention and Access Controls',
-    body: 'We minimize sensitive data collection, apply access controls, and retain data only as long as necessary for contracted work, legal obligations, and operational continuity.',
+    heading: 'In your browser',
+    body: 'Local storage holds your theme preference, the chat visitor id, and — only if you switch on local autosave — your Grant Lab drafts. Cookies are functional only: sign-in sessions and anti-spam verification. No third-party advertising cookies, ever.',
+  },
+  {
+    heading: 'Client work and AI',
+    body: 'For paid engagements: AI-assisted workflows may process project content for drafting and analysis support, final conclusions are reviewed by me, and client data is not reused across clients without explicit permission.',
+  },
+  {
+    heading: 'Retention and your rights',
+    body: 'Contact-form submissions are kept for business follow-up; account and purchase records are kept as long as your account or my legal obligations require. Email me and I will tell you what I hold about you, correct it, or delete it — deletion requests are honored unless a legal or accounting obligation requires keeping a record.',
   },
   {
     heading: 'Contact',
@@ -52,7 +60,7 @@ export default function PrivacyPage() {
             <p className="index-label">Legal</p>
             <h1 className="display-2 mt-6 text-[color:var(--ink)]">Privacy Policy</h1>
             <p className="data mt-6 text-sm text-[color:var(--muted)]">
-              Last updated: February 24, 2026
+              Last updated: July 20, 2026
             </p>
           </div>
         </Container>
@@ -63,8 +71,9 @@ export default function PrivacyPage() {
         <Container size="lg">
           <div className="measure-wide">
             <p className="lead text-[color:var(--muted)]">
-              Nat Ford Planning &amp; Analysis respects your privacy and is committed to responsible
-              data stewardship. This policy explains how we collect, use, and protect information.
+              This policy names what this site actually collects, every service that touches your
+              data, and how to get your data corrected or deleted. Nothing here is sold, and there
+              are no advertising trackers.
             </p>
 
             <div className="mt-12 divide-y divide-[color:var(--line)] border-y border-[color:var(--line)]">

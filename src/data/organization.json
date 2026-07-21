@@ -4,9 +4,26 @@
   "name": "Nat Ford Planning & Analysis",
   "url": "https://www.natfordplanning.com",
   "logo": "https://www.natfordplanning.com/logos/nf-wordmark-light.png",
-  "founder": "Nathaniel Ford Redmond",
+  "founder": {
+    "@type": "Person",
+    "name": "Nathaniel Ford Redmond",
+    "jobTitle": "Founder",
+    "sameAs": [
+      "https://www.linkedin.com/in/nfredmond",
+      "https://github.com/nfredmond"
+    ]
+  },
+  "email": "nathaniel@natfordplanning.com",
+  "telephone": "+1-530-492-9775",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "inquiries",
+    "email": "nathaniel@natfordplanning.com",
+    "telephone": "+1-530-492-9775"
+  },
   "sameAs": [
-    "https://www.linkedin.com/in/nfredmond"
+    "https://www.linkedin.com/in/nfredmond",
+    "https://github.com/nfredmond"
   ],
   "areaServed": "United States",
   "description": "Open-source planning, GIS, aerial, modeling, AI, and operations software for public-interest work, with paid implementation, custom forks, hosting, onboarding, support, and transportation planning services."
