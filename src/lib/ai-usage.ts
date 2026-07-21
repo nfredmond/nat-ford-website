@@ -34,29 +34,41 @@ export function buildScopeKey(userId: string | null | undefined, visitorId: stri
   return `guest-ip:${ip}`
 }
 
-export async function fetchUsageSnapshot(
-  admin: SupabaseClient,
-  scopeKey: string,
-  route: string,
-  nowMs: number
-): Promise<UsageSnapshot> {
-  const dayAgoIso = new Date(nowMs - 24 * 60 * 60 * 1000).toISOString()
-  const hourCutoff = nowMs - 60 * 60 * 1000
+/**
+ * In-memory fallback rate limiting, used when the usage-events table is
+ * unreachable. Per-instance only (serverless instances don't share it), but
+ * it keeps a database outage from turning into unmetered platform-key spend.
+ */
+export type FallbackRateState = {
+  firstSeenAt: number
+  lastRequestAt: number
+  requests: number[]
+}
 
-  const { data, error } = await admin
-    .from('ai_usage_events')
-    .select('created_at,input_tokens,output_tokens,status')
-    .eq('scope_key', scopeKey)
-    .eq('route', route)
-    .gte('created_at', dayAgoIso)
-    .order('created_at', { ascending: false })
-    .limit(500)
+export function enforceFallbackRateLimit(
+  state: FallbackRateState,
+  now: number,
+  maxPerHour: number,
+  minIntervalMs: number,
+  windowMs = 60 * 60 * 1000
+): string | null {
+  state.requests = state.requests.filter((timestamp) => now - timestamp <= windowMs)
 
-  if (error) {
-    throw error
+  if (state.lastRequestAt && now - state.lastRequestAt < minIntervalMs) {
+    return 'You are sending messages too quickly. Please wait a moment.'
   }
 
-  const rows = (data ?? []) as UsageEventRow[]
+  if (state.requests.length >= maxPerHour) {
+    return 'You have hit the hourly message limit. Please try again shortly.'
+  }
+
+  state.lastRequestAt = now
+  state.requests.push(now)
+  return null
+}
+
+export function aggregateUsageRows(rows: UsageEventRow[], nowMs: number): UsageSnapshot {
+  const hourCutoff = nowMs - 60 * 60 * 1000
   const lastRequestAtMs = rows.length > 0 ? Date.parse(rows[0].created_at) : null
 
   const requestsLastHour = rows.reduce((count, row) => {
@@ -79,6 +91,60 @@ export async function fetchUsageSnapshot(
     requestsLastHour,
     tokensUsed24h,
   }
+}
+
+export async function fetchUsageSnapshot(
+  admin: SupabaseClient,
+  scopeKey: string,
+  route: string,
+  nowMs: number
+): Promise<UsageSnapshot> {
+  const dayAgoIso = new Date(nowMs - 24 * 60 * 60 * 1000).toISOString()
+
+  const { data, error } = await admin
+    .from('ai_usage_events')
+    .select('created_at,input_tokens,output_tokens,status')
+    .eq('scope_key', scopeKey)
+    .eq('route', route)
+    .gte('created_at', dayAgoIso)
+    .order('created_at', { ascending: false })
+    .limit(500)
+
+  if (error) {
+    throw error
+  }
+
+  return aggregateUsageRows((data ?? []) as UsageEventRow[], nowMs)
+}
+
+/**
+ * Usage aggregated by requester IP regardless of scope key. The scope key for
+ * guests is derived from a client-chosen visitorId, so a caller who rotates
+ * visitorIds gets a fresh scope every time; the IP dimension is the backstop
+ * that keeps that rotation from becoming unbounded platform-key spend.
+ */
+export async function fetchIpUsageSnapshot(
+  admin: SupabaseClient,
+  ip: string,
+  route: string,
+  nowMs: number
+): Promise<UsageSnapshot> {
+  const dayAgoIso = new Date(nowMs - 24 * 60 * 60 * 1000).toISOString()
+
+  const { data, error } = await admin
+    .from('ai_usage_events')
+    .select('created_at,input_tokens,output_tokens,status')
+    .eq('ip', ip)
+    .eq('route', route)
+    .gte('created_at', dayAgoIso)
+    .order('created_at', { ascending: false })
+    .limit(1000)
+
+  if (error) {
+    throw error
+  }
+
+  return aggregateUsageRows((data ?? []) as UsageEventRow[], nowMs)
 }
 
 type LogUsageInput = {
