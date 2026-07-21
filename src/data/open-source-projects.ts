@@ -188,22 +188,22 @@ export const openSourceProjects: OpenSourceProject[] = [
 export const implementationOffers = [
   {
     name: 'Managed open-source deployment',
-    summary: 'We install, host, configure, monitor, and administer an open-source tool so your team can use it without becoming the maintainer.',
+    summary: 'I install, host, configure, monitor, and administer an open-source tool so your team can use it without becoming the maintainer.',
     examples: ['Vercel/Supabase deployment', 'domain and environment setup', 'backups and monitoring', 'release management'],
   },
   {
     name: 'Custom fork / agency edition',
-    summary: 'We fork the base project and adapt the workflows, data model, branding, permissions, and reporting outputs to your actual work.',
+    summary: 'I fork the base project and adapt the workflows, data model, branding, permissions, and reporting outputs to your actual work.',
     examples: ['custom modules', 'local data schemas', 'agency report templates', 'merge-forward maintenance'],
   },
   {
     name: 'Team onboarding and identity planning',
-    summary: 'We plan and configure the unglamorous but essential parts: roles, access, staff onboarding, training, and governance. SSO or identity-provider work is scoped only when the deployment actually needs it.',
+    summary: 'I plan and configure the unglamorous but essential parts: roles, access, staff onboarding, training, and governance. SSO or identity-provider work is scoped only when the deployment actually needs it.',
     examples: ['role/access setup', 'identity-provider scoping when needed', 'staff onboarding', 'admin documentation'],
   },
   {
     name: 'Priority support and operations',
-    summary: 'For teams that need confidence, we provide a scoped operator lane for urgent fixes, QA, uptime checks, and release triage.',
+    summary: 'For teams that need confidence, I provide a scoped operator lane for urgent fixes, QA, uptime checks, and release triage.',
     examples: ['agreed priority-response terms', 'bug triage', 'security patch support', 'monthly improvement review'],
   },
 ]

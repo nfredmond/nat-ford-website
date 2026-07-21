@@ -172,7 +172,9 @@ export default function ProductsPage() {
 
                     <div className="mt-4 flex flex-wrap gap-2">
                       <span className="provenance">{licenseLabel(project)}</span>
-                      <span className="provenance">{sourceAvailabilityLabel(project)}</span>
+                      {sourceAvailabilityLabel(project) !== licenseLabel(project) ? (
+                        <span className="provenance">{sourceAvailabilityLabel(project)}</span>
+                      ) : null}
                       <span className="provenance">
                         {project.contributionPath ?? 'GitHub issues / forks'}
                       </span>
