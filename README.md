@@ -29,6 +29,10 @@ Retired routes (`/services`, `/projects`, `/products`, `/open-source`, `/process
 `/resources`, and the old contact subpages) redirect to their replacements. The list is in
 `next.config.ts`.
 
+The retired capability brochure at `/NFPA_Capability_OnePager.pdf` redirects to the
+prior-role experience section of `/about`. The site no longer publishes that services
+brochure or its outdated contact number.
+
 The home page facts about OpenPlan come from the OpenPlan README ("What exists" table, license,
 setup steps). Keep them in step with that repository. The latest release tag is fetched from the
 GitHub API and refreshed hourly (`src/lib/openplan-release.ts`).
