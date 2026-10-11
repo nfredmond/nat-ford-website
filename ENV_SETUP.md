@@ -3,10 +3,16 @@
 Create a `.env.local` file in the project root with:
 
 ```env
-# Supabase (Nat Ford website project)
-NEXT_PUBLIC_SUPABASE_URL=https://vguhqcookoekpvumnvqc.supabase.co
+# Supabase (Nat Ford website project, ref bymadqabjvtwrfbkcded, created 2026-10-10
+# in the "Nat Ford Planning & Analysis" Supabase org after the original
+# Vercel-integration project was deleted). Kept separate from OpenPlan's project.
+NEXT_PUBLIC_SUPABASE_URL=https://bymadqabjvtwrfbkcded.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<SUPABASE_ANON_KEY>
 SUPABASE_SERVICE_ROLE_KEY=<SUPABASE_SERVICE_ROLE_KEY>
+
+# Google sign-in (login, signup, and the /admin Google + MFA requirement).
+# Leave unset until a Google OAuth client is configured in the Supabase project.
+# NEXT_PUBLIC_GOOGLE_AUTH_ENABLED=true
 
 # Internal Lead Inbox
 LEAD_INBOX_PASSWORD=<STRONG_PASSWORD>

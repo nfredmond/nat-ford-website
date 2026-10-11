@@ -12,6 +12,11 @@ type LoginFormProps = {
   infoMessage?: string | null
 }
 
+
+// Google sign-in needs an OAuth client configured in the Supabase project.
+// Hidden until NEXT_PUBLIC_GOOGLE_AUTH_ENABLED is set to "true".
+const GOOGLE_AUTH_ENABLED = process.env.NEXT_PUBLIC_GOOGLE_AUTH_ENABLED === 'true'
+
 export function LoginForm({ redirectPath, infoMessage }: LoginFormProps) {
   const router = useRouter()
   const isAdminPath = redirectPath.startsWith('/admin')
@@ -96,27 +101,31 @@ export function LoginForm({ redirectPath, infoMessage }: LoginFormProps) {
         </p>
       )}
 
-      <Button
-        type="button"
-        variant="outline"
-        className="w-full"
-        onClick={onGoogleSignIn}
-        disabled={isGoogleLoading || isLoading}
-      >
-        {isGoogleLoading ? 'Connecting to Google…' : 'Continue with Google'}
-      </Button>
+      {GOOGLE_AUTH_ENABLED && (
+        <>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={onGoogleSignIn}
+            disabled={isGoogleLoading || isLoading}
+          >
+            {isGoogleLoading ? 'Connecting to Google…' : 'Continue with Google'}
+          </Button>
 
-      {isAdminPath && (
-        <p className="rounded-lg border border-amber-300/60 bg-amber-50 px-3 py-2 text-xs text-amber-900">
-          Admin login path detected. Use Google + MFA to satisfy access policy.
-        </p>
+          {isAdminPath && (
+            <p className="rounded-lg border border-amber-300/60 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+              Admin login path detected. Use Google + MFA to satisfy access policy.
+            </p>
+          )}
+
+          <div className="flex items-center gap-3 text-xs text-[color:var(--foreground)]/68">
+            <span className="h-px flex-1 bg-[color:var(--line)]" />
+            <span>Email login</span>
+            <span className="h-px flex-1 bg-[color:var(--line)]" />
+          </div>
+        </>
       )}
-
-      <div className="flex items-center gap-3 text-xs text-[color:var(--foreground)]/68">
-        <span className="h-px flex-1 bg-[color:var(--line)]" />
-        <span>Email login</span>
-        <span className="h-px flex-1 bg-[color:var(--line)]" />
-      </div>
 
       <Input
         type="email"
