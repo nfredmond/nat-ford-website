@@ -34,6 +34,10 @@ NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=<MAPBOX_PUBLIC_TOKEN>
 # Model is fixed in code to provider-native: gpt-5.3-instant
 # (OpenClaw alias equivalent: openai-codex/gpt-5.3-instant)
 
+# Checkout is closed unless this is "true" (nothing is for sale as of October 2026).
+# The Stripe webhook still serves earlier purchases either way.
+# COMMERCE_CHECKOUT_OPEN=true
+
 # Stripe checkout links used by /api/commerce/checkout routing
 STRIPE_LINK_AI_ASSISTED_PLANNING_WORKFLOWS_29=<https://buy.stripe.com/...>
 STRIPE_LINK_AI_ASSISTED_PLANNING_WORKFLOWS_39=<https://buy.stripe.com/...>
