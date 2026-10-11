@@ -33,7 +33,7 @@ export default function SoftwarePage() {
         </Container>
       </section>
 
-      <section className="on-dark bg-[color:var(--sign)] text-white">
+      <section id="openplan" className="on-dark scroll-mt-16 bg-[color:var(--sign)] text-white">
         <div className="grid lg:grid-cols-2">
           <div className="px-4 py-16 sm:px-6 md:py-20 lg:pl-[max(2rem,calc((100vw-1400px)/2+2rem))] lg:pr-16">
             <p className="font-ui font-bold text-[color:var(--signal)]">Main project</p>

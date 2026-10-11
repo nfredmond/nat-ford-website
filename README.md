@@ -7,7 +7,9 @@ funding readiness scorecard, and an AI grant-narrative drafting tool.
 
 OpenPlan is a separate application. It is deployed on its own and mounted at
 `natfordplanning.com/openplan`. This repository has no `/openplan` route, and links to it are
-plain `<a>` tags so the browser does a full page load into the other app.
+plain `<a>` tags so the browser does a full page load into the other app. Until that mount
+exists, a temporary redirect in `next.config.ts` sends `/openplan` to the OpenPlan section of
+`/software`. Remove it when the mount goes in.
 
 ## Pages
 

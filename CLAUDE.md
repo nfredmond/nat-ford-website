@@ -59,7 +59,7 @@ Copy rules: sentence case, no all-caps tracked labels, no em dashes. Refer to th
 
 ### OpenPlan
 
-OpenPlan is a separate app mounted at `/openplan` on the same domain. Do not add a `/openplan` route here, and link to it with a plain `<a>`, not `next/link`.
+OpenPlan is a separate app mounted at `/openplan` on the same domain. Do not add a `/openplan` route here, and link to it with a plain `<a>`, not `next/link`. Until the mount exists, `next.config.ts` holds a temporary `/openplan` redirect to `/software#openplan`; remove it in the same change that adds the mount, because redirects run before rewrites.
 
 ### Components
 

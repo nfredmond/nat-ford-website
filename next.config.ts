@@ -19,9 +19,23 @@ const retired: Array<[string, string]> = [
   ['/faq', '/contact'],
 ]
 
+// TEMPORARY. The OpenPlan app will be mounted at /openplan by a separate
+// deployment. Until that mount exists, send visitors to the OpenPlan
+// section of /software instead of a 404. Delete this entry in the same
+// change that adds the /openplan rewrite or microfrontend route, because
+// redirects run before rewrites and would shadow it.
+const openplanPlaceholder = {
+  source: '/openplan/:path*',
+  destination: '/software#openplan',
+  permanent: false,
+}
+
 const nextConfig: NextConfig = {
   async redirects() {
-    return retired.map(([source, destination]) => ({ source, destination, permanent: true }))
+    return [
+      ...retired.map(([source, destination]) => ({ source, destination, permanent: true })),
+      openplanPlaceholder,
+    ]
   },
 }
 
