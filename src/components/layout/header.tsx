@@ -51,19 +51,21 @@ export function Header() {
           <Link href="/" className="-m-1.5 flex items-center rounded-md p-1.5">
             <span className="sr-only">Nat Ford Planning &amp; Analysis, home</span>
             <Image
-              src="/logos/nf-wordmark-light-cropped.png"
+              src="/logos/nf-wordmark-light.svg"
               alt=""
-              width={147}
-              height={36}
+              width={142}
+              height={40}
+              unoptimized
               priority
-              className="block h-9 w-auto dark:hidden"
+              className="block h-10 w-auto dark:hidden"
             />
             <Image
-              src="/logos/nf-wordmark-dark-cropped.png"
+              src="/logos/nf-wordmark-dark.svg"
               alt=""
-              width={164}
-              height={36}
-              className="hidden h-9 w-auto dark:block"
+              width={142}
+              height={40}
+              unoptimized
+              className="hidden h-10 w-auto dark:block"
             />
           </Link>
 
