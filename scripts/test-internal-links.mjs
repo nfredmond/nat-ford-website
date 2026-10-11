@@ -33,7 +33,7 @@ const routes = new Set(
     .map(routeFromPageFile)
 )
 
-// Redirect sources count as valid targets (e.g. the /openplan placeholder).
+// Redirect sources count as valid targets (e.g. the /openplan redirect).
 const nextConfig = fs.readFileSync(path.join(repoRoot, 'next.config.ts'), 'utf8')
 for (const match of nextConfig.matchAll(/source:\s*'([^':]+)/g)) routes.add(match[1].replace(/\/$/, '') || '/')
 for (const match of nextConfig.matchAll(/\['(\/[^']*)',\s*'/g)) routes.add(match[1])

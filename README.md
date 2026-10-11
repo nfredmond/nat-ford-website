@@ -6,11 +6,11 @@ planning application, along with his other public projects. It sells nothing. It
 free tools: a contact form that feeds a lead inbox, a funding readiness scorecard, and an AI
 grant-narrative drafting tool.
 
-OpenPlan itself is a separate application, deployed on its own and mounted at
-`natfordplanning.com/openplan`. This repository has no `/openplan` route, and links to it are
-plain `<a>` tags so the browser does a full page load into the other app. Until that mount
-exists, a temporary redirect in `next.config.ts` sends `/openplan` to the "Run it on your own
-computer" section of the home page. Remove it in the same change that adds the mount.
+OpenPlan runs separately at `https://openplan-zeta.vercel.app`. A temporary 307 redirect in
+`next.config.ts` sends `/openplan` to that deployment. Paths after `/openplan` and request
+query parameters pass through. `/openplan/` first follows Next.js's standard 308 redirect
+to `/openplan`, then follows the 307 redirect to OpenPlan. This repository has no `/openplan`
+route, rewrite, or embed. Links use plain `<a>` tags so the browser loads the separate app.
 
 ## Pages
 
