@@ -4,21 +4,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-- `npm run dev` — Next.js dev server (Turbopack) at http://localhost:3000
-- `npm run build` — Production build (Turbopack)
-- `npm run start` — Run the production build
-- `npm run lint` — ESLint (uses `eslint-config-next/core-web-vitals` + `eslint-config-next/typescript`)
+- `npm run dev`: Next.js dev server (Turbopack) at http://localhost:3000
+- `npm run build`: Production build (Turbopack)
+- `npm run start`: Run the production build
+- `npm run lint`: ESLint (uses `eslint-config-next/core-web-vitals` + `eslint-config-next/typescript`)
 
 `npm test` runs the behavior tests in `scripts/test-*.mjs`, including `test-internal-links.mjs`, which fails on any internal link without a matching route, redirect, or public file. Live smoke checks also live in `scripts/`:
 
-- `scripts/lead-intake-smoke-check.sh` — exercises the public lead form end-to-end
-- `scripts/stripe-checkout-smoke.sh` — Stripe checkout smoke test
-- `scripts/check-commerce-webhook-health.mjs` — verifies the Stripe webhook is alive
-- `scripts/provision-product-access.mjs` — manual access provisioning fallback
+- `scripts/lead-intake-smoke-check.sh`: exercises the public lead form end-to-end
+- `scripts/stripe-checkout-smoke.sh`: Stripe checkout smoke test
+- `scripts/check-commerce-webhook-health.mjs`: verifies the Stripe webhook is alive
+- `scripts/provision-product-access.mjs`: manual access provisioning fallback
 
-PDF builders (`scripts/build_*.py`) regenerate the marketing PDFs in `public/`.
+`scripts/build_funding_readiness_scorecard_pdf.py` regenerates the funding readiness worksheet in `public/`. The retired capability brochure and its builder are removed. Its old URL redirects to `/about#experience`.
 
-Supabase CLI: migrations live in `supabase/migrations/` and are applied with `supabase db push` against the project named in `supabase/config.toml`. Apply migrations in numeric order — they assume strict sequencing.
+Supabase CLI: migrations live in `supabase/migrations/` and are applied with `supabase db push` against the project named in `supabase/config.toml`. Apply migrations in numeric order: they assume strict sequencing.
 
 ## Architecture
 
@@ -28,18 +28,18 @@ Next.js 16 App Router (Turbopack-only, both dev and build) on React 19, Tailwind
 
 ### Routing layout
 
-Single route group `src/app/(marketing)/` holds nearly every user-facing page — marketing site, auth pages, client portal, admin, lead-inbox, products, grant-lab, dashboard, etc. The group exists to share the marketing layout (Header/Footer); auth-protected sections still live inside it and are gated by middleware, not by being in a separate route group. API routes are under `src/app/api/`.
+Single route group `src/app/(marketing)/` holds nearly every user-facing page: marketing site, auth pages, client portal, admin, lead-inbox, products, grant-lab, dashboard, etc. The group exists to share the marketing layout (Header/Footer); auth-protected sections still live inside it and are gated by middleware, not by being in a separate route group. API routes are under `src/app/api/`.
 
 ### Auth + the proxy
 
-This project uses Next.js 16's `proxy.ts` (not `middleware.ts`) at `src/proxy.ts`. It calls `updateSession` from `src/lib/supabase/middleware.ts` and currently matches `/portal/*`, `/dashboard/*`, `/login`, `/signup`. **When adding a new authenticated route, update the `matcher` in `src/proxy.ts`** — putting a page under `(marketing)` does not auto-protect it.
+This project uses Next.js 16's `proxy.ts` (not `middleware.ts`) at `src/proxy.ts`. It calls `updateSession` from `src/lib/supabase/middleware.ts` and currently matches `/portal/*`, `/dashboard/*`, `/login`, `/signup`. **When adding a new authenticated route, update the `matcher` in `src/proxy.ts`**: putting a page under `(marketing)` does not auto-protect it.
 
 Supabase clients are split by execution context, and the split matters:
 
-- `src/lib/supabase/client.ts` — browser client (`'use client'` components only)
-- `src/lib/supabase/server.ts` — Server Components / Server Actions / Route Handlers
-- `src/lib/supabase/admin.ts` — service-role client; server-only, never import from client code
-- `src/lib/supabase/middleware.ts` — used exclusively by `proxy.ts` for cookie refresh
+- `src/lib/supabase/client.ts`: browser client (`'use client'` components only)
+- `src/lib/supabase/server.ts`: Server Components / Server Actions / Route Handlers
+- `src/lib/supabase/admin.ts`: service-role client; server-only, never import from client code
+- `src/lib/supabase/middleware.ts`: used exclusively by `proxy.ts` for cookie refresh
 
 Admin-area access checks go through `src/lib/auth/admin-access.ts` and audit logs via `src/lib/auth/admin-audit.ts` (writes to the `admin_action_log` table).
 
@@ -67,18 +67,18 @@ OpenPlan is a separate app mounted at `/openplan` on the same domain. Do not add
 
 ### Components
 
-- `src/components/layout/` — `Header`, `Footer`, `Container`, `Section`, `Grid` (the page chrome primitives)
-- `src/components/ui/` — `Button`, `Card`, `Input`, `Textarea`, `ThemeToggle`
-- `src/components/features/` and `src/components/auth/` — feature-scoped pieces
+- `src/components/layout/`: `Header`, `Footer`, `Container`, `Section`, `Grid` (the page chrome primitives)
+- `src/components/ui/`: `Button`, `Card`, `Input`, `Textarea`, `ThemeToggle`
+- `src/components/features/` and `src/components/auth/`: feature-scoped pieces
 - `cn()` lives in `src/lib/utils.ts` (clsx + tailwind-merge). Use it for conditional classes.
 
 ### Static content
 
-Structured site data lives in `src/data/` as JSON/TS (`experience.ts`, `open-source-projects.ts`, `projects.json`, `services.json`, `organization.json`, `funding-readiness-scorecard.ts`, `admin-project-status.json`, `ca-counties.ts`). Edit these rather than hardcoding copy in components when the content is shared across pages or used in JSON-LD. `organization.json` is the schema.org Organization payload — its `logo` URL must point to a real public asset.
+Structured site data lives in `src/data/` as JSON/TS (`experience.ts`, `open-source-projects.ts`, `projects.json`, `services.json`, `organization.json`, `funding-readiness-scorecard.ts`, `admin-project-status.json`, `ca-counties.ts`). Edit these rather than hardcoding copy in components when the content is shared across pages or used in JSON-LD. `organization.json` is the schema.org Organization payload: its `logo` URL must point to a real public asset.
 
 ### Brand assets
 
-The logo is a guide-sign panel: a green (`#0B5E3E`) rounded square with a white inset border and "NF" in Overpass Black, beside "Nat Ford" (Overpass ExtraBold) and "Planning & Analysis" (Overpass SemiBold). All text is outlined to paths, so the SVGs need no fonts. `scripts/build_logo.py` generates every SVG; do not hand-edit the path data. Files in `public/logos/`: `nf-wordmark-{light,dark}.{svg,png}` and `nf-monogram-square-{light,dark}.{svg,png}` (the monogram is identical in both; the names are kept for existing references). The header and footer use the wordmark SVGs. Favicons at the App Router conventional paths: `src/app/favicon.ico` (16, 32, 48 px, from the borderless small monogram), `src/app/icon.png` (512 px), `src/app/apple-icon.png` (180 px, square corners because iOS applies its own mask). Naming: "Light" = for light backgrounds, "Dark" = for dark backgrounds. The marketing PDFs in `public/` still carry the previous logo.
+The logo is a guide-sign panel: a green (`#0B5E3E`) rounded square with a white inset border and "NF" in Overpass Black, beside "Nat Ford" (Overpass ExtraBold) and "Planning & Analysis" (Overpass SemiBold). All text is outlined to paths, so the SVGs need no fonts. `scripts/build_logo.py` generates every SVG; do not hand-edit the path data. Files in `public/logos/`: `nf-wordmark-{light,dark}.{svg,png}` and `nf-monogram-square-{light,dark}.{svg,png}` (the monogram is identical in both; the names are kept for existing references). The header and footer use the wordmark SVGs. Favicons at the App Router conventional paths: `src/app/favicon.ico` (16, 32, 48 px, from the borderless small monogram), `src/app/icon.png` (512 px), `src/app/apple-icon.png` (180 px, square corners because iOS applies its own mask). Naming: "Light" = for light backgrounds, "Dark" = for dark backgrounds. The funding readiness worksheet in `public/` still carries the previous logo.
 
 ### Vercel / Next 16 notes
 

@@ -14,6 +14,7 @@ const retired: Array<[string, string]> = [
   ['/open-source', '/software'],
   ['/process', '/'],
   ['/resources', '/software'],
+  ['/NFPA_Capability_OnePager.pdf', '/about#experience'],
   ['/faq', '/contact'],
   ['/contact/openplan-fit', '/contact'],
   ['/contact/funding-readiness', '/contact'],
