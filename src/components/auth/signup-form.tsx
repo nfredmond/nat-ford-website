@@ -11,6 +11,11 @@ type SignupFormProps = {
   redirectPath: string
 }
 
+
+// Google sign-in needs an OAuth client configured in the Supabase project.
+// Hidden until NEXT_PUBLIC_GOOGLE_AUTH_ENABLED is set to "true".
+const GOOGLE_AUTH_ENABLED = process.env.NEXT_PUBLIC_GOOGLE_AUTH_ENABLED === 'true'
+
 export function SignupForm({ redirectPath }: SignupFormProps) {
   const router = useRouter()
 
@@ -110,21 +115,25 @@ export function SignupForm({ redirectPath }: SignupFormProps) {
         </p>
       )}
 
-      <Button
-        type="button"
-        variant="outline"
-        className="w-full"
-        onClick={onGoogleSignup}
-        disabled={isGoogleLoading || isLoading}
-      >
-        {isGoogleLoading ? 'Connecting to Google…' : 'Sign up with Google'}
-      </Button>
+      {GOOGLE_AUTH_ENABLED && (
+        <>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={onGoogleSignup}
+            disabled={isGoogleLoading || isLoading}
+          >
+            {isGoogleLoading ? 'Connecting to Google…' : 'Sign up with Google'}
+          </Button>
 
-      <div className="flex items-center gap-3 text-xs text-[color:var(--foreground)]/68">
-        <span className="h-px flex-1 bg-[color:var(--line)]" />
-        <span>Email signup</span>
-        <span className="h-px flex-1 bg-[color:var(--line)]" />
-      </div>
+          <div className="flex items-center gap-3 text-xs text-[color:var(--foreground)]/68">
+            <span className="h-px flex-1 bg-[color:var(--line)]" />
+            <span>Email signup</span>
+            <span className="h-px flex-1 bg-[color:var(--line)]" />
+          </div>
+        </>
+      )}
 
       <Input
         type="email"
