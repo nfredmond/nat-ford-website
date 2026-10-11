@@ -90,8 +90,7 @@ export default function ServicesPage() {
                   src="/images/site/drone-intersection-topdown-2026-03.jpg"
                   alt="Top-down drone photo of a small-town intersection with crosswalks, angled parking, and a civic building"
                   fill
-                  priority
-                  sizes="352px"
+                  sizes="(min-width: 1024px) 352px, 1px"
                   className="object-cover"
                 />
               </div>
