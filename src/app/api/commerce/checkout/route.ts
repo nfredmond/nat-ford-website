@@ -68,7 +68,19 @@ function maybeApplyOpenPlanPrelaunchPromo(checkoutUrl: URL, tierId: string, prod
   checkoutUrl.searchParams.set('client_reference_id', `${tierId}-prelaunch`)
 }
 
+// The site sells nothing as of October 2026, and OpenPlan has no paid tier.
+// Checkout stays closed unless this variable is set to "true". The webhook
+// is untouched, so earlier purchases keep their access.
+const CHECKOUT_OPEN = process.env.COMMERCE_CHECKOUT_OPEN === 'true'
+
 export async function GET(request: NextRequest) {
+  if (!CHECKOUT_OPEN) {
+    return NextResponse.json(
+      { error: 'Checkout is closed. Nothing is for sale on this site.' },
+      { status: 410 }
+    )
+  }
+
   const tierId = request.nextUrl.searchParams.get('tier')
 
   if (!tierId) {

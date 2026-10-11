@@ -2,17 +2,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Container } from '@/components/layout/container'
-import { SignArrow } from '@/components/features/sign-arrow'
-import {
-  implementationPackages,
-  isFeaturedPublicRepo,
-  openSourceProjects,
-} from '@/data/open-source-projects'
+import { isFeaturedPublicRepo, openSourceProjects } from '@/data/open-source-projects'
 
 export const metadata: Metadata = {
   title: 'Software',
   description:
-    'OpenPlan and other open-source tools for transportation planning, GIS, drone mapping, and scenario modeling. Free to inspect and run, with paid setup and support.',
+    'OpenPlan and other open-source tools by Nathaniel Redmond for transportation planning, GIS, drone mapping, and scenario modeling.',
 }
 
 export default function SoftwarePage() {
@@ -27,8 +22,8 @@ export default function SoftwarePage() {
             Open-source software for planning work
           </h1>
           <p className="lead measure mt-6 text-[color:var(--muted)]">
-            Every project here is public. Read the code, run it on your own servers, or change it
-            for your agency. I charge only for setup, custom versions, and support.
+            Every project here is public. Read the code, run it yourself, or adapt it for your
+            agency under its license.
           </p>
         </Container>
       </section>
@@ -36,27 +31,21 @@ export default function SoftwarePage() {
       <section id="openplan" className="on-dark scroll-mt-16 bg-[color:var(--sign)] text-white">
         <div className="grid lg:grid-cols-2">
           <div className="px-4 py-16 sm:px-6 md:py-20 lg:pl-[max(2rem,calc((100vw-1400px)/2+2rem))] lg:pr-16">
-            <p className="font-ui font-bold text-[color:var(--signal)]">Main project</p>
-            <h2 className="mt-3 font-ui text-[clamp(2.4rem,5vw,4rem)] font-extrabold leading-none tracking-[-0.03em]">
+            <h2 className="font-ui text-[clamp(2.4rem,5vw,4rem)] font-extrabold leading-none tracking-[-0.03em]">
               {openplan.name}
             </h2>
             <p className="mt-5 max-w-[44ch] text-xl leading-relaxed text-white/85">{openplan.summary}</p>
-            <p className="mt-4 max-w-[48ch] text-white/70">
-              Its models are screening-level estimates for planning review. They are not
-              calibrated forecasts.
-            </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a href="/openplan" className="btn btn-primary btn-lg">
-                Open OpenPlan
-                <SignArrow direction="exit" className="h-4 w-3.5" />
-              </a>
+              <Link href="/" className="btn btn-primary btn-lg">
+                About OpenPlan
+              </Link>
               <a href={openplan.repoUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-lg">
                 Source code
               </a>
             </div>
             <p className="mt-6 font-ui text-sm text-white/65">License: {openplan.licenseSpdx}</p>
           </div>
-          <div className="relative min-h-72">
+          <figure className="relative min-h-72">
             <Image
               src="/images/site/drone-town-overview-2026-03.jpg"
               alt="Aerial view of a small mountain town and its street grid, with forested ridges behind"
@@ -64,7 +53,10 @@ export default function SoftwarePage() {
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
             />
-          </div>
+            <figcaption className="absolute bottom-3 right-4 font-ui text-sm text-white/85">
+              Nevada County, CA and surrounding region
+            </figcaption>
+          </figure>
         </div>
       </section>
 
@@ -99,37 +91,28 @@ export default function SoftwarePage() {
         </Container>
       </section>
 
-      <section className="bg-[color:var(--surface)] py-16 md:py-24">
+      <section className="bg-[color:var(--surface)] py-16 md:py-20">
         <Container size="xl">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-20">
-            <div>
-              <h2 className="display-2 text-[color:var(--ink)]">Paid help, in the order most agencies need it</h2>
-              <p className="measure mt-5 text-[color:var(--muted)]">
-                Most teams start with a fit review. Sometimes the answer is that the software is
-                not the right tool, and the review says so.
-              </p>
-              <Link
-                href="/contact?topic=open-source-support&intent=discovery"
-                className="btn btn-primary btn-lg mt-8"
-              >
-                Ask about a fit review
+          <h2 className="display-3 text-[color:var(--ink)]">Free tools on this site</h2>
+          <ul className="mt-6 grid gap-8 md:grid-cols-2">
+            <li>
+              <Link href="/funding-readiness-scorecard" className="prose-link font-ui text-lg font-semibold">
+                Funding readiness scorecard
               </Link>
-            </div>
-            <ol className="border-t-[3px] border-[color:var(--ink)]">
-              {implementationPackages.map((pkg, i) => (
-                <li
-                  key={pkg.name}
-                  className="grid grid-cols-[2.5rem_1fr] gap-x-4 border-b border-[color:var(--line)] py-6"
-                >
-                  <span className="font-ui text-2xl font-extrabold text-[color:var(--pine)]">{i + 1}</span>
-                  <div>
-                    <h3 className="font-ui text-xl font-bold text-[color:var(--ink)]">{pkg.name}</h3>
-                    <p className="mt-1 text-[color:var(--muted)]">{pkg.deliverable}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
+              <p className="mt-1 text-[color:var(--muted)]">
+                A self-check on whether a project is ready for a funding application.
+              </p>
+            </li>
+            <li>
+              <Link href="/grant-lab" className="prose-link font-ui text-lg font-semibold">
+                Grant Narrative Lab
+              </Link>
+              <p className="mt-1 text-[color:var(--muted)]">
+                An AI drafting tool for grant narratives, organized around each program&rsquo;s
+                scoring criteria.
+              </p>
+            </li>
+          </ul>
         </Container>
       </section>
     </>

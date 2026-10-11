@@ -59,6 +59,19 @@ export function ContactPageShell({
                 </dd>
               </div>
               <div>
+                <dt className="label">OpenPlan bugs and feature requests</dt>
+                <dd className="mt-0.5 text-lg">
+                  <a
+                    href="https://github.com/nfredmond/openplan/issues"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="prose-link font-semibold"
+                  >
+                    github.com/nfredmond/openplan/issues
+                  </a>
+                </dd>
+              </div>
+              <div>
                 <dt className="label">Location</dt>
                 <dd className="mt-0.5 text-lg text-[color:var(--ink)]">Grass Valley, California</dd>
               </div>

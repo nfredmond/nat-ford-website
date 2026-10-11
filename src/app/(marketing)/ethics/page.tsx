@@ -5,46 +5,52 @@ import { Container } from '@/components/layout/container'
 export const metadata: Metadata = {
   title: 'AI Use and Ethics',
   description:
-    'How Nat Ford Planning & Analysis uses AI in deliverables, handles client data, prices work, and reports problems.',
+    'What Nat Ford Planning & Analysis is, how OpenPlan is built and licensed, how AI is used, and what this site does with your data.',
 }
 
 const policies = [
   {
+    heading: 'What this site is',
+    points: [
+      'Nat Ford Planning & Analysis is the name Nathaniel Redmond publishes OpenPlan and his other open-source planning tools under.',
+      'This site showcases that work. It does not sell services, and OpenPlan has no paid tier or payment step.',
+    ],
+  },
+  {
+    heading: 'Independence',
+    points: [
+      'Nathaniel builds OpenPlan and the other projects here on his own. They are not products of, and are not endorsed by, any employer or client.',
+      'No employer or client data, documents, or confidential information go into these projects.',
+      'The planning projects listed on the About page were delivered on staff at Green DOT Transportation Solutions from 2021 to 2025. They are prior-role experience, not Nat Ford projects.',
+    ],
+  },
+  {
+    heading: 'Open source',
+    points: [
+      'OpenPlan is licensed under Apache-2.0. Each project’s LICENSE file governs its terms.',
+      'The full code and change history are public on GitHub, so anyone can check how a result is produced.',
+    ],
+  },
+  {
+    heading: 'Honest status',
+    points: [
+      'OpenPlan is in active development. Its model results are screening-level estimates, not validated forecasts.',
+      'The repository lists known limitations and what each release has and has not proven. Read them before relying on an output.',
+    ],
+  },
+  {
     heading: 'AI use',
     points: [
-      'AI helps with drafting, data preparation, and formatting.',
-      'A qualified planner reviews and approves every analysis, conclusion, and recommendation. AI does not sign off on any work.',
-      'Regulatory and technical claims carry a citation, or they are marked for verification before anyone relies on them.',
-      'Deliverables include the methods and assumptions behind them.',
+      'AI coding assistants help write and test the software. Every change is recorded in the public repository history.',
+      'Inside OpenPlan, cloud AI is optional. Consequential facts, publication, adoption, and money stay under human control.',
+      'The Grant Narrative Lab on this site sends what you type to OpenAI to generate a draft. Review and verify any draft before you use it.',
     ],
   },
   {
-    heading: 'Client data',
+    heading: 'Your data on this site',
     points: [
-      'Client data is never sold.',
-      'Data from one client is not reused for another without written permission.',
-      'Sensitive data is limited to what the work needs, access-controlled, and deleted when the work no longer needs it.',
-    ],
-  },
-  {
-    heading: 'Methods and estimates',
-    points: [
-      'Every deliverable states its assumptions and limits.',
-      'Screening-level estimates are labeled as such on the page where they appear, not in a footnote.',
-    ],
-  },
-  {
-    heading: 'Pricing and problems',
-    points: [
-      'Rates do not change with deadline pressure.',
-      'If scope, schedule, or quality slips, the client hears about it early, with a plan to correct it.',
-      'Some capacity is held at reduced rates for under-resourced agencies.',
-    ],
-  },
-  {
-    heading: 'Communities',
-    points: [
-      'Recommendations do not shift cost, risk, or burden onto disadvantaged or Tribal communities to make a project work on paper.',
+      'The contact form and the Grant Narrative Lab collect only what the privacy policy lists. There are no advertising or analytics trackers.',
+      'Nothing you send is sold or shared for marketing.',
     ],
   },
 ]
@@ -57,15 +63,18 @@ export default function EthicsPage() {
           <div>
             <h1 className="display-1 text-[color:var(--ink)]">AI use and ethics</h1>
             <p className="lead measure mt-6 text-[color:var(--muted)]">
-              Planning work ends up in board packets, grant files, and the public record. These
-              are the standards it follows.
+              What this site is, how its software is built, and where AI is involved.
             </p>
             <p className="mt-8 font-ui text-[color:var(--muted)]">
-              Questions about a policy:{' '}
+              Read the{' '}
+              <Link href="/privacy" className="prose-link font-semibold">
+                privacy policy
+              </Link>{' '}
+              or{' '}
               <Link href="/contact" className="prose-link font-semibold">
                 contact Nathaniel
-              </Link>
-              .
+              </Link>{' '}
+              with questions.
             </p>
           </div>
 

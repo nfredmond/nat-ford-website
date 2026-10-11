@@ -9,7 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run start` — Run the production build
 - `npm run lint` — ESLint (uses `eslint-config-next/core-web-vitals` + `eslint-config-next/typescript`)
 
-There is no test runner wired up. Smoke checks live in `scripts/`:
+`npm test` runs the behavior tests in `scripts/test-*.mjs`, including `test-internal-links.mjs`, which fails on any internal link without a matching route, redirect, or public file. Live smoke checks also live in `scripts/`:
 
 - `scripts/lead-intake-smoke-check.sh` — exercises the public lead form end-to-end
 - `scripts/stripe-checkout-smoke.sh` — Stripe checkout smoke test
@@ -57,9 +57,13 @@ Signature pieces: `.guide-sign` (the home hero), `SignArrow` (MUTCD arrow), `.ce
 
 Copy rules: sentence case, no all-caps tracked labels, no em dashes. Refer to the owner as "Nathaniel" or "Nathaniel Redmond," never "Nat." Prior-role projects in `src/data/experience.ts` must stay attributed to Green DOT Transportation Solutions.
 
+### Site purpose
+
+Nat Ford Planning & Analysis no longer sells services. The site showcases OpenPlan (the home page) and Nathaniel's other open-source projects. Do not add service pages, pricing, or sales calls to action. OpenPlan facts on the home page come from the OpenPlan repository README; keep them in step.
+
 ### OpenPlan
 
-OpenPlan is a separate app mounted at `/openplan` on the same domain. Do not add a `/openplan` route here, and link to it with a plain `<a>`, not `next/link`. Until the mount exists, `next.config.ts` holds a temporary `/openplan` redirect to `/software#openplan`; remove it in the same change that adds the mount, because redirects run before rewrites.
+OpenPlan is a separate app mounted at `/openplan` on the same domain. Do not add a `/openplan` route here, and link to it with a plain `<a>`, not `next/link`. Until the mount exists, `next.config.ts` holds a temporary `/openplan` redirect; remove it in the same change that adds the mount, because redirects run before rewrites. The placeholder currently points to `/#try`.
 
 ### Components
 

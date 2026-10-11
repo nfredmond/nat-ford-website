@@ -424,19 +424,9 @@ export default function GrantLabPage() {
               priorities you provide. Built for the agencies that write these on a deadline: small
               towns, tribes, counties, RTPAs, transportation commissions, and state agencies.
             </p>
-            <p className="measure mt-4 text-sm leading-6 text-white/60">
-              Want it running inside your organization? This workflow deploys through OpenPlan, as an
-              open-source custom fork, or as a client-specific delivery system.
-            </p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <a href="/openplan" className="btn btn-primary btn-md">
+              <Link href="/" className="btn btn-primary btn-md">
                 See OpenPlan <ArrowRight className="h-4 w-4" />
-              </a>
-              <Link
-                href="/contact?intent=discovery&topic=custom-software&inquiry=custom-grant-ai"
-                className="btn btn-outline btn-md"
-              >
-                Request a custom build
               </Link>
             </div>
           </div>
@@ -810,14 +800,6 @@ export default function GrantLabPage() {
                   Start with a{' '}
                   <Link href="/signup?redirect=/grant-lab" className="font-semibold text-[color:var(--pine)]">
                     free account
-                  </Link>
-                  . Want this workflow running inside your organization? It can be deployed through{' '}
-                  <a href="/openplan" className="font-semibold text-[color:var(--pine)]">
-                    OpenPlan managed support
-                  </a>{' '}
-                  (screening-grade, in active build), or as a{' '}
-                  <Link href="/contact?intent=discovery&topic=custom-software&inquiry=custom-grant-ai" className="font-semibold text-[color:var(--pine)]">
-                    custom-built client solution
                   </Link>
                   .
                 </div>

@@ -53,10 +53,6 @@ const nearTerm = 'Near-term (1-3 months)'
 }
 
 const expectedCtaTargets = [
-  ['src/app/(marketing)/services/page.tsx', '/contact?intent=discovery&topic=planning-support'],
-  ['src/app/(marketing)/services/page.tsx', '/contact?intent=discovery&topic=gis-mapping'],
-  ['src/app/(marketing)/services/page.tsx', '/contact?intent=discovery&topic=open-source-support'],
-  ['src/app/(marketing)/grant-lab/page.tsx', '/contact?intent=discovery&topic=custom-software&inquiry=custom-grant-ai'],
   ['src/app/(marketing)/portal/page.tsx', '/contact?intent=discovery&topic=portal-support'],
 ]
 

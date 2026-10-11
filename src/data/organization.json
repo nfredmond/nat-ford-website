@@ -7,7 +7,7 @@
   "founder": {
     "@type": "Person",
     "name": "Nathaniel Redmond",
-    "jobTitle": "Founder",
+    "jobTitle": "Founder and OpenPlan maintainer",
     "sameAs": [
       "https://www.linkedin.com/in/nfredmond",
       "https://github.com/nfredmond"
@@ -26,7 +26,7 @@
     "https://github.com/nfredmond"
   ],
   "areaServed": "United States",
-  "description": "Transportation planning, grant strategy, GIS and aerial mapping, and open-source planning software for small and rural public agencies.",
+  "description": "Nat Ford Planning & Analysis publishes OpenPlan and other free, open-source software for transportation and land-use planning, maintained by Nathaniel Redmond.",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Grass Valley",

@@ -1,32 +1,32 @@
 import type { NextConfig } from 'next'
 
-// Pages retired in the 2026 redesign. Each old URL lands on the section
+// Pages retired in the October 2026 redesigns. Each old URL lands on the section
 // that replaced it. /openplan is not listed: it belongs to the separate
 // OpenPlan app mounted at that path.
 const retired: Array<[string, string]> = [
-  ['/services/planning', '/services#planning'],
-  ['/services/grants', '/services#planning'],
-  ['/services/gis', '/services#mapping'],
-  ['/services/aerial', '/services#mapping'],
-  ['/services/ai', '/services#software'],
-  ['/projects/sierra-rtp', '/projects#sierra-rtp'],
-  ['/projects/del-norte-atp', '/projects#del-norte-atp'],
-  ['/projects/tehama-vmt', '/projects#tehama-vmt'],
+  ['/services', '/'],
+  ['/services/:path*', '/'],
+  ['/projects', '/about#experience'],
+  ['/projects/sierra-rtp', '/about#sierra-rtp'],
+  ['/projects/del-norte-atp', '/about#del-norte-atp'],
+  ['/projects/tehama-vmt', '/about#tehama-vmt'],
   ['/products', '/software'],
   ['/open-source', '/software'],
-  ['/process', '/services'],
-  ['/resources', '/services'],
+  ['/process', '/'],
+  ['/resources', '/software'],
   ['/faq', '/contact'],
+  ['/contact/openplan-fit', '/contact'],
+  ['/contact/funding-readiness', '/contact'],
 ]
 
 // TEMPORARY. The OpenPlan app will be mounted at /openplan by a separate
-// deployment. Until that mount exists, send visitors to the OpenPlan
-// section of /software instead of a 404. Delete this entry in the same
-// change that adds the /openplan rewrite or microfrontend route, because
+// deployment. Until that mount exists, send visitors to the home page's
+// "Run it on your own computer" section instead of a 404. Delete this
+// entry in the same change that adds the /openplan rewrite or microfrontend route, because
 // redirects run before rewrites and would shadow it.
 const openplanPlaceholder = {
   source: '/openplan/:path*',
-  destination: '/software#openplan',
+  destination: '/#try',
   permanent: false,
 }
 
