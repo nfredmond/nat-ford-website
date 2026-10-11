@@ -50,11 +50,12 @@ export function Footer() {
               <Link href="/" className="inline-flex rounded-md">
                 <span className="sr-only">Nat Ford Planning &amp; Analysis, home</span>
                 <Image
-                  src="/logos/nf-wordmark-dark-cropped.png"
+                  src="/logos/nf-wordmark-dark.svg"
                   alt=""
-                  width={200}
-                  height={44}
-                  className="block h-11 w-auto"
+                  width={171}
+                  height={48}
+                  unoptimized
+                  className="block h-12 w-auto"
                 />
               </Link>
               <address className="mt-6 space-y-1 font-ui text-[0.95rem] not-italic leading-relaxed text-white/75">

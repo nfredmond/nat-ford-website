@@ -55,6 +55,10 @@ The look comes from the road itself. The tokens live in `src/app/globals.css`.
   `src/data/ca-counties.ts`, which holds U.S. Census Bureau county boundaries (`us-atlas`,
   `counties-10m`) projected to California Albers. Regenerate that file with a script; do not
   hand-edit the path data.
+- **Logo.** A guide-sign monogram ("NF" on a green panel with a white inset border) beside
+  "Nat Ford / Planning & Analysis," all in Overpass and outlined to paths.
+  `scripts/build_logo.py` regenerates the SVGs; its docstring lists the setup. PNGs and
+  favicons are rendered from those SVGs with `rsvg-convert` and ImageMagick.
 - **Writing.** Plain, specific, sentence case, no em dashes, no all-caps labels. Refer to the
   owner as "Nathaniel," never "Nat."
 

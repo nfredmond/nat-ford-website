@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
-  <rect width="1200" height="1200" fill="none"/>
-  <rect x="200" y="200" width="800" height="800" fill="none" stroke="#B8934E" stroke-width="7"/>
-  <rect x="230" y="230" width="740" height="740" fill="none" stroke="#B8934E" stroke-width="5"/>
-  <text x="330" y="700" font-family="Times New Roman, Georgia, serif" font-size="540" fill="#111111">N</text>
-  <text x="565" y="835" font-family="Times New Roman, Georgia, serif" font-size="450" fill="#B8934E">F</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img">
+  <title>Nat Ford Planning &amp; Analysis</title>
+  <rect x="0" y="0" width="200" height="200" rx="28.00" fill="#0B5E3E"/>
+  <rect x="18.00" y="18.00" width="164.00" height="164.00" rx="14.50" fill="none" stroke="#FFFFFF" stroke-width="10.00"/>
+  <path d="M42.06 133V67H55.54L79.4 100.47Q79.82 101.08 80.77 102.69Q81.71 104.29 82.13 105.37Q81.99 104.43 81.92 102.76Q81.85 101.08 81.85 100.38V67H96.65V133H83.74L59.32 99.25Q58.84 98.59 57.93 96.94Q57.01 95.29 56.49 94.15Q56.72 95.43 56.75 96.86Q56.77 98.3 56.77 99.25V133ZM111.27 133V67H157.94V81.14H126.16V91.89H146.06V106.03H126.16V133Z" fill="#FFFFFF"/>
 </svg>
