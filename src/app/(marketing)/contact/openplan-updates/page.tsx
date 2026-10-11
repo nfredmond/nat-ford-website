@@ -3,14 +3,14 @@ import { ContactPageShell } from '@/components/features/contact-page-shell'
 
 export const metadata: Metadata = {
   title: 'OpenPlan Updates',
-  description: 'Request OpenPlan open-source release, pilot, and managed deployment updates from Nat Ford.',
+  description: 'Ask for updates on OpenPlan releases, pilots, and hosted setups.',
 }
 
 export default function OpenPlanUpdatesPage() {
   return (
     <ContactPageShell
-      title="Stay close to OpenPlan without forcing a purchase decision."
-      subtitle="Use this intake to request OpenPlan open-source release, pilot, and managed deployment updates. We will route it with the right product context."
+      title="OpenPlan updates"
+      subtitle="Ask for news on OpenPlan releases, pilots, and hosted setups. No purchase is involved."
       initialIntent="updates"
       initialTopic="openplan"
       initialProduct="openplan"

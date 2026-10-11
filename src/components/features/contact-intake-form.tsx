@@ -132,10 +132,10 @@ export function ContactIntakeForm({
   return !submitted ? (
     <>
       <p className="mb-5 text-sm leading-6 text-[color:var(--foreground)]/78">
-        Send the essential details now. Budget, exact dates, and geography are helpful but optional — we can sort those out in discovery.
+        Name, email, and a few sentences about the project are enough. Everything else is optional.
       </p>
       {contextNotice ? (
-        <div className="mb-6 rounded-xl border border-[color:var(--pine)]/25 bg-[color:var(--sand)]/35 px-4 py-3 text-sm text-[color:var(--foreground)]/85">
+        <div className="mb-6 rounded-md border border-[color:var(--pine)]/25 bg-[color:var(--sand)]/35 px-4 py-3 text-sm text-[color:var(--foreground)]/85">
           <p className="font-semibold text-[color:var(--pine)]">{contextNotice.title}</p>
           <p className="mt-1">{contextNotice.body}</p>
         </div>
@@ -144,8 +144,8 @@ export function ContactIntakeForm({
         <input type="text" name="website" className="hidden" tabIndex={-1} autoComplete="off" />
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <Input label="First Name" name="firstName" required />
-          <Input label="Last Name" name="lastName" required />
+          <Input label="First name" name="firstName" required />
+          <Input label="Last name" name="lastName" required />
         </div>
 
         <Input label="Email" name="email" type="email" required />
@@ -154,14 +154,14 @@ export function ContactIntakeForm({
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="inquiryType" className="mb-1.5 block text-sm font-medium text-[color:var(--ink)]">
-              Inquiry Type
+              Type of work
             </label>
             <select
               id="inquiryType"
               name="inquiryType"
               defaultValue={defaultInquiryType}
               required
-              className="flex h-11 w-full rounded-xl border border-[color:var(--line)] bg-[color:var(--background)] px-3.5 py-2 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
+              className="flex h-11 w-full rounded-md border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-3.5 py-2 text-base text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
             >
               <option value="">Select one</option>
               {inquiryTypes.map((option) => (
@@ -174,13 +174,13 @@ export function ContactIntakeForm({
 
           <div>
             <label htmlFor="timeline" className="mb-1.5 block text-sm font-medium text-[color:var(--ink)]">
-              Desired Timeline <span className="font-normal text-[color:var(--foreground)]/62">(optional)</span>
+              Timeline <span className="font-normal text-[color:var(--foreground)]/62">(optional)</span>
             </label>
             <select
               id="timeline"
               name="timeline"
               defaultValue={defaultTimeline}
-              className="flex h-11 w-full rounded-xl border border-[color:var(--line)] bg-[color:var(--background)] px-3.5 py-2 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
+              className="flex h-11 w-full rounded-md border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-3.5 py-2 text-base text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
             >
               <option value="">Select one</option>
               {timelines.map((option) => (
@@ -194,33 +194,33 @@ export function ContactIntakeForm({
 
         <div>
           <Textarea
-            label="What should we help you solve?"
+            label="What is the project?"
             name="description"
             defaultValue={defaultDescription}
-            placeholder="What decision, workflow, deployment, or deadline are you trying to move forward?"
+            placeholder="The work, the deadline, and the funding program if there is one."
             rows={5}
             minLength={20}
             required
           />
           <p className="mt-1.5 text-xs text-[color:var(--foreground)]/68">
-            A sentence or two (at least 20 characters) helps route this to the right first step.
+            At least 20 characters.
           </p>
         </div>
 
-        <details className="rounded-2xl border border-[color:var(--line)] bg-[color:var(--fog)]/40 p-4">
+        <details className="rounded-md border border-[color:var(--line)] bg-[color:var(--fog)]/40 p-4">
           <summary className="cursor-pointer text-sm font-semibold text-[color:var(--ink)]">
-            Optional scoping details
+            Budget, start date, and location (optional)
           </summary>
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label htmlFor="budgetRange" className="mb-1.5 block text-sm font-medium text-[color:var(--ink)]">
-                Budget Range <span className="font-normal text-[color:var(--foreground)]/62">(optional)</span>
+                Budget range <span className="font-normal text-[color:var(--foreground)]/62">(optional)</span>
               </label>
               <select
                 id="budgetRange"
                 name="budgetRange"
                 defaultValue=""
-                className="flex h-11 w-full rounded-xl border border-[color:var(--line)] bg-[color:var(--background)] px-3.5 py-2 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
+                className="flex h-11 w-full rounded-md border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-3.5 py-2 text-base text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
               >
                 <option value="">Select a range</option>
                 {budgetRanges.map((option) => (
@@ -232,14 +232,14 @@ export function ContactIntakeForm({
             </div>
 
             <Input
-              label="Desired Start Window (optional)"
+              label="Start date (optional)"
               name="desiredStartDate"
               type="date"
             />
 
             <div className="sm:col-span-2">
               <Input
-                label="Project Geography (optional)"
+                label="Project location (optional)"
                 name="projectGeography"
                 placeholder="County, region, or service area"
               />
@@ -275,7 +275,7 @@ export function ContactIntakeForm({
           {isSubmitting ? 'Submitting…' : submitLabel}
         </Button>
         <p className="text-xs leading-5 text-[color:var(--foreground)]/68">
-          Typical response: 1–2 business days. If this is urgent, email nathaniel@natfordplanning.com directly.
+          You can also email nathaniel@natfordplanning.com directly.
         </p>
       </form>
     </>
@@ -289,7 +289,7 @@ export function ContactIntakeForm({
       </h2>
       <p className="mt-3 text-[color:var(--foreground)]/75">{successMessage}</p>
       <Button variant="outline" className="mt-6" onClick={() => setSubmitted(false)}>
-        Submit Another Inquiry
+        Send another message
       </Button>
     </div>
   )

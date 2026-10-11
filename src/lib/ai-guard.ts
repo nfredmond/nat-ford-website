@@ -3,7 +3,7 @@ import { findActiveAiBan, logUsageEvent } from '@/lib/ai-usage'
 import { sanitizeForLog } from '@/lib/security/redact-secrets'
 
 /**
- * Shared helpers for the AI chat routes (planner, grant-lab).
+ * Shared helpers for the AI chat route (grant-lab).
  * Only the byte-for-byte identical logic lives here — the route-specific
  * flows (guest grace, token budgets, prompt grounding) stay in each route.
  */

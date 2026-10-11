@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 export default function FundingReadinessContactPage() {
   return (
     <ContactPageShell
-      title="Let’s review your funding readiness."
-      subtitle="Use this intake to share your scorecard result, major gaps, and target funding timeline so we can recommend a practical next step. This intake is not a funding guarantee or formal eligibility determination."
+      title="Funding readiness review"
+      subtitle="Share your scorecard result, the main gaps, and the funding cycle you are aiming for. This review is not an eligibility determination."
       initialTopic="funding-readiness-scorecard"
       initialIntent="scorecard-review"
     />

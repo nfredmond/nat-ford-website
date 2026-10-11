@@ -25,7 +25,7 @@ NEXT_PUBLIC_SITE_NAME=Nat Ford Planning & Analysis
 # Optional Meta/Facebook callback verification
 FACEBOOK_APP_SECRET=<META_APP_SECRET>
 
-# AI planner chatbot (homepage) + Grant AI Lab
+# Grant Narrative Lab (/grant-lab)
 OPENAI_API_KEY=<OPENAI_API_KEY>
 # Optional but recommended for Census-backed responses (higher quota)
 CENSUS_API_KEY=<CENSUS_API_KEY>

@@ -988,7 +988,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                   {[
                     { href: '/portal', label: 'Customer portal' },
                     { href: '/lead-inbox', label: 'Lead inbox' },
-                    { href: '/products', label: 'Products page' },
+                    { href: '/software', label: 'Software page' },
                     { href: '/admin?tab=settings', label: 'Admin settings tab' },
                   ].map((item) => (
                     <Link

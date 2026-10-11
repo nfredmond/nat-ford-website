@@ -88,7 +88,7 @@ export const openSourceProjects: OpenSourceProject[] = [
     status: 'Active build',
     category: 'Planning software',
     summary:
-      'Free, open-source planning software for rural RTPAs, counties, agencies, consultants, and public-interest planning teams — with projects, funding, maps, reports, evidence, and implementation work kept in one spine.',
+      'Planning software for rural regional agencies, counties, and consultants. Projects, funding, maps, reports, and evidence share one workspace.',
     repoUrl: 'https://github.com/nfredmond/openplan',
     licenseSpdx: 'Apache-2.0',
     // demoUrl omitted — the hosted demo is paused (returns HTTP 402).
@@ -104,7 +104,7 @@ export const openSourceProjects: OpenSourceProject[] = [
     status: 'Public alpha',
     category: 'Geospatial',
     summary:
-      'AI-native drone-to-insight geospatial platform built with Next.js, Supabase, PostGIS, MapLibre, and AI SDK patterns.',
+      'A web GIS for drone imagery and planning data, built on PostGIS and MapLibre.',
     repoUrl: 'https://github.com/nfredmond/OpenGeo',
     licenseSpdx: 'AGPL-3.0-only',
     licenseNote: 'Source code is licensed under AGPL-3.0-only unless the repository marks a specific file or asset otherwise.',
@@ -118,7 +118,7 @@ export const openSourceProjects: OpenSourceProject[] = [
     status: 'Active build',
     category: 'Aerial intelligence',
     summary:
-      'Open aerial data processing and planning-intelligence platform using an ODM-composed architecture for drone workflows.',
+      'Turns drone flights into planning-ready maps and datasets, using OpenDroneMap for processing.',
     repoUrl: 'https://github.com/nfredmond/aerial-intel-platform',
     licenseSpdx: 'Apache-2.0',
     licenseNote: 'Source code is licensed under Apache-2.0 unless the repository marks a specific file or asset otherwise; the repository’s LICENSE file is authoritative.',
@@ -132,7 +132,7 @@ export const openSourceProjects: OpenSourceProject[] = [
     status: 'Active build',
     category: 'Modeling',
     summary:
-      'AI-orchestrated, local-first transportation scenario modeling for small and rural agencies. Python engine plus Tauri desktop UI.',
+      'Transportation scenario modeling for small and rural agencies. A desktop app that runs on local data.',
     repoUrl: 'https://github.com/nfredmond/clawmodeler',
     licenseSpdx: 'Apache-2.0',
     licenseNote: 'Source code is licensed under Apache-2.0 unless the repository marks a specific file or asset otherwise; the repository’s LICENSE file is authoritative.',
@@ -146,7 +146,7 @@ export const openSourceProjects: OpenSourceProject[] = [
     status: 'Public alpha',
     category: 'Operations',
     summary:
-      'Ad and operations automation lineage for Google, Meta, and LinkedIn workflows, adaptable to planning and business reporting.',
+      'Reporting and automation for Google, Meta, and LinkedIn ad accounts.',
     repoUrl: 'https://github.com/nfredmond/ads_chatbot',
     licenseSpdx: 'Apache-2.0',
     demoUrl: 'https://ads-chatbot.vercel.app',
@@ -210,27 +210,28 @@ export const implementationOffers = [
 
 export const implementationPackages = [
   {
-    name: 'Open-source fit audit',
-    bestFor: 'Teams that want to know whether one of these repos can solve a real workflow before committing to a build.',
-    deliverable: 'A short recommendation memo: self-host, supported deployment, custom fork, or no-build/avoid.',
-    includes: ['repo/readiness review', 'workflow fit interview', 'risk and data gap list', 'recommended next scope'],
+    name: 'Fit review',
+    bestFor: 'Teams that want to know whether one of these projects solves a real workflow before committing to it.',
+    deliverable:
+      'A short memo that recommends one path: run it yourself, a hosted setup, a custom version, or a different tool.',
+    includes: ['project readiness review', 'workflow interview', 'risks and data gaps', 'recommended next step'],
   },
   {
-    name: 'Managed deployment sprint',
-    bestFor: 'Agencies or companies that want a working hosted tool without becoming DevOps maintainers.',
-    deliverable: 'Configured deployment, environment setup, admin notes, smoke test, and handoff checklist.',
-    includes: ['Vercel/Supabase or equivalent setup', 'domain/env configuration', 'basic monitoring', 'staff handoff'],
+    name: 'Hosted setup',
+    bestFor: 'Agencies that want a working tool without maintaining servers.',
+    deliverable: 'A configured, monitored deployment with administration notes, a test run, and a handoff checklist.',
+    includes: ['hosting and database setup', 'domain and environment configuration', 'monitoring', 'staff handoff'],
   },
   {
-    name: 'Custom fork / internal edition',
-    bestFor: 'Teams whose workflow is too specific for generic software but too important for spreadsheets.',
-    deliverable: 'A supported fork with local data model, permissions, branding, workflows, and reporting outputs.',
-    includes: ['fork strategy', 'custom modules', 'data migration', 'merge-forward maintenance plan'],
+    name: 'Custom version',
+    bestFor: 'Teams whose workflow is too specific for the general release.',
+    deliverable: 'A maintained fork with your data model, permissions, branding, workflows, and report formats.',
+    includes: ['fork plan', 'custom modules', 'data migration', 'plan for merging future releases'],
   },
   {
-    name: 'Operator support lane',
-    bestFor: 'Teams running open-source tools in public, production, or deadline-sensitive environments.',
-    deliverable: 'Ongoing support lane for triage, upgrades, release notes, QA checks, and monthly improvement review.',
-    includes: ['agreed priority-response terms', 'bug triage', 'security/update review', 'monthly operations memo'],
+    name: 'Ongoing support',
+    bestFor: 'Teams running the software in production or on public deadlines.',
+    deliverable: 'Bug triage, upgrades, release notes, quality checks, and a monthly review of what to improve next.',
+    includes: ['agreed response times', 'bug triage', 'security updates', 'monthly operations memo'],
   },
 ]

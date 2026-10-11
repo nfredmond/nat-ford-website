@@ -3,7 +3,7 @@ import { ContactPageShell } from '@/components/features/contact-page-shell'
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: 'Start a focused intake with Nat Ford so scope, timeline, and delivery model are clear before work begins.',
+  description: 'Contact Nathaniel Redmond at Nat Ford Planning & Analysis about transportation planning, grants, GIS, or open-source planning software.',
 }
 
 type ContactPageProps = {
@@ -19,8 +19,8 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
   return (
     <ContactPageShell
-      title="Schedule discovery. Scope the right next step."
-      subtitle="Share the essentials first. We’ll respond within 1–2 business days with a practical next step for implementation support, custom software, planning, GIS, grant, or aerial work."
+      title="Contact Nathaniel"
+      subtitle="Describe the project, the deadline, and the funding program if there is one."
       initialIntent={firstParam(params.intent)}
       initialTopic={firstParam(params.topic)}
       initialInquiry={firstParam(params.inquiry) || firstParam(params.service)}

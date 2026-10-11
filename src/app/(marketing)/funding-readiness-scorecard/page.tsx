@@ -5,7 +5,6 @@ import { FundingReadinessScorecard } from '@/components/features/funding-readine
 import { Container } from '@/components/layout/container'
 import { Section } from '@/components/layout/section'
 import { Button } from '@/components/ui/button'
-import { ContourField } from '@/components/features/contour-field'
 import {
   fundingReadinessBands,
   fundingReadinessCommonGaps,
@@ -31,7 +30,6 @@ export default function FundingReadinessScorecardPage() {
     <>
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="worksurface relative overflow-hidden border-b border-[color:var(--line)]">
-        <ContourField animate className="opacity-90" />
         <Container size="xl" className="relative py-16 md:py-24">
           <div className="grid items-end gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
             <div>
@@ -62,7 +60,7 @@ export default function FundingReadinessScorecardPage() {
               </p>
             </div>
 
-            {/* What this is — a report plate, not a heading */}
+            {/* What this is: a report plate, not a heading */}
             <div className="surface-card reveal reveal-5 p-6 md:p-7 lg:justify-self-end">
               <p className="label">What this is</p>
               <ul className="mt-4 space-y-3.5">
@@ -231,7 +229,7 @@ export default function FundingReadinessScorecardPage() {
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg">
-                  <Link href="/services/grants">View grant services</Link>
+                  <Link href="/services#planning">View grant services</Link>
                 </Button>
               </div>
             </article>

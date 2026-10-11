@@ -45,7 +45,7 @@ export function FundingReadinessScorecard() {
                 </legend>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/68">
+                    <p className="text-xs font-semibold text-[color:var(--foreground)]/68">
                       Question {index + 1} · {question.domain}
                     </p>
                     <h3 className="mt-2 text-xl font-semibold text-[color:var(--ink)]" aria-hidden="true">
@@ -53,7 +53,7 @@ export function FundingReadinessScorecard() {
                     </h3>
                     <p className="mt-2 max-w-3xl text-sm text-[color:var(--foreground)]/74">{question.note}</p>
                   </div>
-                  <span className="inline-flex rounded-full border border-[color:var(--line)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[color:var(--foreground)]/72">
+                  <span className="inline-flex rounded-full border border-[color:var(--line)] px-3 py-1 text-xs font-semibold text-[color:var(--foreground)]/72">
                     {answers[question.id] === null ? 'Unscored' : `${answers[question.id]} / 2`}
                   </span>
                 </div>
@@ -99,7 +99,7 @@ export function FundingReadinessScorecard() {
       <div className="xl:sticky xl:top-24 xl:self-start">
         <Card className="border-[color:var(--line)] bg-[color:var(--background)]">
           <CardContent className="p-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--foreground)]/68">
+            <p className="text-xs font-semibold text-[color:var(--foreground)]/68">
               Live result
             </p>
             <h3 className="mt-2 text-2xl font-semibold text-[color:var(--ink)]">Funding readiness snapshot</h3>
@@ -110,14 +110,14 @@ export function FundingReadinessScorecard() {
             <div className="mt-5 rounded-2xl border border-[color:var(--line)] bg-[color:var(--fog)]/70 px-4 py-4">
               <div className="flex items-end justify-between gap-4">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.12em] text-[color:var(--foreground)]/68">Questions answered</p>
+                  <p className="text-xs text-[color:var(--foreground)]/68">Questions answered</p>
                   <p className="mt-1 text-3xl font-semibold text-[color:var(--ink)]">
                     {answeredCount}
                     <span className="text-lg text-[color:var(--foreground)]/70">/{fundingReadinessQuestions.length}</span>
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs uppercase tracking-[0.12em] text-[color:var(--foreground)]/68">Current score</p>
+                  <p className="text-xs text-[color:var(--foreground)]/68">Current score</p>
                   <p className="mt-1 text-3xl font-semibold text-[color:var(--ink)]">
                     {score}
                     <span className="text-lg text-[color:var(--foreground)]/70">/{maxScore}</span>
@@ -138,7 +138,7 @@ export function FundingReadinessScorecard() {
             </div>
 
             <div aria-live="polite" className="mt-5 rounded-2xl border border-[color:var(--line)] bg-[color:var(--sand)]/38 p-4">
-              <p className="text-xs uppercase tracking-[0.12em] text-[color:var(--foreground)]/68">Result band</p>
+              <p className="text-xs text-[color:var(--foreground)]/68">Result band</p>
               <h4 className="mt-2 text-2xl font-semibold text-[color:var(--ink)]">{isComplete ? band.name : 'Complete all questions to reveal your band'}</h4>
               <p className="mt-1 text-sm font-semibold text-[color:var(--pine)]">{isComplete ? band.rangeLabel : '10 questions · 20 points total'}</p>
               <p className="mt-3 text-sm text-[color:var(--foreground)]/78">

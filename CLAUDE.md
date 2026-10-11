@@ -51,7 +51,15 @@ Light/dark is class-based (`.dark` on `<html>`), not media-query driven. The tog
 @custom-variant dark (&:where(.dark, .dark *));
 ```
 
-Colors are CSS variables (`--background`, `--foreground`, `--pine`, `--pine-deep`, `--copper`, `--sand`, `--fog`, `--line`, `--ink`) redefined under `.dark`. Reference them as `bg-[color:var(--pine)]` / `text-[color:var(--foreground)]` rather than hard-coded hex. Fonts are `Cormorant Garamond` (display) and `Source Sans 3` (body), loaded via `next/font/google` in `src/app/layout.tsx` and exposed as `--font-display` / `--font-body`.
+The design system ("Right of way") takes its vocabulary from the road. Colors are CSS variables redefined under `.dark`: `--paper`, `--surface`, `--surface-2`, `--ink`, `--muted`, `--line`, `--sign` (guide-sign green), `--signal` (warning yellow, non-text on light backgrounds), `--asphalt`. Older names (`--pine`, `--copper`, `--sand`, `--fog`) remain as aliases so the utility pages still render. Reference them as `bg-[color:var(--sign)]` rather than hard-coded hex. Fonts are Overpass (headings and interface, `font-ui`) and Source Serif 4 (reading text, the body default), loaded via `next/font/google` in `src/app/layout.tsx`. The font variables sit on `<html>` so the `:root` tokens can resolve them. Custom classes live in `@layer components` so Tailwind utilities override them.
+
+Signature pieces: `.guide-sign` (the home hero), `SignArrow` (MUTCD arrow), `.centerline` (double yellow line above the footer, used once), `CaliforniaMap` (static county SVG from `src/data/ca-counties.ts`).
+
+Copy rules: sentence case, no all-caps tracked labels, no em dashes. Refer to the owner as "Nathaniel" or "Nathaniel Redmond," never "Nat." Prior-role projects in `src/data/experience.ts` must stay attributed to Green DOT Transportation Solutions.
+
+### OpenPlan
+
+OpenPlan is a separate app mounted at `/openplan` on the same domain. Do not add a `/openplan` route here, and link to it with a plain `<a>`, not `next/link`.
 
 ### Components
 
@@ -62,11 +70,11 @@ Colors are CSS variables (`--background`, `--foreground`, `--pine`, `--pine-deep
 
 ### Static content
 
-Structured site data lives in `src/data/` as JSON/TS (`projects.json`, `services.json`, `organization.json`, `funding-readiness-scorecard.ts`, `admin-project-status.json`). Edit these rather than hardcoding copy in components when the content is shared across pages or used in JSON-LD. `organization.json` is the schema.org Organization payload — its `logo` URL must point to a real public asset.
+Structured site data lives in `src/data/` as JSON/TS (`experience.ts`, `open-source-projects.ts`, `projects.json`, `services.json`, `organization.json`, `funding-readiness-scorecard.ts`, `admin-project-status.json`, `ca-counties.ts`). Edit these rather than hardcoding copy in components when the content is shared across pages or used in JSON-LD. `organization.json` is the schema.org Organization payload — its `logo` URL must point to a real public asset.
 
 ### Brand assets
 
-Logos live in `public/logos/` (`nf-wordmark-{light,dark}.{png,svg}`, `nf-monogram-square-{light,dark}.{png,svg}`). The wordmark is a complete lockup (badge + name), so pages use it on its own. Header swaps light/dark variants via `dark:hidden` / `dark:block`; the footer uses the light wordmark on the dark `#0b120f` band. Favicons at the App Router conventional paths: `src/app/favicon.ico`, `src/app/icon.png`, `src/app/apple-icon.png`. Naming: "Light" = for light backgrounds, "Dark" = for dark backgrounds. The raw brand-kit master lives in design handoff / Drive, not in this repo.
+Logos live in `public/logos/` (`nf-wordmark-{light,dark}.{png,svg}`, `nf-monogram-square-{light,dark}.{png,svg}`). The header and footer use `nf-wordmark-{light,dark}-cropped.png`, the same art with the transparent padding trimmed. The wordmark is a complete lockup (badge + name), so pages use it on its own. Header swaps light/dark variants via `dark:hidden` / `dark:block`; the footer uses the dark-background wordmark on the asphalt band. Favicons at the App Router conventional paths: `src/app/favicon.ico`, `src/app/icon.png`, `src/app/apple-icon.png`. Naming: "Light" = for light backgrounds, "Dark" = for dark backgrounds. The raw brand-kit master lives in design handoff / Drive, not in this repo.
 
 ### Vercel / Next 16 notes
 

@@ -5,7 +5,6 @@
 
 @theme {
   --color-*: initial;
-  /* Keep core utility colors available after reset */
   --color-white: #ffffff;
   --color-black: #000000;
   --color-transparent: transparent;
@@ -13,84 +12,94 @@
 }
 
 /* ------------------------------------------------------------------ *
- * Design tokens — "The Planning Worksurface"
- * Forest-green ink on warm topographic paper; copper as the one sharp
- * accent; IBM Plex Mono as the data/provenance layer. Forest-night dark.
- * Every value is AA-checked for its intended role.
+ * Design tokens: "Right of way"
+ * Built from the road itself. Concrete-white page, MUTCD guide-sign
+ * green as the brand surface, warning yellow used rarely, asphalt for
+ * the footer. Overpass (a Highway Gothic descendant) for headings and
+ * interface; Source Serif 4 for reading text.
  * ------------------------------------------------------------------ */
 :root {
   /* Surfaces */
-  --paper: #f3f1e9;        /* base page — warm topographic paper */
-  --background: #f3f1e9;   /* alias, kept for existing pages */
-  --surface: #fbfaf4;      /* raised plate / card */
-  --surface-2: #ebe7d9;    /* inset / sunken */
-  --fog: #e4e9e7;          /* cool cartographic panel */
-  --slate: #dbe2df;        /* cool surface accent */
-  --sand: #e7dcc3;         /* warm surface accent */
+  --paper: #f4f6f5;
+  --background: #f4f6f5;
+  --surface: #ffffff;
+  --surface-2: #e8edea;
+  --fog: #e8edea;
+  --slate: #dfe6e2;
+  --sand: #e8edea;
 
-  /* Ink + text */
-  --ink: #182220;          /* deep spruce ink — primary text */
-  --foreground: #182220;
-  --muted: #4c574f;        /* secondary text — AA on paper */
-  --faint: #6d766c;        /* tertiary / captions — AA-large only */
+  /* Text */
+  --ink: #17231e;
+  --foreground: #17231e;
+  --muted: #4f5c55;
+  --faint: #67736c;
 
-  /* Brand */
-  --pine: #1e5031;         /* primary green */
-  --pine-deep: #143621;    /* deeper green (hover / pressed) */
-  --pine-soft: #2c6a44;    /* lifted green */
-  --copper: #b07a22;       /* decorative accent (large / non-text) */
-  --copper-ink: #8a5a15;   /* AA-safe copper text on light */
+  /* Road palette */
+  --sign: #0b5e3e;          /* guide-sign green (FHWA green family) */
+  --sign-deep: #084a31;
+  --signal: #f2b705;        /* MUTCD warning yellow, non-text only on light */
+  --asphalt: #232927;
+
+  /* Legacy aliases kept so older pages map onto the new system */
+  --pine: #0b5e3e;
+  --pine-deep: #084a31;
+  --pine-soft: #0f7a50;
+  --pine-hover: #084a31;
+  --copper: #c99700;
+  --copper-ink: #6e5200;
 
   /* Lines */
-  --line: #d8d2c2;         /* warm hairline */
-  --line-strong: #c3bba4;
+  --line: #d3dcd7;
+  --line-strong: #b4c1ba;
 
-  /* Error state — AA on paper/surface for body-size text */
+  /* Error state */
   --danger: #a1352a;
-  --danger-surface: #f6e7e3;
+  --danger-surface: #f8e9e6;
   --danger-line: #dbb7ae;
 
-  /* On-color text + interaction (mode-aware for AA) */
   --on-pine: #ffffff;
-  --on-copper: #20160a;
-  --pine-hover: #17402a;
+  --on-copper: #17231e;
 
-  /* Fonts */
-  --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-body: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-display: var(--font-overpass), "Overpass", ui-sans-serif, system-ui, sans-serif;
+  --font-ui: var(--font-overpass), "Overpass", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-serif), "Source Serif 4", Georgia, serif;
+  --font-mono: var(--font-overpass), "Overpass", ui-sans-serif, system-ui, sans-serif;
 }
 
 .dark {
-  --paper: #0b120f;
-  --background: #0b120f;
-  --surface: #121c17;
-  --surface-2: #0e1712;
-  --fog: #101914;
-  --slate: #14201a;
-  --sand: #1d2a22;
+  --paper: #0f1513;
+  --background: #0f1513;
+  --surface: #151d1a;
+  --surface-2: #1b2521;
+  --fog: #1b2521;
+  --slate: #1b2521;
+  --sand: #1b2521;
 
-  --ink: #e8ece2;
-  --foreground: #e8ece2;
-  --muted: #9daca1;
-  --faint: #7d8a80;
+  --ink: #e6ece8;
+  --foreground: #e6ece8;
+  --muted: #a2afa8;
+  --faint: #86948c;
 
-  --pine: #5ca274;
-  --pine-deep: #c7e6d2;    /* light green — for text/marks on dark green */
-  --pine-soft: #7cbb92;
-  --copper: #d6ae5c;
-  --copper-ink: #e2c079;
+  --sign: #0d6844;
+  --sign-deep: #0a5537;
+  --asphalt: #0a0e0d;
 
-  --line: #26332b;
-  --line-strong: #35473c;
+  --pine: #5cc08e;
+  --pine-deep: #c9ecd9;
+  --pine-soft: #7fd0a7;
+  --pine-hover: #4aa97a;
+  --copper: #f2b705;
+  --copper-ink: #f2c94c;
+
+  --line: #26322d;
+  --line-strong: #36443e;
 
   --danger: #e2907f;
   --danger-surface: #2b1712;
   --danger-line: #5c3129;
 
-  --on-pine: #08130c;
-  --on-copper: #20160a;
-  --pine-hover: #4f9468;
+  --on-pine: #08130d;
+  --on-copper: #17231e;
 }
 
 @theme inline {
@@ -103,18 +112,22 @@
   --color-primary: var(--pine);
   --color-secondary: var(--copper);
   --color-line: var(--line);
+  --color-sign: var(--sign);
 
-  --font-sans: var(--font-body);
+  --font-sans: var(--font-ui);
+  --font-ui: var(--font-ui);
   --font-body: var(--font-body);
   --font-display: var(--font-display);
   --font-mono: var(--font-mono);
 }
 
+@layer base {
 /* ------------------------------------------------------------------ *
  * Base
  * ------------------------------------------------------------------ */
 html {
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -122,231 +135,194 @@ body {
   background-color: var(--paper);
   color: var(--foreground);
   font-family: var(--font-body);
-  font-size: 1.0625rem;      /* 17px floor */
-  line-height: 1.62;
+  font-size: 1.125rem;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  font-feature-settings: "kern", "liga";
+}
+
+/* Interface text (forms, nav, buttons, tables) is set in Overpass. */
+button, input, select, textarea, label, nav, table, figcaption {
+  font-family: var(--font-ui);
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--pine) 22%, transparent);
+  background: color-mix(in srgb, var(--signal) 55%, transparent);
   color: var(--ink);
 }
-.dark ::selection {
-  background: color-mix(in srgb, var(--pine) 40%, transparent);
-  color: #fff;
-}
 
-/* Restrained, on-theme scrollbar (Firefox + WebKit) */
 * {
   scrollbar-color: color-mix(in srgb, var(--line-strong) 80%, transparent) transparent;
 }
 
+}
+
+@layer components {
 /* ------------------------------------------------------------------ *
- * Typography scale — large jumps, real weight contrast
+ * Type scale (roughly 1.25 ratio from an 18px base)
  * ------------------------------------------------------------------ */
-.font-display {
-  font-family: var(--font-display);
-  letter-spacing: -0.018em;
+.font-display,
+.font-ui {
+  font-family: var(--font-ui);
 }
 .font-body { font-family: var(--font-body); }
-.font-mono { font-family: var(--font-mono); }
+.font-mono {
+  font-family: var(--font-ui);
+  font-variant-numeric: tabular-nums;
+}
 
 .display-1 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(2.75rem, 6.4vw, 5.25rem);
-  line-height: 0.98;
-  letter-spacing: -0.022em;
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 5.4vw, 4.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  text-wrap: balance;
 }
 .display-2 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(2rem, 4.2vw, 3.35rem);
-  line-height: 1.03;
-  letter-spacing: -0.018em;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
 }
 .display-3 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
-  line-height: 1.1;
-  letter-spacing: -0.012em;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2vw, 1.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
 }
-/* Kept for existing pages; harmonized with the new scale */
 .section-title {
-  font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.018em;
-  line-height: 1.05;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
 }
 
 .lead {
-  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+  font-size: clamp(1.2rem, 1.6vw, 1.4rem);
   line-height: 1.55;
-  color: color-mix(in srgb, var(--foreground) 88%, transparent);
 }
 
-/* Constrain reading measure to ~68ch */
-.measure { max-width: 64ch; }
-.measure-wide { max-width: 74ch; }
+.measure { max-width: 62ch; }
+.measure-wide { max-width: 72ch; }
 
-/* The monospace data / provenance layer */
+/* Small interface label: sentence case, never tracked caps */
 .label {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 600;
   color: var(--muted);
 }
 .data {
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.01em;
 }
 
-/* ------------------------------------------------------------------ *
- * Structural devices
- * ------------------------------------------------------------------ */
-
-/* Section index label — a mono marker with a real hairline, no pill chrome */
+/* Legacy section label, re-cut as a quiet green heading-lead */
 .index-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--copper-ink);
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--pine);
 }
-.index-label::before {
-  content: "";
-  width: 1.6rem;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.65;
-}
-.dark .index-label { color: var(--copper); }
 
-/* Provenance tag — the site's signature. A small mono chip that names the
-   real source behind a claim (repo, license, PDF, dataset). */
 .provenance {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
   color: var(--muted);
   border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 0.18rem 0.5rem;
-  background: color-mix(in srgb, var(--surface) 70%, transparent);
-}
-a.provenance {
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-a.provenance:hover {
-  color: var(--pine);
-  border-color: color-mix(in srgb, var(--pine) 45%, var(--line));
-}
-.dark a.provenance:hover { color: var(--pine-soft); }
-
-/* Card / plate surfaces — one crisp edge, no belt-and-suspenders shadow */
-.surface-card {
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
   background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 14px;
 }
-.surface-inset {
-  background: var(--surface-2);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-}
-/* Kept aliases for existing pages */
-.soft-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-}
-.signal-tile {
-  background: var(--surface-2);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-}
+a.provenance:hover { color: var(--pine); border-color: var(--pine); }
 
-/* Figure plate — a framed image with a mono figure caption, like a report plate */
-.plate {
-  position: relative;
-  overflow: hidden;
-  border-radius: 14px;
-  border: 1px solid var(--line-strong);
-  background: var(--surface-2);
-}
-.plate-caption {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.06em;
-  color: #e9ece2;
-}
-
-/* Hairline divider */
-.rule {
-  height: 1px;
-  background: var(--line);
-  border: 0;
-}
-
-/* Contour worksurface backdrop for feature sections */
-.worksurface {
-  position: relative;
-  isolation: isolate;
-  background:
-    radial-gradient(120% 90% at 85% -10%, color-mix(in srgb, var(--copper) 8%, transparent), transparent 55%),
-    radial-gradient(100% 80% at 0% 0%, color-mix(in srgb, var(--pine) 7%, transparent), transparent 52%),
-    var(--paper);
-}
-
-/* Pill — kept for existing pages, re-cut to the mono label system */
 .pill {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--copper-ink);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--pine);
   border: 1px solid var(--line);
-  border-radius: 7px;
-  padding: 0.3rem 0.6rem;
-  background: color-mix(in srgb, var(--surface) 70%, transparent);
-}
-.dark .pill { color: var(--copper); }
-
-/* Brand plaque behind the monogram */
-.nf-brand-plaque {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.25rem 0.6rem;
   background: var(--surface);
-  padding: 0.5rem;
-}
-.dark .nf-brand-plaque {
-  background: color-mix(in srgb, var(--surface) 88%, #0a0f0c);
 }
 
-/* Sticky site header — blur is justified here (genuine sticky layering) */
+/* Prose links inside reading text */
+.prose-link {
+  color: var(--pine);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.prose-link:hover { text-decoration-thickness: 2px; }
+
+/* ------------------------------------------------------------------ *
+ * Surfaces
+ * ------------------------------------------------------------------ */
+.surface-card,
+.soft-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.surface-inset,
+.signal-tile {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.plate {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--surface-2);
+}
+.rule { height: 1px; background: var(--line); border: 0; }
+
+.worksurface { position: relative; isolation: isolate; background: var(--paper); }
+
+/* Interior hero band used by a few utility pages */
+.hero-mesh {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background: var(--sign);
+}
+.hero-mesh .section-title { color: #fff; }
+
+.on-dark .pill,
+.hero-mesh .pill {
+  color: #fff;
+  border-color: rgb(255 255 255 / 0.4);
+  background: transparent;
+}
+.on-dark .index-label,
+.hero-mesh .index-label { color: var(--signal); }
+.on-dark .label,
+.hero-mesh .label { color: rgb(255 255 255 / 0.72); }
+
+.nf-glass {
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: saturate(140%) blur(12px);
+}
+
+/* Sticky header */
 .site-header {
-  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
   backdrop-filter: saturate(140%) blur(12px);
   border-bottom: 1px solid var(--line);
 }
@@ -355,184 +331,152 @@ a.provenance:hover {
 }
 
 /* ------------------------------------------------------------------ *
- * Legacy homepage utilities — retained so any not-yet-rebuilt page that
- * still references them stays coherent. Float animation intentionally
- * removed (anti-slop). Glass reduced to a solid layered surface.
+ * Road furniture: the guide sign and the centerline
  * ------------------------------------------------------------------ */
-.nf-glass {
-  background: color-mix(in srgb, var(--paper) 82%, transparent);
-  backdrop-filter: saturate(140%) blur(12px);
-}
-.hero-mesh-light { position: relative; overflow: hidden; }
 
-/* Forest-night hero used by interior pages (kept working under the new system) */
-.hero-mesh {
-  position: relative;
-  overflow: hidden;
+/* A guide sign: green panel, white inset border, rounded corners,
+   proportioned like an MUTCD D-series / E-series panel. */
+.guide-sign {
+  background: var(--sign);
   color: #fff;
+  border-radius: 16px;
+  padding: 7px;
+  box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.55);
+}
+.guide-sign__face {
+  border: 3px solid #fff;
+  border-radius: 11px;
+}
+
+/* Double yellow centerline. Used once, above the footer. */
+.centerline {
+  height: 12px;
   background:
-    radial-gradient(900px 500px at 86% -12%, color-mix(in srgb, var(--copper) 24%, transparent), transparent 60%),
-    radial-gradient(820px 480px at -5% 0%, color-mix(in srgb, #23623c 60%, transparent), transparent 56%),
-    linear-gradient(158deg, #0f1c14, #0b120f 62%);
+    linear-gradient(var(--signal) 0 4px, transparent 4px 8px, var(--signal) 8px 12px);
 }
-/* Pills + index labels read as light on the dark hero and dark bands */
-.hero-mesh .pill,
-.on-dark .pill {
-  color: #fff;
-  border-color: color-mix(in srgb, #fff 30%, transparent);
-  background: color-mix(in srgb, #fff 10%, transparent);
+
+/* Lane-line dash, used as a list bullet in a few places */
+.lane-dash {
+  display: inline-block;
+  width: 0.9rem;
+  height: 3px;
+  background: var(--pine);
+  border-radius: 1px;
 }
-.hero-mesh .index-label,
-.on-dark .index-label { color: var(--copper); }
-.hero-mesh .label,
-.on-dark .label { color: color-mix(in srgb, #fff 64%, transparent); }
-.hero-mesh .section-title { color: #fff; }
-.nf-kicker {
-  display: flex; flex-wrap: wrap; gap: 0.85rem; align-items: center;
-  font-family: var(--font-mono);
-  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.13em;
-  text-transform: uppercase; color: var(--muted);
-}
-.nf-proof-strip {
-  border-top: 1px solid var(--line); padding-top: 0.9rem;
-  font-size: 0.9rem; line-height: 1.5; color: var(--muted);
-}
-.nf-ops-board {
-  border: 1px solid var(--line); border-radius: 16px;
-  background: var(--surface); padding: 1.5rem;
-}
-.float-slow { animation: none; }
 
 /* ------------------------------------------------------------------ *
- * Buttons — contrast handled per theme via on-color tokens
+ * Buttons: squared like sign blanks, not pills
  * ------------------------------------------------------------------ */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-family: var(--font-body);
-  font-weight: 600;
-  border-radius: 9999px;
-  border: 1px solid transparent;
-  transition: background-color 0.2s ease, border-color 0.2s ease,
-    color 0.2s ease, transform 0.2s ease;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   white-space: nowrap;
   cursor: pointer;
+  line-height: 1;
 }
 .btn:disabled { opacity: 0.5; pointer-events: none; }
 
-.btn-sm { height: 2.25rem; padding-inline: 0.9rem; font-size: 0.875rem; }
-.btn-md { height: 2.6rem; padding-inline: 1.15rem; font-size: 0.9375rem; }
-.btn-lg { height: 3.05rem; padding-inline: 1.5rem; font-size: 1.0625rem; }
+.btn-sm { height: 2.25rem; padding-inline: 0.9rem; font-size: 0.9rem; }
+.btn-md { height: 2.7rem; padding-inline: 1.15rem; font-size: 0.98rem; }
+.btn-lg { height: 3.2rem; padding-inline: 1.5rem; font-size: 1.05rem; }
 
-.btn-primary { background: var(--pine); color: var(--on-pine); }
-.btn-primary:hover { background: var(--pine-hover); }
+.btn-primary { background: var(--sign); color: #fff; }
+.btn-primary:hover { background: var(--sign-deep); }
+.dark .btn-primary { background: var(--pine); color: var(--on-pine); }
+.dark .btn-primary:hover { background: var(--pine-hover); }
 
-.btn-secondary { background: var(--copper); color: var(--on-copper); }
-.btn-secondary:hover { filter: brightness(1.06); }
+.btn-secondary { background: var(--signal); color: #17231e; }
+.btn-secondary:hover { filter: brightness(1.05); }
 
 .btn-outline {
   border-color: var(--line-strong);
   color: var(--ink);
   background: transparent;
 }
-.btn-outline:hover {
-  border-color: color-mix(in srgb, var(--pine) 55%, var(--line-strong));
-  color: var(--pine);
-  background: color-mix(in srgb, var(--pine) 6%, transparent);
-}
-.dark .btn-outline:hover { color: var(--pine-soft); }
+.btn-outline:hover { border-color: var(--ink); }
 
 .btn-ghost { color: var(--ink); background: transparent; }
 .btn-ghost:hover { background: var(--surface-2); }
 
-/* On the dark ink footer/proof bands, buttons invert against the surface */
-.on-dark .btn-outline {
-  border-color: color-mix(in srgb, #fff 26%, transparent);
+.on-dark .btn-outline,
+.hero-mesh .btn-outline {
+  border-color: rgb(255 255 255 / 0.5);
   color: #fff;
 }
-.on-dark .btn-outline:hover {
-  border-color: var(--copper);
-  color: var(--copper);
-  background: color-mix(in srgb, #fff 6%, transparent);
-}
+.on-dark .btn-outline:hover,
+.hero-mesh .btn-outline:hover { border-color: #fff; }
 .on-dark .btn-ghost { color: #fff; }
-.on-dark .btn-ghost:hover { background: color-mix(in srgb, #fff 8%, transparent); }
+.on-dark .btn-ghost:hover { background: rgb(255 255 255 / 0.1); }
+.on-dark .btn-primary { background: #fff; color: var(--sign-deep); }
+.on-dark .btn-primary:hover { background: #e6ece8; }
 
 /* ------------------------------------------------------------------ *
- * Motion — one orchestrated reveal, transform/opacity only, motion-safe
+ * Motion: one orchestrated moment on the home hero, nothing else
  * ------------------------------------------------------------------ */
-@keyframes reveal-up {
-  from { opacity: 0; transform: translateY(14px); }
+@keyframes sign-rise {
+  from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes draw {
-  from { stroke-dashoffset: var(--draw-len, 1200); }
-  to   { stroke-dashoffset: 0; }
+@keyframes photo-settle {
+  from { transform: scale(1.06); }
+  to   { transform: scale(1); }
 }
 
 .reveal { opacity: 1; }
 @media (prefers-reduced-motion: no-preference) {
-  .reveal {
-    opacity: 0;
-    animation: reveal-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-  .reveal-1 { animation-delay: 0.05s; }
-  .reveal-2 { animation-delay: 0.14s; }
-  .reveal-3 { animation-delay: 0.23s; }
-  .reveal-4 { animation-delay: 0.32s; }
-  .reveal-5 { animation-delay: 0.41s; }
-  .reveal-6 { animation-delay: 0.5s; }
-
-  .contour-draw path {
-    stroke-dasharray: var(--draw-len, 1200);
-    animation: draw 2.4s ease-out forwards;
-  }
-  .contour-draw path:nth-child(2) { animation-delay: 0.15s; }
-  .contour-draw path:nth-child(3) { animation-delay: 0.3s; }
-  .contour-draw path:nth-child(4) { animation-delay: 0.45s; }
-  .contour-draw path:nth-child(5) { animation-delay: 0.6s; }
-  .contour-draw path:nth-child(6) { animation-delay: 0.75s; }
+  .hero-photo { animation: photo-settle 2.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .hero-sign { animation: sign-rise 0.9s 0.25s cubic-bezier(0.22, 1, 0.36, 1) both; }
 }
 
 /* ------------------------------------------------------------------ *
  * Accessibility floor
  * ------------------------------------------------------------------ */
 :focus-visible {
-  outline: 2px solid var(--pine);
+  outline: 3px solid var(--ink);
   outline-offset: 2px;
   border-radius: 3px;
 }
-.dark :focus-visible { outline-color: var(--pine-soft); }
+/* Yellow reads on green, asphalt, and dark mode; ink reads on paper. */
+.dark :focus-visible,
+.on-dark :focus-visible,
+.hero-mesh :focus-visible,
+.guide-sign :focus-visible { outline-color: var(--signal); }
 
-/* Cards that wrap a visually-hidden input (e.g. scorecard radio options)
-   must still show keyboard focus on the visible card. */
 label:has(input.sr-only:focus-visible) {
-  outline: 2px solid var(--pine);
+  outline: 3px solid var(--ink);
   outline-offset: 2px;
 }
-.dark label:has(input.sr-only:focus-visible) { outline-color: var(--pine-soft); }
+.dark label:has(input.sr-only:focus-visible) { outline-color: var(--signal); }
 
 .skip-link {
   position: absolute;
   top: -48px;
   left: 12px;
   z-index: 100;
-  background: var(--pine);
+  background: var(--sign);
   color: #fff;
+  font-family: var(--font-ui);
   padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 600;
+  border-radius: 6px;
+  font-weight: 700;
   transition: top 0.15s ease;
 }
 .skip-link:focus { top: 12px; }
 
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
   }
+}
 }

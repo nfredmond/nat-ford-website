@@ -120,7 +120,7 @@ export default async function PortalPage() {
               <h2 className="text-lg font-semibold text-[color:var(--ink)]">Quick actions</h2>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 <Link
-                  href="/products"
+                  href="/software"
                   className="rounded-xl border border-[color:var(--line)] bg-[color:var(--fog)]/45 px-4 py-3 text-sm font-medium text-[color:var(--foreground)] hover:bg-[color:var(--fog)]"
                 >
                   Review open-source projects

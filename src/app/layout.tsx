@@ -1,36 +1,33 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Source_Sans_3, IBM_Plex_Mono } from "next/font/google";
+import { Overpass, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { ThemeScript } from "./theme-script";
 
-const display = Cormorant_Garamond({
+// Overpass descends from Highway Gothic, the FHWA sign alphabet. It sets
+// headings and interface text; Source Serif 4 sets reading text.
+const overpass = Overpass({
   subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["500", "600", "700"],
+  variable: "--font-overpass",
+  weight: ["400", "600", "700", "800"],
 });
 
-const body = Source_Sans_3({
+const serif = Source_Serif_4({
   subsets: ["latin"],
-  variable: "--font-body",
-  weight: ["400", "500", "600", "700"],
-});
-
-const mono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "500", "600"],
+  variable: "--font-serif",
+  weight: ["400", "600"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.natfordplanning.com"),
   title: {
-    default: "Nat Ford Planning & Analysis | Open-Source Planning & GIS",
+    default: "Nat Ford Planning & Analysis | Transportation Planning, GIS, and Open-Source Tools",
     template: "%s | Nat Ford Planning & Analysis",
   },
   alternates: {
     canonical: "./",
   },
-  description: "Free and open-source planning, GIS, aerial, AI, and operations software with paid implementation, custom forks, hosting, onboarding, support, and transportation planning services.",
+  description: "Transportation planning, grant strategy, GIS, and open-source planning software for small and rural public agencies. Based in Grass Valley, California.",
   keywords: [
     "urban planning",
     "transportation planning",
@@ -48,7 +45,7 @@ export const metadata: Metadata = {
     "RTPA",
     "transportation commission",
   ],
-  authors: [{ name: "Nathaniel Ford Redmond" }],
+  authors: [{ name: "Nathaniel Redmond" }],
   creator: "Nat Ford Planning & Analysis",
   // og:title/og:description are intentionally unset so each page's own
   // title and description flow through to its social card.
@@ -72,12 +69,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${overpass.variable} ${serif.variable}`}>
       <head>
         <ThemeScript />
       </head>
       <body
-        className={`${display.variable} ${body.variable} ${mono.variable} font-body antialiased flex min-h-dvh flex-col bg-[color:var(--background)] text-[color:var(--foreground)]`}
+        className={`font-body antialiased flex min-h-dvh flex-col bg-[color:var(--background)] text-[color:var(--foreground)]`}
       >
         {children}
       </body>
