@@ -1,36 +1,40 @@
 # natfordplanning.com
 
-Website for Nat Ford Planning & Analysis, the transportation planning practice of Nathaniel
-Redmond in Grass Valley, California. It presents the services, prior planning experience, and the
-open-source software, and it runs a few working tools: a contact form that feeds a lead inbox, a
-funding readiness scorecard, and an AI grant-narrative drafting tool.
+Website for Nat Ford Planning & Analysis, the name Nathaniel Redmond publishes his open-source
+planning software under. The site showcases OpenPlan, his free transportation and land-use
+planning application, along with his other public projects. It sells nothing. It also runs a few
+free tools: a contact form that feeds a lead inbox, a funding readiness scorecard, and an AI
+grant-narrative drafting tool.
 
-OpenPlan is a separate application. It is deployed on its own and mounted at
+OpenPlan itself is a separate application, deployed on its own and mounted at
 `natfordplanning.com/openplan`. This repository has no `/openplan` route, and links to it are
 plain `<a>` tags so the browser does a full page load into the other app. Until that mount
-exists, a temporary redirect in `next.config.ts` sends `/openplan` to the OpenPlan section of
-`/software`. Remove it when the mount goes in.
+exists, a temporary redirect in `next.config.ts` sends `/openplan` to the "Run it on your own
+computer" section of the home page. Remove it in the same change that adds the mount.
 
 ## Pages
 
 | Route | What it is |
 | --- | --- |
-| `/` | Home: guide-sign hero, intro, three service areas, county map, OpenPlan, contact |
-| `/services` | Planning and funding, GIS and aerial mapping, open-source software |
-| `/projects` | Experience: county map, six prior-role projects, career history |
-| `/software` | OpenPlan and the other public repositories, plus paid support options |
-| `/about` | Bio, credentials, career |
-| `/contact` | Contact form (also `/contact/openplan-fit`, `/openplan-updates`, `/funding-readiness`) |
+| `/` | OpenPlan showcase: what it covers, how it is built, how to run it, who builds it |
+| `/software` | The other public repositories and the free tools on this site |
+| `/about` | Nathaniel's bio, county map, prior-role projects, career |
+| `/contact` | Contact form and direct channels (also `/contact/openplan-updates`) |
 | `/funding-readiness-scorecard` | Self-assessment tool |
 | `/grant-lab` | AI grant-narrative drafting tool |
 | `/ethics`, `/privacy`, `/terms` | Policies |
 | `/login`, `/portal`, `/admin`, `/lead-inbox` | Authenticated areas |
 
-Routes retired in the 2026 redesign (`/products`, `/open-source`, `/services/*`, `/projects/*`,
-`/process`, `/faq`, `/resources`) redirect to their replacements. The list is in `next.config.ts`.
+Retired routes (`/services`, `/projects`, `/products`, `/open-source`, `/process`, `/faq`,
+`/resources`, and the old contact subpages) redirect to their replacements. The list is in
+`next.config.ts`.
 
-The projects on `/projects` were delivered while Nathaniel was on staff at Green DOT
-Transportation Solutions (2021–2025). They are prior-role experience, not firm client work, and
+The home page facts about OpenPlan come from the OpenPlan README ("What exists" table, license,
+setup steps). Keep them in step with that repository. The latest release tag is fetched from the
+GitHub API and refreshed hourly (`src/lib/openplan-release.ts`).
+
+The projects on `/about` were delivered while Nathaniel was on staff at Green DOT
+Transportation Solutions (2021–2025). They are prior-role experience, not Nat Ford work, and
 every page that shows them says so. Keep that attribution if you edit `src/data/experience.ts`.
 
 ## Design system
@@ -68,14 +72,14 @@ npm install
 npm run dev     # http://localhost:3000
 ```
 
-Public pages run without environment variables. `ENV_SETUP.md` lists every variable. The authenticated pages, the contact form, and
-the grant lab need the Supabase and OpenAI values in `ENV_SETUP.md`. With the Vercel CLI linked,
+Public pages run without environment variables. `ENV_SETUP.md` lists every variable. The
+authenticated pages, the contact form, and the grant lab need the Supabase and OpenAI values in `ENV_SETUP.md`. With the Vercel CLI linked,
 `vercel env pull .env.local` fetches them.
 
 ## Checks
 
 ```bash
-npm test           # behavior tests for commerce, catalog, links, contact prefill, lead routing
+npm test           # commerce, catalog, internal links, contact prefill, lead routing
 npx tsc --noEmit   # type-check
 npm run lint
 npm run build
@@ -94,5 +98,5 @@ numeric order.
 
 ## License
 
-Source code is Apache-2.0. The license does not cover the Nat Ford name, logos, photographs, or
-client materials. See `LICENSE-NOTICE.md`.
+Source code is Apache-2.0. The license does not cover the Nat Ford name, logos, or
+photographs. See `LICENSE-NOTICE.md`.

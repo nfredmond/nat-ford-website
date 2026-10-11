@@ -1,8 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import Link from 'next/link'
-import { ArrowRight, Download } from 'lucide-react'
+import { Download } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import {
@@ -155,11 +154,6 @@ export function FundingReadinessScorecard() {
 
             <div className="mt-5 space-y-3">
               <Button asChild className="w-full" size="lg">
-                <Link href="/contact/funding-readiness">
-                  Request a funding readiness review <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" className="w-full" size="lg">
                 <a href="/Funding_Readiness_Scorecard_Worksheet.pdf" download>
                   <Download className="mr-2 h-4 w-4" />
                   Download worksheet PDF

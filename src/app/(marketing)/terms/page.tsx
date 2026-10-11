@@ -1,44 +1,48 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { Container } from '@/components/layout/container'
-import { Section } from '@/components/layout/section'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service',
+  title: 'Terms of Use',
   description:
-    'The terms that govern your use of Nat Ford Planning & Analysis services and products, including OpenPlan.',
+    'Terms for using natfordplanning.com and its free tools. The open-source software is governed by its own licenses.',
 }
 
 const sections: { heading: string; body: ReactNode }[] = [
   {
-    heading: 'Service Commitments',
-    body: 'We provide professional planning and software services using transparent methods, clear assumptions, and fair pricing principles. Scope, deliverables, timeline, and exclusions are documented in each proposal or statement of work.',
+    heading: 'This site',
+    body: 'natfordplanning.com is published by Nat Ford Planning & Analysis to present OpenPlan and other open-source planning software by Nathaniel Redmond. No professional services are sold through this site.',
   },
   {
-    heading: 'AI Use and Human Review',
-    body: 'AI may be used to accelerate drafting, data cleaning, formatting, and interpretation support. Final analysis, conclusions, and recommendations are reviewed and approved by Nathaniel Redmond, the planner responsible for the work.',
+    heading: 'Software licenses',
+    body: 'Each software project is governed by the license in its repository. OpenPlan is licensed under Apache-2.0. Those licenses, not these terms, control how you may use, change, and share the software, and they include their own warranty disclaimers.',
   },
   {
-    heading: 'Fees, Scope Changes, and Payment',
-    body: 'Pricing is based on transparent scope and effort assumptions. Scope changes are handled through a non-punitive written addendum with options to reduce scope, extend schedule, or adjust fee.',
+    heading: 'Free tools',
+    body: 'The funding readiness scorecard and the Grant Narrative Lab are self-help tools. Their results are not professional, legal, or eligibility advice, and they do not guarantee funding, approval, or any other outcome.',
   },
   {
-    heading: 'No Guarantee of Funding or Outcomes',
-    body: 'Planning recommendations and grant support improve competitiveness but do not guarantee funding awards, approvals, or downstream outcomes outside our direct control.',
+    heading: 'AI-generated drafts',
+    body: 'The Grant Narrative Lab uses OpenAI to generate text. Drafts can contain errors or unsupported claims. You are responsible for reviewing and verifying any draft before you use it.',
   },
   {
-    heading: 'Confidentiality',
-    body: 'We treat client information as confidential and use it only for contracted work, subject to applicable law and agreed disclosure terms.',
+    heading: 'Accounts and fair use',
+    body: 'Keep your sign-in credentials private. Usage limits protect the free tools from abuse, and accounts or addresses that misuse them may be blocked.',
+  },
+  {
+    heading: 'No warranty',
+    body: 'This site and its tools are provided as is, without warranties of any kind, to the extent the law allows.',
+  },
+  {
+    heading: 'Changes',
+    body: 'These terms may change. The date at the top of this page shows the latest revision.',
   },
   {
     heading: 'Contact',
     body: (
       <>
-        Questions about these Terms:{' '}
-        <a
-          href="mailto:nathaniel@natfordplanning.com"
-          className="font-medium text-[color:var(--pine)] underline underline-offset-2 hover:text-[color:var(--pine-deep)] dark:text-[color:var(--pine-soft)]"
-        >
+        Questions about these terms:{' '}
+        <a href="mailto:nathaniel@natfordplanning.com" className="prose-link font-semibold">
           nathaniel@natfordplanning.com
         </a>
       </>
@@ -48,53 +52,25 @@ const sections: { heading: string; body: ReactNode }[] = [
 
 export default function TermsPage() {
   return (
-    <>
-      {/* ── Header ────────────────────────────────────────────── */}
-      <section className="worksurface relative overflow-hidden border-b border-[color:var(--line)]">
-        <Container size="lg" className="relative py-16 md:py-20">
-          <div className="measure-wide">
-            <p className="index-label">Legal</p>
-            <h1 className="display-2 mt-6 text-[color:var(--ink)]">Terms of Service</h1>
-            <p className="data mt-6 text-sm text-[color:var(--muted)]">
-              Last updated: February 24, 2026
-            </p>
+    <section className="py-16 md:py-24">
+      <Container size="xl">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] lg:gap-20">
+          <div>
+            <h1 className="display-1 text-[color:var(--ink)]">Terms of use</h1>
+            <p className="mt-6 font-ui text-[color:var(--muted)]">Last updated: October 10, 2026</p>
           </div>
-        </Container>
-      </section>
-
-      {/* ── Terms ─────────────────────────────────────────────── */}
-      <Section spacing="lg">
-        <Container size="lg">
-          <div className="measure-wide">
-            <p className="lead text-[color:var(--muted)]">
-              These Terms govern your use of Nat Ford Planning &amp; Analysis services and products,
-              including OpenPlan. By using our services, you agree to these Terms.
-            </p>
-
-            <div className="mt-12 divide-y divide-[color:var(--line)] border-y border-[color:var(--line)]">
-              {sections.map((section, i) => (
-                <section
-                  key={section.heading}
-                  className="grid gap-2 py-8 sm:grid-cols-[2.5rem_1fr] sm:gap-6"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="data text-sm text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]"
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <div>
-                    <h2 className="font-display text-2xl font-semibold text-[color:var(--ink)]">
-                      {section.heading}
-                    </h2>
-                    <p className="mt-3 leading-7 text-[color:var(--muted)]">{section.body}</p>
-                  </div>
-                </section>
-              ))}
-            </div>
+          <div className="space-y-10">
+            {sections.map((section) => (
+              <div key={section.heading}>
+                <h2 className="display-3 border-t-[3px] border-[color:var(--ink)] pt-5 text-[color:var(--ink)]">
+                  {section.heading}
+                </h2>
+                <p className="measure mt-3">{section.body}</p>
+              </div>
+            ))}
           </div>
-        </Container>
-      </Section>
-    </>
+        </div>
+      </Container>
+    </section>
   )
 }

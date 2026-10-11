@@ -6,7 +6,7 @@ import { Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { buildContactPrefill, budgetRanges, inquiryTypes, timelines } from '@/lib/contact-prefill'
+import { buildContactPrefill } from '@/lib/contact-prefill'
 
 declare global {
   interface Window {
@@ -131,9 +131,6 @@ export function ContactIntakeForm({
 
   return !submitted ? (
     <>
-      <p className="mb-5 text-sm leading-6 text-[color:var(--foreground)]/78">
-        Name, email, and a few sentences about the project are enough. Everything else is optional.
-      </p>
       {contextNotice ? (
         <div className="mb-6 rounded-md border border-[color:var(--pine)]/25 bg-[color:var(--sand)]/35 px-4 py-3 text-sm text-[color:var(--foreground)]/85">
           <p className="font-semibold text-[color:var(--pine)]">{contextNotice.title}</p>
@@ -151,53 +148,17 @@ export function ContactIntakeForm({
         <Input label="Email" name="email" type="email" required />
         <Input label="Organization (optional)" name="organization" />
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div>
-            <label htmlFor="inquiryType" className="mb-1.5 block text-sm font-medium text-[color:var(--ink)]">
-              Type of work
-            </label>
-            <select
-              id="inquiryType"
-              name="inquiryType"
-              defaultValue={defaultInquiryType}
-              required
-              className="flex h-11 w-full rounded-md border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-3.5 py-2 text-base text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
-            >
-              <option value="">Select one</option>
-              {inquiryTypes.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="timeline" className="mb-1.5 block text-sm font-medium text-[color:var(--ink)]">
-              Timeline <span className="font-normal text-[color:var(--foreground)]/62">(optional)</span>
-            </label>
-            <select
-              id="timeline"
-              name="timeline"
-              defaultValue={defaultTimeline}
-              className="flex h-11 w-full rounded-md border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-3.5 py-2 text-base text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
-            >
-              <option value="">Select one</option>
-              {timelines.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+        {/* The lead API still records a topic and timeline; the public form no
+            longer asks for them, so they ride along from the URL prefill. */}
+        <input type="hidden" name="inquiryType" value={defaultInquiryType || 'General inquiry'} />
+        <input type="hidden" name="timeline" value={defaultTimeline} />
 
         <div>
           <Textarea
-            label="What is the project?"
+            label="Message"
             name="description"
             defaultValue={defaultDescription}
-            placeholder="The work, the deadline, and the funding program if there is one."
+            placeholder="A question about OpenPlan, a bug report, or an idea for working together."
             rows={5}
             minLength={20}
             required
@@ -207,45 +168,6 @@ export function ContactIntakeForm({
           </p>
         </div>
 
-        <details className="rounded-md border border-[color:var(--line)] bg-[color:var(--fog)]/40 p-4">
-          <summary className="cursor-pointer text-sm font-semibold text-[color:var(--ink)]">
-            Budget, start date, and location (optional)
-          </summary>
-          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div>
-              <label htmlFor="budgetRange" className="mb-1.5 block text-sm font-medium text-[color:var(--ink)]">
-                Budget range <span className="font-normal text-[color:var(--foreground)]/62">(optional)</span>
-              </label>
-              <select
-                id="budgetRange"
-                name="budgetRange"
-                defaultValue=""
-                className="flex h-11 w-full rounded-md border border-[color:var(--line-strong)] bg-[color:var(--surface)] px-3.5 py-2 text-base text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--pine)]"
-              >
-                <option value="">Select a range</option>
-                {budgetRanges.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <Input
-              label="Start date (optional)"
-              name="desiredStartDate"
-              type="date"
-            />
-
-            <div className="sm:col-span-2">
-              <Input
-                label="Project location (optional)"
-                name="projectGeography"
-                placeholder="County, region, or service area"
-              />
-            </div>
-          </div>
-        </details>
 
         {turnstileSiteKey && (
           <>

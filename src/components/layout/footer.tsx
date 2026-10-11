@@ -10,21 +10,21 @@ import { Container } from './container'
 
 const columns = [
   {
-    heading: 'Work',
+    heading: 'OpenPlan',
     links: [
-      { name: 'Services', href: '/services' },
-      { name: 'Experience', href: '/projects' },
-      { name: 'About', href: '/about' },
-      { name: 'Contact', href: '/contact' },
+      { name: 'Overview', href: '/' },
+      { name: 'Try OpenPlan', href: '/openplan', external: true },
+      { name: 'Source code', href: 'https://github.com/nfredmond/openplan', external: true },
     ],
   },
   {
-    heading: 'Software',
+    heading: 'More',
     links: [
-      { name: 'OpenPlan', href: '/openplan', external: true },
-      { name: 'All projects', href: '/software' },
+      { name: 'Other software', href: '/software' },
       { name: 'Grant Narrative Lab', href: '/grant-lab' },
       { name: 'Funding readiness scorecard', href: '/funding-readiness-scorecard' },
+      { name: 'About', href: '/about' },
+      { name: 'Contact', href: '/contact' },
     ],
   },
   {

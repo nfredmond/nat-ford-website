@@ -6,13 +6,13 @@ import { Section } from '@/components/layout/section'
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description:
-    'How Nat Ford Planning & Analysis collects, uses, and protects the information you share when you use our services and products.',
+    'How Nat Ford Planning & Analysis collects, uses, and protects the information you share on this site and its tools.',
 }
 
 const sections: { heading: string; body: ReactNode }[] = [
   {
     heading: 'What I collect',
-    body: 'When you send the contact form: your name, email, organization, and what you write about your project, plus your IP address and browser identifier for spam control. If you create an account: your email and sign-in records. If you buy something: the purchase record (product, tier, your email). Card numbers go to Stripe and never touch this site. Nothing else is collected. There are no advertising or analytics trackers on this site.',
+    body: 'When you send the contact form: your name, email, organization, and your message, plus your IP address and browser identifier for spam control. If you create an account: your email and sign-in records. If you buy something: the purchase record (product, tier, your email). Card numbers go to Stripe and never touch this site. Nothing else is collected. There are no advertising or analytics trackers on this site.',
   },
   {
     heading: 'Services that process data on my behalf',
@@ -27,12 +27,8 @@ const sections: { heading: string; body: ReactNode }[] = [
     body: 'Local storage holds your theme preference, the Grant Lab visitor id, and, only if you switch on local autosave, your Grant Lab drafts. Cookies are functional only: sign-in sessions and anti-spam verification. No third-party advertising cookies, ever.',
   },
   {
-    heading: 'Client work and AI',
-    body: 'For paid engagements: AI-assisted workflows may process project content for drafting and analysis support, final conclusions are reviewed by me, and client data is not reused across clients without explicit permission.',
-  },
-  {
     heading: 'Retention and your rights',
-    body: 'Contact-form submissions are kept for business follow-up; account and purchase records are kept as long as your account or my legal obligations require. Email me and I will tell you what I hold about you, correct it, or delete it. Deletion requests are honored unless a legal or accounting obligation requires keeping a record.',
+    body: 'Contact-form submissions are kept so I can reply and follow up; account and purchase records are kept as long as your account or my legal obligations require. Email me and I will tell you what I hold about you, correct it, or delete it. Deletion requests are honored unless a legal or accounting obligation requires keeping a record.',
   },
   {
     heading: 'Contact',

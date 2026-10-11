@@ -16,18 +16,21 @@ import { ThemeToggle } from '../ui/theme-toggle'
 import { cn } from '@/lib/utils'
 
 const navigation = [
-  { name: 'Services', href: '/services' },
-  { name: 'Experience', href: '/projects' },
-  { name: 'Software', href: '/software' },
-  { name: 'OpenPlan', href: '/openplan', external: true },
-  { name: 'About', href: '/about' },
+  { name: 'OpenPlan', href: '/', external: false },
+  { name: 'Software', href: '/software', external: false },
+  { name: 'About', href: '/about', external: false },
+  { name: 'Contact', href: '/contact', external: false },
 ]
+
+// /openplan is the OpenPlan app itself, a separate deployment.
+const APP_HREF = '/openplan'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
   const pathname = usePathname()
 
-  const isActive = (href: string) => pathname === href || pathname?.startsWith(href + '/')
+  const isActive = (href: string) =>
+    href === '/' ? pathname === '/' : pathname === href || pathname?.startsWith(href + '/')
 
   const linkClass = (href: string) =>
     cn(
@@ -85,9 +88,9 @@ export function Header() {
 
           <div className="hidden items-center gap-2 lg:flex">
             <ThemeToggle />
-            <Link href="/contact" className="btn btn-primary btn-sm">
-              Contact
-            </Link>
+            <a href={APP_HREF} className="btn btn-primary btn-sm">
+              Try OpenPlan
+            </a>
           </div>
 
           <div className="flex items-center gap-1 lg:hidden">
@@ -112,7 +115,7 @@ export function Header() {
         {mobileMenuOpen && (
           <div id="mobile-menu" className="border-t border-[color:var(--line)] pb-5 pt-2 lg:hidden">
             <ul className="divide-y divide-[color:var(--line)]">
-              {[...navigation, { name: 'Contact', href: '/contact', external: false }].map((item) => (
+              {[...navigation, { name: 'Try OpenPlan', href: APP_HREF, external: true }].map((item) => (
                 <li key={item.name}>
                   {item.external ? (
                     <a href={item.href} className="block py-3 text-lg font-semibold text-[color:var(--ink)]">

@@ -216,20 +216,17 @@ export default function FundingReadinessScorecardPage() {
                 <ClipboardList className="h-5 w-5" aria-hidden="true" />
               </div>
               <h2 className="display-3 mt-5 text-[color:var(--ink)]">
-                Want a tighter view of what to fix first?
+                Questions or corrections
               </h2>
               <p className="mt-4 text-sm leading-6 text-[color:var(--muted)]">
-                Nat Ford can turn your score into a focused action plan: what to define, what evidence to
-                organize, and what pieces need to be submission-ready before the next funding window.
+                If a question is unclear or a program rule has changed, tell Nathaniel so the
+                scorecard can be fixed.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <Button asChild size="lg">
-                  <Link href="/contact/funding-readiness">
-                    Request a review <ArrowRight className="h-4 w-4" />
+                <Button asChild size="lg" variant="outline">
+                  <Link href="/contact">
+                    Contact Nathaniel <ArrowRight className="h-4 w-4" />
                   </Link>
-                </Button>
-                <Button asChild variant="outline" size="lg">
-                  <Link href="/services#planning">View grant services</Link>
                 </Button>
               </div>
             </article>
