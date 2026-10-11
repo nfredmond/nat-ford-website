@@ -283,7 +283,7 @@ export function buildContactPrefill({
         ? 'Request funding readiness review'
         : serviceLabel
           ? `Request ${serviceLabel} intake`
-          : 'Request discovery'
+          : 'Send message'
 
   const successTitle = pilotUpdatesIntent && openPlanProductContext
     ? 'OpenPlan update request received'
@@ -291,15 +291,9 @@ export function buildContactPrefill({
       ? 'OpenPlan fit request received'
       : fundingReadinessIntent
         ? 'Funding readiness request received'
-        : 'Inquiry received'
+        : 'Message sent'
 
-  const successMessage = pilotUpdatesIntent && openPlanProductContext
-    ? 'Thanks — your request is now labeled for OpenPlan pilot-update follow-up. We typically respond within 1–2 business days.'
-    : fitConversationIntent && openPlanProductContext
-      ? 'Thanks — your request is now labeled for OpenPlan fit follow-up. We typically respond within 1–2 business days.'
-      : fundingReadinessIntent
-        ? 'Thanks — your request is now labeled for funding-readiness follow-up. We typically respond within 1–2 business days.'
-        : 'Thanks — your message is now in our intake pipeline. We typically respond within 1–2 business days.'
+  const successMessage = 'Thanks. Nathaniel will reply by email.'
 
   return {
     requestIntent,

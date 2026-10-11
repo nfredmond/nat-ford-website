@@ -6,7 +6,6 @@ import Image from 'next/image'
 import { ArrowRight, Copy, Download, Loader2, Save, Sparkles } from 'lucide-react'
 import { Container } from '@/components/layout/container'
 import { Section } from '@/components/layout/section'
-import { ContourField } from '@/components/features/contour-field'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -413,8 +412,7 @@ export default function GrantLabPage() {
 
   return (
     <>
-      <section className="on-dark relative overflow-hidden border-b border-white/10 bg-[#0b120f] text-white">
-        <ContourField className="opacity-55" />
+      <section className="on-dark relative overflow-hidden border-b border-white/10 bg-[color:var(--asphalt)] text-white">
         <Container size="xl" className="relative py-14 md:py-20">
           <div className="max-w-3xl">
             <p className="index-label text-[color:var(--copper)]">AI Grant Narrative Lab</p>
@@ -431,9 +429,9 @@ export default function GrantLabPage() {
               open-source custom fork, or as a client-specific delivery system.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <Link href="/openplan" className="btn btn-primary btn-md">
-                See OpenPlan inclusion <ArrowRight className="h-4 w-4" />
-              </Link>
+              <a href="/openplan" className="btn btn-primary btn-md">
+                See OpenPlan <ArrowRight className="h-4 w-4" />
+              </a>
               <Link
                 href="/contact?intent=discovery&topic=custom-software&inquiry=custom-grant-ai"
                 className="btn btn-outline btn-md"
@@ -524,7 +522,7 @@ export default function GrantLabPage() {
                 </p>
 
                 <form className="mt-5 space-y-4" onSubmit={onGenerateDraft}>
-                  <p className="label">Step 1 of 3 — Program + applicant context</p>
+                  <p className="label">Step 1 of 3: Program and applicant</p>
                   <div>
                     <label htmlFor="grant-program" className="mb-1.5 block text-sm font-medium text-[color:var(--ink)]">
                       Grant program *
@@ -556,7 +554,7 @@ export default function GrantLabPage() {
                   {context.location.trim().length >= 4 ? (
                     <div className="rounded-2xl border border-[color:var(--line)] bg-[color:var(--fog)]/65 p-3">
                       <div className="mb-2 flex items-center justify-between gap-2">
-                        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[color:var(--foreground)]/70">Mapbox location preview</p>
+                        <p className="text-xs font-semibold text-[color:var(--foreground)]/70">Mapbox location preview</p>
                         <p className="text-[11px] text-[color:var(--foreground)]/65">Map centered from location input</p>
                       </div>
                       {mapPreviewUrl && !mapPreviewFailed ? (
@@ -580,7 +578,7 @@ export default function GrantLabPage() {
                     </div>
                   ) : null}
 
-                  <p className="label pt-1">Step 2 of 3 — Need, scope, and readiness</p>
+                  <p className="label pt-1">Step 2 of 3: Need, scope, and readiness</p>
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                     <label className="text-sm text-[color:var(--foreground)]/80">
                       Tone
@@ -689,7 +687,7 @@ export default function GrantLabPage() {
                     </div>
                   </details>
 
-                  <p className="label pt-1">Step 3 of 3 — Generate and refine</p>
+                  <p className="label pt-1">Step 3 of 3: Generate and refine</p>
                   {missingRequirements.length > 0 && (
                     <p className="text-xs text-[color:var(--foreground)]/70">
                       To generate a draft, add: {missingRequirements.join(' and ')}.
@@ -814,9 +812,9 @@ export default function GrantLabPage() {
                     free account
                   </Link>
                   . Want this workflow running inside your organization? It can be deployed through{' '}
-                  <Link href="/openplan" className="font-semibold text-[color:var(--pine)]">
+                  <a href="/openplan" className="font-semibold text-[color:var(--pine)]">
                     OpenPlan managed support
-                  </Link>{' '}
+                  </a>{' '}
                   (screening-grade, in active build), or as a{' '}
                   <Link href="/contact?intent=discovery&topic=custom-software&inquiry=custom-grant-ai" className="font-semibold text-[color:var(--pine)]">
                     custom-built client solution
@@ -834,8 +832,8 @@ export default function GrantLabPage() {
               <li>• Iterative revisions based on scoring criteria, equity/safety framing, and readiness realities</li>
               <li>• Converting rough project notes into coherent, board-ready narrative language</li>
             </ul>
-            <Link href="/products" className="mt-4 inline-flex items-center text-sm font-semibold text-[color:var(--pine)]">
-              Explore full product stack <ArrowRight className="ml-1.5 h-4 w-4" />
+            <Link href="/software" className="mt-4 inline-flex items-center text-sm font-semibold text-[color:var(--pine)]">
+              See all the software <ArrowRight className="ml-1.5 h-4 w-4" />
             </Link>
           </div>
         </Container>

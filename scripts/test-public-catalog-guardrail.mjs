@@ -92,9 +92,8 @@ assert.match(readinessNote(aiWorkflows.status), /Paid educational product/)
 assert.ok(!JSON.stringify(aiWorkflows).toLowerCase().includes('vibe coding'), 'Legacy casual product name leaked into the public catalog entry.')
 assert.ok(!JSON.stringify(aiWorkflows).toLowerCase().includes('vibe-coding'), 'Legacy route alias leaked into the public catalog entry.')
 
-const projectsPage = fs.readFileSync(path.join(rootDir, 'src/app/(marketing)/products/page.tsx'), 'utf8')
-const openSourcePage = fs.readFileSync(path.join(rootDir, 'src/app/(marketing)/open-source/page.tsx'), 'utf8')
-const publicCatalogSource = `${projectsPage}\n${openSourcePage}\n${JSON.stringify(openSourceProjects)}`.toLowerCase()
+const softwarePage = fs.readFileSync(path.join(rootDir, 'src/app/(marketing)/software/page.tsx'), 'utf8')
+const publicCatalogSource = `${softwarePage}\n${JSON.stringify(openSourceProjects)}`.toLowerCase()
 
 for (const legacyPhrase of ['vibe coding', 'vibe-coding']) {
   assert.ok(!publicCatalogSource.includes(legacyPhrase), `Legacy AI Workflows name/route phrase leaked into public catalog source: ${legacyPhrase}`)

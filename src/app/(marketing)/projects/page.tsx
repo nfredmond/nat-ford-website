@@ -1,228 +1,125 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
-import { Container } from '@/components/layout/container'
-import { Section } from '@/components/layout/section'
-import { Button } from '@/components/ui/button'
-import JsonLd from '@/components/features/json-ld'
-import { ContourField } from '@/components/features/contour-field'
-import projectsData from '@/data/projects.json'
 import type { Metadata } from 'next'
+import { Container } from '@/components/layout/container'
+import JsonLd from '@/components/features/json-ld'
+import { CaliforniaMap } from '@/components/features/california-map'
+import projectsData from '@/data/projects.json'
+import { experienceCounties, experienceProjects, priorRoles } from '@/data/experience'
 
 export const metadata: Metadata = {
-  title: 'Planning Experience',
+  title: 'Experience',
   description:
-    'Six rural transportation-planning engagements delivered across Northern California while on staff at Green DOT Transportation Solutions.',
+    'Regional transportation plans, active transportation plans, VMT analysis, and grant applications across 14 Northern California counties, delivered on staff at Green DOT Transportation Solutions.',
 }
 
-type Engagement = {
-  title: string
-  year: string
-  focus: string
-  services: string[]
-  href?: string
-}
-
-const engagements: Engagement[] = [
-  {
-    title: 'Sierra County RTP',
-    year: '2024',
-    focus:
-      'Performance targets and a fiscally constrained investment roadmap for a high-elevation rural county.',
-    services: ['Transportation Planning', 'GIS Analysis', 'Funding Strategy'],
-    href: '/projects/sierra-rtp',
-  },
-  {
-    title: 'Del Norte County ATP',
-    year: '2024',
-    focus:
-      'Active-transportation network gaps turned into phaseable, grant-ready applications, with a Safe Routes focus.',
-    services: ['Active Transportation', 'Safe Routes', 'Grant Writing'],
-    href: '/projects/del-norte-atp',
-  },
-  {
-    title: 'Tehama County VMT & CIP',
-    year: '2025',
-    focus:
-      'VMT-reduction strategy connected to a realistic, prioritized capital-improvement program.',
-    services: ['Carbon Reduction', 'VMT Analysis', 'CIP Development'],
-    href: '/projects/tehama-vmt',
-  },
-  {
-    title: 'Plumas Transit FTA 5339',
-    year: '2024',
-    focus:
-      'Grant narrative for an FTA 5339 transit facility, linking site feasibility, fleet transition, and public benefit.',
-    services: ['Grant Writing', 'Transit Planning', 'Site Concepting'],
-  },
-  {
-    title: 'Placer County MIAS',
-    year: '2024',
-    focus:
-      'Countywide multimodal screening with planning-level cost bands and project-packaging guidance.',
-    services: ['Complete Streets', 'GIS Analysis', 'Prioritization'],
-  },
-  {
-    title: 'El Dorado Next Gen Mobility',
-    year: '2024',
-    focus:
-      'Phased mobility-program options with a KPI framework and an implementation structure.',
-    services: ['Mobility Strategy', 'Transit & TDM', 'Data Storytelling'],
-  },
-]
-
-export default function ProjectsPage() {
+export default function ExperiencePage() {
   return (
     <>
       <JsonLd data={projectsData} />
 
-      {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="worksurface relative overflow-hidden border-b border-[color:var(--line)]">
-        <ContourField animate className="opacity-90" />
-        <Container size="xl" className="relative py-16 md:py-24 lg:py-28">
-          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <section className="py-16 md:py-24">
+        <Container size="xl">
+          <div className="grid items-center gap-12 lg:grid-cols-[1fr_minmax(0,24rem)] lg:gap-20">
             <div>
-              <p className="index-label reveal reveal-1">Planning experience · prior employment</p>
-              <h1 className="display-1 reveal reveal-2 mt-6 text-[color:var(--ink)]">
-                Rural planning work, on the record.
+              <h1 className="display-1 max-w-[14ch] text-[color:var(--ink)]">
+                Plans and grants in {experienceCounties.length} rural counties
               </h1>
-              <p className="lead reveal reveal-3 measure-wide mt-6 text-[color:var(--muted)]">
-                Six transportation-planning engagements I delivered across Northern California. All of
-                them were done while I was on staff at Green DOT Transportation Solutions, so this is
-                prior-employment experience, not Nat Ford Planning client work. I list them because
-                they are the clearest record of the planning judgment the software is built to carry.
+              <p className="lead measure mt-6 text-[color:var(--muted)]">
+                From 2021 to 2025, I worked on regional plans, active transportation plans, and
+                grant applications as a senior transportation planner at Green DOT Transportation
+                Solutions.
               </p>
-
-              <div className="reveal reveal-4 mt-9 flex flex-wrap items-center gap-3">
-                <Button asChild size="lg">
-                  <Link href="/services">
-                    See the current services <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button asChild size="lg" variant="outline">
-                  <Link href="/products">Browse the software</Link>
-                </Button>
-              </div>
+              <p className="measure mt-4 text-[color:var(--muted)]">
+                The projects below belong to that role. They are not Nat Ford Planning &amp;
+                Analysis client projects.
+              </p>
             </div>
-
-            {/* Figure plate */}
-            <figure className="reveal reveal-5 w-full max-w-md lg:justify-self-end">
-              <div className="plate aspect-[4/5] w-full">
-                <Image
-                  src="/images/site/drone-corridor-valley-2026-03.jpg"
-                  alt="Aerial view of a rural highway corridor threading through a Northern California valley"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0b120f]/78 via-transparent to-transparent" />
-                <figcaption className="plate-caption absolute inset-x-4 bottom-3.5 flex items-center justify-between">
-                  <span>Fig. 01 · Rural corridor, aerial capture</span>
-                  <span className="text-[color:var(--copper)]">Representative</span>
-                </figcaption>
-              </div>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="provenance">Prior employer · Green DOT Transportation Solutions</span>
-                <span className="provenance">6 engagements · Northern California</span>
-              </div>
+            <figure>
+              <CaliforniaMap
+                highlighted={experienceCounties}
+                label={`Map of California highlighting ${experienceCounties.join(', ')} counties.`}
+                className="mx-auto max-w-[22rem]"
+              />
+              <figcaption className="mt-3 text-sm text-[color:var(--muted)]">
+                {experienceCounties.join(', ')} counties. Source: U.S. Census Bureau county
+                boundaries.
+              </figcaption>
             </figure>
           </div>
         </Container>
       </section>
 
-      {/* ── The register ─────────────────────────────────────── */}
-      <Section spacing="lg">
+      <section className="bg-[color:var(--surface)] py-16 md:py-24">
         <Container size="xl">
-          <div className="max-w-2xl">
-            <p className="index-label">The field record</p>
-            <h2 className="display-2 mt-5 text-[color:var(--ink)]">
-              Six engagements, delivered on staff.
-            </h2>
-            <p className="measure mt-5 text-[color:var(--muted)]">
-              Each one shipped as a real deliverable for a rural Northern California agency. Three have
-              detailed write-ups. The others are here as a record of the work.
-            </p>
-          </div>
-
-          <ul className="mt-10 divide-y divide-[color:var(--line)] border-y border-[color:var(--line)]">
-            {engagements.map((e, i) => (
+          <h2 className="display-2 text-[color:var(--ink)]">Selected projects</h2>
+          <ol className="mt-10 border-t-[3px] border-[color:var(--ink)]">
+            {experienceProjects.map((project) => (
               <li
-                key={e.title}
-                className="grid gap-3 py-7 sm:grid-cols-[minmax(0,6rem)_1fr] sm:gap-8"
+                key={project.slug}
+                id={project.slug}
+                className="grid scroll-mt-24 gap-4 border-b border-[color:var(--line)] py-8 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-12"
               >
-                <div className="flex items-baseline gap-3 sm:flex-col sm:gap-1 sm:pt-1.5">
-                  <span className="data text-sm text-[color:var(--copper-ink)] dark:text-[color:var(--copper)]">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span className="data text-sm text-[color:var(--muted)]">{e.year}</span>
+                <div className="font-ui">
+                  <p className="font-bold text-[color:var(--ink)]">{project.county} County</p>
+                  <p className="text-[color:var(--muted)]">
+                    {project.type}, {project.year}
+                  </p>
                 </div>
-
                 <div>
-                  <h3 className="font-display text-2xl font-semibold text-[color:var(--ink)]">
-                    {e.title}
-                  </h3>
-                  <p className="measure mt-2 text-[color:var(--muted)]">{e.focus}</p>
-
-                  <ul className="mt-4 flex flex-wrap gap-2" aria-label="Disciplines">
-                    {e.services.map((service) => (
-                      <li
-                        key={service}
-                        className="label rounded-full border border-[color:var(--line)] px-2.5 py-1"
-                      >
-                        {service}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {e.href && (
-                    <div className="mt-4">
-                      <Link
-                        href={e.href}
-                        className="inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--pine)] hover:underline dark:text-[color:var(--pine-soft)]"
-                      >
-                        Read the write-up
-                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                      </Link>
-                    </div>
-                  )}
+                  <h3 className="display-3 text-[color:var(--ink)]">{project.title}</h3>
+                  <p className="measure mt-2 text-[color:var(--muted)]">{project.summary}</p>
+                  {project.work ? (
+                    <ul className="measure mt-4 space-y-2">
+                      {project.work.map((item) => (
+                        <li key={item} className="flex items-baseline gap-3 text-[1.02rem]">
+                          <span aria-hidden="true" className="lane-dash shrink-0 -translate-y-1" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                 </div>
               </li>
             ))}
-          </ul>
+          </ol>
         </Container>
-      </Section>
+      </section>
 
-      {/* ── Closing / what I do now ──────────────────────────── */}
-      <section className="on-dark relative overflow-hidden border-t border-white/10 bg-[#0b120f] text-white">
-        <ContourField className="opacity-60" />
-        <Container size="xl" className="relative py-16 md:py-24">
-          <div className="max-w-2xl">
-            <p className="index-label text-[color:var(--copper)]">What I do now</p>
-            <h2 className="display-2 mt-5 text-white">
-              The same judgment, now with the software to carry it.
-            </h2>
-            <p className="mt-5 text-white/70">
-              Nat Ford Planning is where that work continues: transportation planning, GIS, grants,
-              and open-source tools that make each one reusable. If your agency runs lean, that is who
-              this is for.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <Button asChild size="lg">
-                <Link href="/services">
-                  View services <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              <a href="/products" className="btn btn-outline btn-lg">
-                View the software
-              </a>
-              <a
-                href="mailto:nathaniel@natfordplanning.com"
-                className="font-mono text-sm text-[color:var(--copper)] hover:underline"
-              >
-                nathaniel@natfordplanning.com
-              </a>
+      <section className="py-16 md:py-24">
+        <Container size="xl">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-20">
+            <div>
+              <h2 className="display-2 text-[color:var(--ink)]">Prior roles</h2>
+              <ol className="mt-8 space-y-8">
+                {priorRoles.map((role) => (
+                  <li key={role.employer} className="border-l-[3px] border-[color:var(--pine)] pl-5">
+                    <p className="font-ui text-[color:var(--muted)]">{role.years}</p>
+                    <h3 className="font-ui text-xl font-bold text-[color:var(--ink)]">
+                      {role.title}, {role.employer}
+                    </h3>
+                    <p className="measure mt-2 text-[color:var(--muted)]">{role.summary}</p>
+                  </li>
+                ))}
+              </ol>
             </div>
+            <figure className="self-start">
+              <div className="plate aspect-[16/10]">
+                <Image
+                  src="/images/site/drone-mainstreet-parking-2026-03.jpg"
+                  alt="Drone photo of a small-town main street with angled parking, street trees, and a stop-controlled intersection"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover"
+                />
+              </div>
+              <figcaption className="mt-3 text-sm text-[color:var(--muted)]">
+                Main street parking, Plumas County. Drone capture.
+              </figcaption>
+              <Link href="/contact" className="btn btn-primary btn-lg mt-10">
+                Contact Nathaniel
+              </Link>
+            </figure>
           </div>
         </Container>
       </section>

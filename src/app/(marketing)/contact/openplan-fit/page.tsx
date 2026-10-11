@@ -21,8 +21,8 @@ export default async function OpenPlanFitPage({
 
   return (
     <ContactPageShell
-      title="Let’s see whether OpenPlan is the right fit."
-      subtitle="Start with a focused OpenPlan fit intake. We’ll align workflow, timing, and the right next step before anyone commits."
+      title="Ask whether OpenPlan fits"
+      subtitle="Describe the workflow you want OpenPlan to handle and when you need it. The answer may be that a different tool fits better."
       initialIntent="fit"
       initialTopic="openplan"
       initialProduct="openplan"

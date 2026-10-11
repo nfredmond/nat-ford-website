@@ -6,7 +6,7 @@
   "logo": "https://www.natfordplanning.com/logos/nf-wordmark-light.png",
   "founder": {
     "@type": "Person",
-    "name": "Nathaniel Ford Redmond",
+    "name": "Nathaniel Redmond",
     "jobTitle": "Founder",
     "sameAs": [
       "https://www.linkedin.com/in/nfredmond",
@@ -26,5 +26,11 @@
     "https://github.com/nfredmond"
   ],
   "areaServed": "United States",
-  "description": "Open-source planning, GIS, aerial, modeling, AI, and operations software for public-interest work, with paid implementation, custom forks, hosting, onboarding, support, and transportation planning services."
+  "description": "Transportation planning, grant strategy, GIS and aerial mapping, and open-source planning software for small and rural public agencies.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Grass Valley",
+    "addressRegion": "CA",
+    "addressCountry": "US"
+  }
 }
