@@ -63,7 +63,7 @@ Nat Ford Planning & Analysis no longer sells services. The site showcases OpenPl
 
 ### OpenPlan
 
-OpenPlan is a separate app mounted at `/openplan` on the same domain. Do not add a `/openplan` route here, and link to it with a plain `<a>`, not `next/link`. Until the mount exists, `next.config.ts` holds a temporary `/openplan` redirect; remove it in the same change that adds the mount, because redirects run before rewrites. The placeholder currently points to `/#try`.
+OpenPlan runs on its own deployment at `https://openplan-zeta.vercel.app`. In `next.config.ts`, `/openplan/:path*` uses a temporary 307 redirect to that deployment. It preserves the path after `/openplan` and request query parameters. Next.js first normalizes `/openplan/` to `/openplan` with its standard 308 redirect. This is an external redirect, not a rewrite, mount, or embed. Do not add a `/openplan` route here. Link to it with a plain `<a>`, not `next/link`, so the browser follows the redirect into the separate app.
 
 ### Components
 
